@@ -7,9 +7,9 @@ ENV PIP_NO_CACHE_DIR off
 ENV PIP_DISABLE_PIP_VERSION_CHECK on
 
 
-RUN pip install -U wheel pip setuptools -i https://pypi.doubanio.com/simple/
+RUN pip install -U wheel pip setuptools 
 
-RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
+#RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
 
 RUN apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get install -y -q libxslt1-dev libxml2-dev libpq-dev libldap2-dev libsasl2-dev libssl-dev
 
@@ -17,13 +17,13 @@ RUN mkdir -p /conf /data /wheels
 
 ADD requirements.txt /conf/
 
-RUN pip wheel --wheel-dir=/wheels -r /conf/requirements.txt && pip install --find-links=/wheels -r /conf/requirements.txt  -i https://pypi.doubanio.com/simple/
+RUN pip wheel --wheel-dir=/wheels -r /conf/requirements.txt 
 
 ENV SENTRY_VERSION 9.1.2
 
 RUN set -x \
     && buildDeps=" \
-        g++ \
+        cargo g++ \
         dirmngr \
         gnupg \
         wget \
@@ -35,7 +35,7 @@ RUN set -x \
     && wget -O /usr/src/sentry/sentry_plugins-${SENTRY_VERSION}-py2.py3-none-any.whl "https://github.com/getsentry/sentry/releases/download/${SENTRY_VERSION}/sentry_plugins-${SENTRY_VERSION}-py2.py3-none-any.whl" \
     && wget -O /usr/src/sentry/sentry_plugins-${SENTRY_VERSION}-py2.py3-none-any.whl.asc "https://github.com/getsentry/sentry/releases/download/${SENTRY_VERSION}/sentry_plugins-${SENTRY_VERSION}-py2.py3-none-any.whl.asc" \
     && export GNUPGHOME="$(mktemp -d)" \
-    && pip install --find-links=/wheels\
+    && pip install --find-links=/wheels \
         /usr/src/sentry/sentry-${SENTRY_VERSION}-py27-none-any.whl \
         /usr/src/sentry/sentry_plugins-${SENTRY_VERSION}-py2.py3-none-any.whl \
     && sentry --help \
@@ -62,4 +62,3 @@ RUN apt-get clean
 RUN rm -f /wheels/*
 RUN apt-get remove -y -q libxslt1-dev libxml2-dev libpq-dev libldap2-dev libsasl2-dev libssl-dev
 RUN rm -rf /var/lib/apt/lists/*
-RUN rm /tmp/req.txt
