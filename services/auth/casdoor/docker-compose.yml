@@ -1,0 +1,28 @@
+version: '3.1'
+services:
+  casdoor:
+    restart: always
+    image: casbin/casdoor:v1.428.0
+    entrypoint: /bin/sh -c './server --createDatabase=true'
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    environment:
+      RUNNING_IN_DOCKER: "true"
+    volumes:
+      - ./conf:/conf/
+  postgres:
+    image: postgres:12-alpine
+    user: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: p0stgr3s
+      PGDATA: /var/lib/postgresql/data/pgdata
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - /srv/postgresql/data:/var/lib/postgresql/data
