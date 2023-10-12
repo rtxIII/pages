@@ -17,7 +17,7 @@ RUN mkdir -p /conf /data /wheels
 
 ADD requirements.txt /conf/
 
-RUN pip wheel --wheel-dir=/wheels -r /conf/requirements.txt 
+#RUN pip wheel --wheel-dir=/wheels -r /conf/requirements.txt 
 
 ENV SENTRY_VERSION 9.1.2
 
@@ -32,14 +32,14 @@ RUN set -x \
     && mkdir -p /usr/src/sentry \
     && wget -O /usr/src/sentry/sentry-${SENTRY_VERSION}-py27-none-any.whl "https://github.com/getsentry/sentry/releases/download/${SENTRY_VERSION}/sentry-${SENTRY_VERSION}-py27-none-any.whl" \
     && wget -O /usr/src/sentry/sentry-${SENTRY_VERSION}-py27-none-any.whl.asc "https://github.com/getsentry/sentry/releases/download/${SENTRY_VERSION}/sentry-${SENTRY_VERSION}-py27-none-any.whl.asc" \
-    && wget -O /usr/src/sentry/sentry_plugins-${SENTRY_VERSION}-py2.py3-none-any.whl "https://github.com/getsentry/sentry/releases/download/${SENTRY_VERSION}/sentry_plugins-${SENTRY_VERSION}-py2.py3-none-any.whl" \
-    && wget -O /usr/src/sentry/sentry_plugins-${SENTRY_VERSION}-py2.py3-none-any.whl.asc "https://github.com/getsentry/sentry/releases/download/${SENTRY_VERSION}/sentry_plugins-${SENTRY_VERSION}-py2.py3-none-any.whl.asc" \
+    #&& wget -O /usr/src/sentry/sentry_plugins-${SENTRY_VERSION}-py2.py3-none-any.whl "https://github.com/getsentry/sentry/releases/download/${SENTRY_VERSION}/sentry_plugins-${SENTRY_VERSION}-py2.py3-none-any.whl" \
+    #&& wget -O /usr/src/sentry/sentry_plugins-${SENTRY_VERSION}-py2.py3-none-any.whl.asc "https://github.com/getsentry/sentry/releases/download/${SENTRY_VERSION}/sentry_plugins-${SENTRY_VERSION}-py2.py3-none-any.whl.asc" \
     && export GNUPGHOME="$(mktemp -d)" \
     && pip install --find-links=/wheels \
         /usr/src/sentry/sentry-${SENTRY_VERSION}-py27-none-any.whl \
-        /usr/src/sentry/sentry_plugins-${SENTRY_VERSION}-py2.py3-none-any.whl \
+        #/usr/src/sentry/sentry_plugins-${SENTRY_VERSION}-py2.py3-none-any.whl \
     && sentry --help \
-    && sentry plugins list \
+    #&& sentry plugins list \
     && rm -r "$GNUPGHOME" /usr/src/sentry \
     && apt-get purge -y --auto-remove $buildDeps
 
