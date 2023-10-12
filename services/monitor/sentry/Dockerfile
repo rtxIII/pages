@@ -54,8 +54,8 @@ ENTRYPOINT ["sentry"]
 
 ENTRYPOINT ["sentry --config=$SENTRY_CONF_FILE"]
 
-RUN pip install python-decouple dj-database-url django-cache-url django-redis django-auth-ldap
-#RUN pip install -r /conf/requirements.txt 
+#RUN pip install python-decouple dj-database-url django-cache-url django-redis django-auth-ldap
+RUN pip install -r /conf/requirements.txt 
 ADD scripts/create_team_or_project.py /conf/
 ADD scripts/check_db_isalive.py /conf/
 
