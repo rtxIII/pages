@@ -52,7 +52,7 @@ ADD sentry_run /usr/local/bin/
 
 ENTRYPOINT ["sentry"]
 
-RUN pip install decouple
+RUN pip install python-decouple
 ADD scripts/create_team_or_project.py /conf/
 ADD scripts/check_db_isalive.py /conf/
 
