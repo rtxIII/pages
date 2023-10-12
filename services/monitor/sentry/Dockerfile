@@ -50,10 +50,9 @@ VOLUME ["/data"]
 ADD sentry_docker_conf.py /conf/
 ADD sentry_run /usr/local/bin/
 
-ENTRYPOINT ["/usr/local/bin/sentry_run"]
+ENTRYPOINT ["sentry"]
 
-CMD ["start"]
-
+RUN pip install decouple
 ADD scripts/create_team_or_project.py /conf/
 ADD scripts/check_db_isalive.py /conf/
 

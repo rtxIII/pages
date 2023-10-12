@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SENTRY_CONF_FILE=${SENTRY_CONF_FILE:-/conf/sentry.conf.py}
+SENTRY_CONF_FILE=${SENTRY_CONF_FILE:-/conf/sentry_docker_conf.py}
 
 # export env var for other scripts to work
 export SENTRY_CONF=$SENTRY_CONF_FILE
