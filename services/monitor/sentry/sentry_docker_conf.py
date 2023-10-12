@@ -12,15 +12,28 @@ CONF_ROOT = os.path.dirname(__file__)
 DATA_DIR = config('SENTRY_DATA_DIR', default='/data')
 DEFAULT_SQLITE_DB_PATH = os.path.join(DATA_DIR, 'sentry.db')
 
-REDIS_HOST = config('SENTRY_REDIS_HOST', default='redis')
+REDIS_HOST = config('SENTRY_REDIS_HOST', default='sentry-redis')
 REDIS_PORT = config('SENTRY_REDIS_PORT', default=6379, cast=int)
 
+#DATABASES = {
+#    'default': dj_database_url.config(default='sqlite:///{0}'.format(DEFAULT_SQLITE_DB_PATH)),
+#    'postgres': config('DATABASE_URL', default='postgres://postgres:@postgres/postgres')
+#}
+
 DATABASES = {
-    'default': dj_database_url.config(default='sqlite:///{0}'.format(DEFAULT_SQLITE_DB_PATH))
+    "default": {
+        "ENGINE": "sentry.db.postgres",
+        "NAME": "sentry",
+        "USER": "sentry",
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "89PsZXyRStOT2"),
+        "HOST": "sentry-postgres",
+        "PORT": 5432,
+    }
 }
 
-if 'postgres' in DATABASES['default']['ENGINE']:
-    DATABASES['default']['ENGINE'] = 'sentry.db.postgres'
+
+#if 'postgres' in DATABASES['default']['ENGINE']:
+#    DATABASES['default']['ENGINE'] = 'sentry.db.postgres'
 
 # You should not change this setting after your database has been created
 # unless you have altered all schemas first
@@ -28,9 +41,14 @@ SENTRY_USE_BIG_INTS = config('SENTRY_USE_BIG_INTS', default=False, cast=bool)
 
 SENTRY_SINGLE_ORGANIZATION = config('SENTRY_SINGLE_ORGANIZATION', default=True, cast=bool)
 
-CACHES = {'default': django_cache_url.config() }
-SENTRY_CACHE = 'sentry.cache.django.DjangoCache'
-
+#CACHES = {'default': django_cache_url.config() }
+#SENTRY_CACHE = 'sentry.cache.django.DjangoCache'
+# A primary cache is required for things such as processing events
+SENTRY_CACHE = "sentry.cache.redis.RedisCache"
+SENTRY_CACHE_MAX_VALUE_SIZE = None
+SENTRY_REDIS_OPTIONS = {
+        'hosts': [{'host': 'sentry-redis', 'port': 6379}]
+    }
 SENTRY_PUBLIC = config('SENTRY_PUBLIC', default=False, cast=bool)
 
 def nydus_config(from_env_var):
@@ -57,7 +75,21 @@ SENTRY_OPTIONS = {
     # You MUST configure the absolute URI root for Sentry:
     'system.url-prefix': config('SENTRY_URL_PREFIX'),
     'system.admin-email': config('SENTRY_ADMIN_EMAIL', default='root@localhost'),
+    'mail.use-tls' : config('SENTRY_EMAIL_USE_TLS', default=False, cast=bool),
+    'mail.password': config('SENTRY_EMAIL_HOST_PASSWORD', default=''),
+    'mail.username': config('SENTRY_EMAIL_HOST_USER', default=''),
+    'mail.port':     config('SENTRY_EMAIL_PORT', default=25, cast=int),
+    'system.secret-key': config('SECRET_KEY'),
+    'mail.from':  config('SENTRY_SERVER_EMAIL', default='root@localhost'),
+    'mail.host':  config('SENTRY_EMAIL_HOST', default='localhost'),
+    'mail.backend':  config('SENTRY_EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend'),
+    'redis.clusters': {'default': {
+        'hosts': [{'host': 'sentry-redis', 'port': 6379}]
+    }}
 }
+
+
+
 
 ###########
 # Queue ##
@@ -94,8 +126,7 @@ SENTRY_USE_REDIS_BUFFERS = config('SENTRY_USE_REDIS_BUFFERS', default=False, cas
 
 if SENTRY_USE_REDIS_BUFFERS:
     SENTRY_BUFFER = 'sentry.buffer.redis.RedisBuffer'
-    SENTRY_REDIS_OPTIONS = nydus_config('SENTRY_REDIS_BUFFERS')
-    SENTRY_CACHE = 'sentry.cache.redis.RedisCache'
+
 
 #######################
 # Time-series Storage #
@@ -132,23 +163,6 @@ SENTRY_WEB_OPTIONS = {
 # allows JavaScript clients to submit cross-domain error reports. Useful for local development
 SENTRY_ALLOW_ORIGIN = config('SENTRY_ALLOW_ORIGIN', default=None)
 
-#################
-# Mail Server ##
-#################
-
-# For more information check Django's documentation:
-#  https://docs.djangoproject.com/en/1.3/topics/email/?from=olddocs#e-mail-backends
-
-EMAIL_BACKEND = config('SENTRY_EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
-
-EMAIL_HOST = config('SENTRY_EMAIL_HOST', default='localhost')
-EMAIL_HOST_PASSWORD = config('SENTRY_EMAIL_HOST_PASSWORD', default='')
-EMAIL_HOST_USER = config('SENTRY_EMAIL_HOST_USER', default='')
-EMAIL_PORT = config('SENTRY_EMAIL_PORT', default=25, cast=int)
-EMAIL_USE_TLS = config('SENTRY_EMAIL_USE_TLS', default=False, cast=bool)
-
-# The email address to send on behalf of
-SERVER_EMAIL = config('SENTRY_SERVER_EMAIL', default='root@localhost')
 
 ###########
 # etc. ##
@@ -158,7 +172,7 @@ SENTRY_FEATURES['auth:register'] = config('SENTRY_ALLOW_REGISTRATION', default=F
 
 # If this file ever becomes compromised, it's important to regenerate your SECRET_KEY
 # Changing this value will result in all current sessions being invalidated
-SECRET_KEY = config('SECRET_KEY')
+#SECRET_KEY = config('SECRET_KEY')
 
 # http://twitter.com/apps/new
 # It's important that input a callback URL, even if its useless. We have no idea why, consult Twitter.

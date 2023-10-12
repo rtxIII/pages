@@ -50,7 +50,6 @@ VOLUME ["/data"]
 ADD sentry_docker_conf.py /conf/
 ADD sentry_run /usr/local/bin/
 
-ENTRYPOINT ["sentry"]
 
 #RUN pip install python-decouple dj-database-url django-cache-url django-redis django-auth-ldap
 RUN pip install -r /conf/requirements.txt 

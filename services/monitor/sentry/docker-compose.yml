@@ -9,7 +9,7 @@ services:
     networks:
       - sentry
     volumes:
-      - './data/sentry/redis/data:/data'
+      - './data/sentry/redis:/data'
   
   sentry-postgres:
     image: postgres:latest
@@ -25,15 +25,16 @@ services:
     volumes:
       - './data/sentry/postgres:/var/lib/postgresql/data'
 
-  sentry-base:
+  sentry-web:
     image: sentry:latest
-    container_name: sentry-base
-    hostname: sentry-base
+    container_name: sentry-web
+    hostname: sentry-web
     restart: always
     ports:
       - '9000:9000'
     env_file:
-      - .env
+      - env
+    command: "sentry --config /conf/sentry_docker_conf.py run web"
     depends_on:
       - sentry-redis
       - sentry-postgres
@@ -48,11 +49,11 @@ services:
     hostname: sentry-cron
     restart: always
     env_file:
-      - .env
+      - env
     depends_on:
       - sentry-redis
       - sentry-postgres
-    command: "sentry run cron"
+    command: "sentry --config /conf/sentry_docker_conf.py run cron"
     networks:
       - sentry
     volumes:
@@ -64,11 +65,11 @@ services:
     hostname: sentry-worker
     restart: always
     env_file:
-      - .env
+      - env
     depends_on:
       - sentry-redis
       - sentry-postgres
-    command: "sentry run worker"
+    command: "sentry --config /conf/sentry_docker_conf.py run worker"
     networks:
       - sentry
     volumes:
