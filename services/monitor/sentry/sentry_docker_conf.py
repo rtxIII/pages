@@ -11,10 +11,12 @@ import functools
 CONF_ROOT = os.path.dirname(__file__)
 DATA_DIR = config('SENTRY_DATA_DIR', default='/data')
 DEFAULT_SQLITE_DB_PATH = os.path.join(DATA_DIR, 'sentry.db')
-
+TIME_ZONE = 'Asia/Shanghai'
 REDIS_HOST = config('SENTRY_REDIS_HOST', default='sentry-redis')
 REDIS_PORT = config('SENTRY_REDIS_PORT', default=6379, cast=int)
-
+# This is only acceptable if we are behind some kind of reverse proxy, or a HTTP
+# load ballancer, since it will do the HOST name checking for us!
+ALLOWED_HOSTS = ['*']
 #DATABASES = {
 #    'default': dj_database_url.config(default='sqlite:///{0}'.format(DEFAULT_SQLITE_DB_PATH)),
 #    'postgres': config('DATABASE_URL', default='postgres://postgres:@postgres/postgres')
@@ -46,9 +48,7 @@ SENTRY_SINGLE_ORGANIZATION = config('SENTRY_SINGLE_ORGANIZATION', default=True, 
 # A primary cache is required for things such as processing events
 SENTRY_CACHE = "sentry.cache.redis.RedisCache"
 SENTRY_CACHE_MAX_VALUE_SIZE = None
-SENTRY_REDIS_OPTIONS = {
-        'hosts': [{'host': 'sentry-redis', 'port': 6379}]
-    }
+
 SENTRY_PUBLIC = config('SENTRY_PUBLIC', default=False, cast=bool)
 
 def nydus_config(from_env_var):
@@ -64,7 +64,7 @@ def nydus_config(from_env_var):
         _redis_hosts[r_index] = {'host': r_host_pair[0], 'port': int(r_host_pair[1])}
 
     return {
-        'hosts': _redis_hosts
+        'cluster': _redis_hosts
     }
 
 
@@ -109,45 +109,80 @@ CELERY_RESULT_SERIALIZER = config('CELERY_RESULT_SERIALIZER', default='pickle')
 CELERY_TASK_SERIALIZER = config('CELERY_TASK_SERIALIZER', default='pickle')
 CELERY_ACCEPT_CONTENT = config('CELERY_ACCEPT_CONTENT', default='pickle,json', cast=lambda x: x.split(','))
 
-####################
-# Update Buffers ##
-####################
+
+###############
+# Rate Limits #
+###############
+
+# Rate limits apply to notification handlers and are enforced per-project
+# automatically.
+
+SENTRY_RATELIMITER = 'sentry.ratelimits.redis.RedisRateLimiter'
+
+##################
+# Update Buffers #
+##################
 
 # Buffers (combined with queueing) act as an intermediate layer between the
 # database and the storage API. They will greatly improve efficiency on large
 # numbers of the same events being sent to the API in a short amount of time.
 # (read: if you send any kind of real data to Sentry, you should enable buffers)
 
-# You'll need to install the required dependencies for Redis buffers:
-#   pip install redis hiredis nydus
-#
+SENTRY_BUFFER = 'sentry.buffer.redis.RedisBuffer'
 
-SENTRY_USE_REDIS_BUFFERS = config('SENTRY_USE_REDIS_BUFFERS', default=False, cast=bool)
+##########
+# Quotas #
+##########
 
-if SENTRY_USE_REDIS_BUFFERS:
-    SENTRY_BUFFER = 'sentry.buffer.redis.RedisBuffer'
+# Quotas allow you to rate limit individual projects or the Sentry install as
+# a whole.
+
+SENTRY_QUOTAS = 'sentry.quotas.redis.RedisQuota'
 
 
-#######################
-# Time-series Storage #
-#######################
-# Sentry provides a service to store time-series data. Primarily this
-# is used to display aggregate information for events and projects, as
-# well as calculating (in real-time) the rates of events.
+########
+# TSDB #
+########
 
-SENTRY_USE_REDIS_TSDB = config('SENTRY_USE_REDIS_TSDB', default=False, cast=bool)
+# The TSDB is used for building charts as well as making things like per-rate
+# alerts possible.
 
-if SENTRY_USE_REDIS_TSDB:
-    SENTRY_TSDB = 'sentry.tsdb.redis.RedisTSDB'
-    SENTRY_TSDB_OPTIONS = nydus_config('SENTRY_REDIS_TSDBS')
+SENTRY_TSDB = 'sentry.tsdb.redis.RedisTSDB'
+
+###########
+# Digests #
+###########
+
+# The digest backend powers notification summaries.
+
+SENTRY_DIGESTS = 'sentry.digests.backends.redis.RedisBackend'
+
+
+################
+# File storage #
+################
+
+# Uploaded media uses these `filestore` settings. The available
+# backends are either `filesystem` or `s3`.
+
+SENTRY_OPTIONS['filestore.backend'] = 'filesystem'
+SENTRY_OPTIONS['filestore.options'] = {
+    'location': DATA_DIR,
+}
+
 
 ################
 # Web Server ##
 ################
 
+if config('SENTRY_USE_SSL', False):
+    SECURE_PROXY_SSL_HEADER = config('SENTRY_SECURE_PROXY_SSL_HEADER', default=None, cast=lambda x: tuple(x.split(',')) if x else None)
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
+
 # If you're using a reverse proxy, you should enable the X-Forwarded-Proto
 # and X-Forwarded-Host headers, and uncomment the following settings
-SECURE_PROXY_SSL_HEADER = config('SENTRY_SECURE_PROXY_SSL_HEADER', default=None, cast=lambda x: tuple(x.split(',')) if x else None)
 USE_X_FORWARDED_HOST = config('SENTRY_USE_X_FORWARDED_HOST', default=False, cast=bool)
 
 SENTRY_WEB_HOST = config('SENTRY_WEB_HOST', default='0.0.0.0')
@@ -200,10 +235,9 @@ BITBUCKET_CONSUMER_KEY = config('BITBUCKET_CONSUMER_KEY', default='')
 BITBUCKET_CONSUMER_SECRET = config('BITBUCKET_CONSUMER_SECRET', default='')
 
 # custom settings
-ALLOWED_HOSTS = ['*']
 LOGGING['disable_existing_loggers'] = False
 
-SENTRY_BEACON = config('SENTRY_BEACON', default=True, cast=bool)
+SENTRY_BEACON = config('SENTRY_BEACON', default=False, cast=bool)
 
 ####################
 # LDAP settings ##
@@ -299,3 +333,4 @@ if SENTRY_USE_REMOTE_USER:
         MIDDLEWARE_CLASSES += ('sentry_config.LAZY_CUSTOM_REMOTE_USER_MIDDLEWARE',)
     else:
         MIDDLEWARE_CLASSES += ('django.contrib.auth.middleware.RemoteUserMiddleware',)
+

@@ -41,7 +41,7 @@ services:
     networks:
       - sentry
     volumes:
-      - './data/sentry/sentry:/var/lib/sentry/files'
+      - './data/sentry/sentry:/data'
 
   sentry-cron:
     image: sentry:latest
@@ -57,7 +57,7 @@ services:
     networks:
       - sentry
     volumes:
-      - './data/sentry/sentry:/var/lib/sentry/files'
+      - './data/sentry/sentry:/data'
 
   sentry-worker:
     image: sentry:latest
@@ -73,7 +73,7 @@ services:
     networks:
       - sentry
     volumes:
-      - './data/sentry/sentry:/var/lib/sentry/files'
+      - './data/sentry/sentry:/data'
 
 networks:
   sentry:
