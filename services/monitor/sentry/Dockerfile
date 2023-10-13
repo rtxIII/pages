@@ -15,8 +15,15 @@ RUN apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get install -y -q l
 
 RUN mkdir -p /conf /data
 
+RUN set -x \
+    && buildDeps=" \
+        cargo g++ \
+        dirmngr \
+        gnupg \
+        wget \
+    " \
+    && apt-get update && apt-get install -y --no-install-recommends $buildDeps && rm -rf /var/lib/apt/lists/* \
 
-#RUN pip wheel --wheel-dir=/wheels -r /conf/requirements.txt 
 
 #ENV SENTRY_VERSION 9.1.2
 
