@@ -1,0 +1,12 @@
+version: '2'
+services:
+  pusher:
+    image: wisecity/prometheus-pusher
+    environment:
+      PUSH_GATEWAY: http://pushgateway.doamin.com
+    volumes:
+    - ./prometheus.yml:/etc/prom-conf/prometheus.yml
+    entrypoint:
+    - /bin/prometheus_pusher
+    - -config.file
+    - /etc/prom-conf/prometheus.yml
