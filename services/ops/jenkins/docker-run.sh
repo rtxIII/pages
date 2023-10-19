@@ -16,8 +16,8 @@ docker run --name jenkins --restart=on-failure --detach \
 
 
 
-#run docker agent on local
-docker run --init jenkins/inbound-agent -url http://jenkins-server:port -workDir=/home/jenkins/agent <secret> <agent name>
+#run docker agent on local machine
+docker run -i --rm --name agent --init jenkins/agent java -jar /usr/share/jenkins/agent.jar -jnlpUrl https://jenkins.domain.com/computer/apple%2Darm%2Dmacmini/jenkins-agent.jnlp -secret 6c52a659fd32bc1fa7bd185e8621d315c399646a6a69b005d900f27600d027db -workDir "/opt/jenkins/agent"
 
 #run docker slave on server
 docker run -i --rm  \
