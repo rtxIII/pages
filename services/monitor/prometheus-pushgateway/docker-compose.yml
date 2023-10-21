@@ -3,6 +3,8 @@ services:
   pushgateway:
     image: prom/pushgateway:v1.3.1
     privileged: true
+    environment:
+      TZ: Asia/Shanghai
     restart: "always"
     ports:
       - "9091:9091"
