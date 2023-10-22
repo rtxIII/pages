@@ -15,6 +15,9 @@ scrape_configs:
     port: 9100
 
 #- job_name: 'ContainerMetrics'
+#  basic_auth:
+#    username: "changeit"
+#    password_file: "changit"
 #  static_configs:
 #    - targets:
 #      - 'rancher-server:9108'
