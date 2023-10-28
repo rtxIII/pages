@@ -5,7 +5,8 @@ import os
 import subprocess
 
 """
-
+python3 pg-backup.py mm /home/backup/postgresql 7
+python3 pg-backup.py sentry /home/backup/postgresql 7
 """
 
 parser = argparse.ArgumentParser()

@@ -1,1 +1,2 @@
- docker exec -t postgres pg_dumpall -c -U 
+ docker exec -t postgres sudo su postgres pg_dump  DATABASE  >  /srv/postgresql/backup/DATABASE_$(date +%F).sql
+
