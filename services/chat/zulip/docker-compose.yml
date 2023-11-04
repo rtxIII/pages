@@ -1,7 +1,7 @@
 version: "2"
 services:
   database:
-    image: "zulip/zulip-postgresql:latest"
+    image: "zulip/zulip-postgresql:14"
     restart: unless-stopped
     environment:
       POSTGRES_DB: "zulip"
@@ -49,7 +49,7 @@ services:
     volumes:
       - "./redis:/data:rw"
   zulip:
-    image: "zulip/docker-zulip:7.4-0"
+    image: "rtx3/docker-zulip:7.4_arm"
     restart: unless-stopped
     build:
       context: .
@@ -65,9 +65,11 @@ services:
       DB_HOST: "database"
       DB_HOST_PORT: "5432"
       DB_USER: "zulip"
+      DB_NAME: "zulip"
       SSL_CERTIFICATE_GENERATION: "self-signed"
       SETTING_MEMCACHED_LOCATION: "memcached:11211"
       SETTING_RABBITMQ_HOST: "rabbitmq"
+      SETTING_DB_USER
       SETTING_REDIS_HOST: "redis"
       SECRETS_email_password: "123456789"
       # These should match RABBITMQ_DEFAULT_PASS, POSTGRES_PASSWORD,
