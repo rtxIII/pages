@@ -1,7 +1,7 @@
 version: "2"
 services:
   database:
-    image: "rtx3/zulip-postgresql:14_arm"
+    image: "rtx3/zulip-postgresql:14"
     restart: unless-stopped
     environment:
       POSTGRES_DB: "zulip"
@@ -69,7 +69,6 @@ services:
       SSL_CERTIFICATE_GENERATION: "self-signed"
       SETTING_MEMCACHED_LOCATION: "memcached:11211"
       SETTING_RABBITMQ_HOST: "rabbitmq"
-      SETTING_DB_USER
       SETTING_REDIS_HOST: "redis"
       SECRETS_email_password: "123456789"
       # These should match RABBITMQ_DEFAULT_PASS, POSTGRES_PASSWORD,
