@@ -11,9 +11,9 @@
       "user": "postgres",
       "password": "p0stgr3s",
       "name": "alist",
-      "db_file": "data\\data.db",
+      "db_file": "data/data.db",
       "table_prefix": "x_",
-      "ssl_mode": ""
+      "ssl_mode": "disable"
     },
     "scheme": {
       "address": "0.0.0.0",
@@ -25,11 +25,11 @@
       "unix_file": "",
       "unix_file_perm": ""
     },
-    "temp_dir": "data\\temp",
-    "bleve_dir": "data\\bleve",
+    "temp_dir": "data/temp",
+    "bleve_dir": "data/bleve",
     "log": {
       "enable": true,
-      "name": "data\\log\\log.log",
+      "name": "data/service.log",
       "max_size": 10,
       "max_backups": 5,
       "max_age": 28,
