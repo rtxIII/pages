@@ -6,7 +6,21 @@
     <description>Recent content in 教程 on rtx3</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 31 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://rtx3.com/categories/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 06 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://rtx3.com/categories/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>统一登录开源服务安装</title>
+      <link>https://rtx3.com/post/casdoor-installation-run/</link>
+      <pubDate>Mon, 06 Nov 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://rtx3.com/post/casdoor-installation-run/</guid>
+      <description>统一登录开源服务Casdoor部署 统一登录是自动运维的基础以及基石，它可以极大的减少用户的管理成本。
+常用的统一登录方式有
+AD LDAP CAS OAUTH 开源服务提供了大部分的接入方式，并且依赖简单，值得使用。
+当使用在生产环境时，需使用K8S等方式实现高可用。
+！当使用在生产环境时，将管理人员使用的登录服务与普通用户使用的登录服务隔离。
+Casdoor features Casdoor follows a front-end and back-end separate architecture, developed by Golang. It supports high concurrency, provides a web-based UI for management, and supports localization in 10+ languages. Casdoor supports third-party application login, such as GitHub, Google, QQ, and WeChat, and it supports extending third-party login with plugins. Casdoor supports authorization management based on Casbin. It supports ACL, RBAC, ABAC, and RESTful access control models.</description>
+    </item>
+    
     <item>
       <title>APP审核说明书文档</title>
       <link>https://rtx3.com/post/china-code-register-2/</link>
