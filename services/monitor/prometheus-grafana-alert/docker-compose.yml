@@ -1,19 +1,11 @@
 version: '3.7'
 
-volumes:
-    prometheus_data: {}
-    grafana_data: {}
-
-networks:
-  front-tier:
-  back-tier:
-
 services:
   prometheus:
     image: prom/prometheus:v2.36.2
     volumes:
       - ./prometheus/:/etc/prometheus/
-      - prometheus_data:/prometheus
+      - ./prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -23,8 +15,6 @@ services:
       - 9090:9090
     links:
       - alertmanager:alertmanager
-    networks:
-      - back-tier
     restart: always
 
   alertmanager:
@@ -33,8 +23,6 @@ services:
       - 9093:9093
     volumes:
       - ./alertmanager/:/etc/alertmanager/
-    networks:
-      - back-tier
     restart: always
     command:
       - '--config.file=/etc/alertmanager/config.yml'
@@ -48,11 +36,8 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - grafana_data:/var/lib/grafana
+      - ./grafana_data:/var/lib/grafana
       - ./grafana/provisioning/:/etc/grafana/provisioning/
     env_file:
       - ./grafana/config.monitoring
-    networks:
-      - back-tier
-      - front-tier
     restart: always
