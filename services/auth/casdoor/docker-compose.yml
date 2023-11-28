@@ -6,8 +6,8 @@ services:
     entrypoint: /bin/sh -c './server --createDatabase=true'
     ports:
       - "8000:8000"
-    depends_on:
-      - postgres
+#    depends_on:
+#      - postgres
     environment:
       RUNNING_IN_DOCKER: "true"
     volumes:
