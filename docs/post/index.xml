@@ -78,7 +78,10 @@ Casdoor features Casdoor follows a front-end and back-end separate architecture,
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://rtx3.com/post/ios%E4%B8%8A%E6%9E%B6/</guid>
-      <description> </description>
+      <description>Ionic ios app打包 保证capacitor版本一致：
+&amp;#34;@capacitor/android&amp;#34;: &amp;#34;^5.5.1&amp;#34;, &amp;#34;@capacitor/app&amp;#34;: &amp;#34;^5.0.6&amp;#34;, &amp;#34;@capacitor/haptics&amp;#34;: &amp;#34;^5.0.6&amp;#34;, &amp;#34;@capacitor/ios&amp;#34;: &amp;#34;^5.5.1&amp;#34;, &amp;#34;@capacitor/keyboard&amp;#34;: &amp;#34;^5.0.6&amp;#34;, &amp;#34;@capacitor/status-bar&amp;#34;: &amp;#34;^5.0.6&amp;#34; 使用npx cap add ios增加ios打包
+确保配置目录正确：
+const config: CapacitorConfig = { appId: &amp;#39;com.example.app&amp;#39;, appName: &amp;#39;Example-App&amp;#39;, webDir: &amp;#39;./.output/public&amp;#39;, bundledWebRuntime: false }; </description>
     </item>
     
   </channel>

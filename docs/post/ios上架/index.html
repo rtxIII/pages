@@ -68,7 +68,30 @@
         <h1> - Mon, Jan 1, 0001</h1>
     </div>
     <p class="lead"></p>
-    <h1 id="heading"></h1>
+    <h1 id="ionic-ios-app打包">Ionic ios app打包</h1>
+<ol>
+<li>
+<p>保证capacitor版本一致：</p>
+<pre tabindex="0"><code>    &#34;@capacitor/android&#34;: &#34;^5.5.1&#34;,
+    &#34;@capacitor/app&#34;: &#34;^5.0.6&#34;,
+    &#34;@capacitor/haptics&#34;: &#34;^5.0.6&#34;,
+    &#34;@capacitor/ios&#34;: &#34;^5.5.1&#34;,
+    &#34;@capacitor/keyboard&#34;: &#34;^5.0.6&#34;,
+    &#34;@capacitor/status-bar&#34;: &#34;^5.0.6&#34;
+</code></pre></li>
+<li>
+<p>使用npx cap add ios增加ios打包</p>
+</li>
+<li>
+<p>确保配置目录正确：</p>
+<pre tabindex="0"><code>const config: CapacitorConfig = {
+  appId: &#39;com.example.app&#39;,
+  appName: &#39;Example-App&#39;,
+  webDir: &#39;./.output/public&#39;,
+  bundledWebRuntime: false
+};
+</code></pre></li>
+</ol>
 
     <h4><a href="https://rtx3.com">Back to Home</a></h4>
 </div>
@@ -81,7 +104,7 @@
 
 &copy; 
 <a href="https://rtx3.com/" target="_blank">
-    狗日的TX
+    rtx3
 </a>
 <span id="thisyear">2023</span>
 
