@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>rtx3 文章展示</title>
+    <title>繠驖瓕RTX3 文章展示</title>
     <link>https://rtx3.com/</link>
-    <description>Recent content on rtx3 文章展示</description>
+    <description>Recent content on 繠驖瓕RTX3 文章展示</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Wed, 13 Dec 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://rtx3.com/index.xml" rel="self" type="application/rss+xml" />
@@ -26,7 +26,11 @@ cook MIT License Copyright (c) 2022 云游君 YunYouJun &amp;lt;me@yunyoujun.cn&
       <description>Ionic ios app打包 保证capacitor版本一致：
 &amp;#34;@capacitor/android&amp;#34;: &amp;#34;^5.5.1&amp;#34;, &amp;#34;@capacitor/app&amp;#34;: &amp;#34;^5.0.6&amp;#34;, &amp;#34;@capacitor/haptics&amp;#34;: &amp;#34;^5.0.6&amp;#34;, &amp;#34;@capacitor/ios&amp;#34;: &amp;#34;^5.5.1&amp;#34;, &amp;#34;@capacitor/keyboard&amp;#34;: &amp;#34;^5.0.6&amp;#34;, &amp;#34;@capacitor/status-bar&amp;#34;: &amp;#34;^5.0.6&amp;#34; 使用npx cap add ios增加ios打包
 确保配置目录正确：
-const config: CapacitorConfig = { appId: &amp;#39;com.example.app&amp;#39;, appName: &amp;#39;Example-App&amp;#39;, webDir: &amp;#39;./.output/public&amp;#39;, bundledWebRuntime: false }; App connect 中建立app</description>
+const config: CapacitorConfig = { appId: &amp;#39;com.example.app&amp;#39;, appName: &amp;#39;Example-App&amp;#39;, webDir: &amp;#39;./.output/public&amp;#39;, bundledWebRuntime: false }; App connect 中建立app
+图标工场 - 移动应用图标/启动图生成工具，一键生成所有尺寸的应用图标/启动图 (wuruihong.com) 生成appicon
+App Tools - Generate icons, images and splashscreens for android and iOS apps (appicononline.com) 启动图
+注意事项：
+最近大半年上架了 5 个 App ，也踩了不少坑，今天说一下上架的相关问题。 直接不废话，开始内容： 注意点 EULA （最终用户许可协议）。EULA 需要出现在三处地方，有一处是 App Information 页面填写的区域，另外两处分别是 1️⃣ 产品描述的文字部分，2️⃣ App 运行页面中的某处（可以放在设置/关于之类的用户看得到的地方），这是新手上架最容易出问题的地方。 内购。内购分为两种，一种是订阅，一种是非订阅（非订阅包含可消费的（比如游戏道具），和不可被消耗的（比如永久会员））。这些内购必须让用户和 Review 人员知道买了之后是做什么的，如果说明文字隔几秒切换一次说明的那种，一定要让 Review 人员知道这个地方会自己变的，订阅类型必须提供一个可以信服的“持续性的价值”。内购提交有自己的 Notes 和 附件，这个地方可以用截图拼贴说明 Free 用户和付费用户的区别。 注意每次 Review 提交的 Notes 部分，这部分留空也是可以提交 Review 的，但是 Notes 以及附件部分，是 Review 人员不需要和你再次沟通就能获取到信息的地方，这里你可以放入大概的功能说明、技术实现，总之要体现自己人畜无害但是 App 又有独特能力的地方。Review 人员如果有疑问在这里就能解决掉，就不会再次要求你提供信息。 Review 人员经常使用 iPad ，所以 iPad 上运行的时候不要一副低质量的状态。 避免一些歧义词，比如我就提交过“锁屏页面也能使用”之类的文字，想表达锁屏页面的实时活动可以用，结果 Review 人员问锁屏小组件里没有你的东西。 如果只有一个页面且只能展示信息，就会特别难上架，Apple 会觉得你这个服务做成 App 没意义，这种情况建议重新设计功能，添加各种自定义的设置，添加用户的收藏夹之类的有用的功能。 每次提交 Review 都是有可能变更 Review 人员的，所以如果被拒绝了，一定要在回复被拒信息的对话页面重新说明清楚。 善用 ChatGPT 或者类似服务翻译和整理自己想说的内容，说来说去就是为了减少歧义 </description>
     </item>
     
     <item>
@@ -142,6 +146,15 @@ Casdoor features Casdoor follows a front-end and back-end separate architecture,
       <description>Written in Go, Hugo is an open source static site generator available under the Apache Licence 2.0. Hugo supports TOML, YAML and JSON data file types, Markdown and HTML content files and uses shortcodes to add rich content. Other notable features are taxonomies, multilingual mode, image processing, custom output formats, HTML/CSS/JS minification and support for Sass SCSS workflows.
 Hugo makes use of a variety of open source projects including:
 https://github.com/yuin/goldmark https://github.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://rtx3.com/post/privacy-policy-cook/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://rtx3.com/post/privacy-policy-cook/</guid>
+      <description></description>
     </item>
     
     <item>
