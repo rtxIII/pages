@@ -1,0 +1,30 @@
+name: Flush cdn when push doc
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/push-doc.yml
+
+jobs:
+  python_flush_cnd:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Flush CDN
+        env:
+          SECRET_ID: ${{ secrets.SecretId }}      # 传入鉴权信息
+          SECRET_KEY: ${{ secrets.SecretKey }}
+        run: |                                    # 安装 sdk 并运行刷新脚本
+          pip install --upgrade tencentcloud-sdk-python
+          python flush-dns.py -i $SECRET_ID -k $SECRET_KEY
+  barks:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Call Bark
+        env:
+          BARKURL: ${{ secrets.BARKURL }}      # 传入鉴权信息  :
+          TITLE: '${{ github.repository }}已推送。'
+          BODY: ${{ github.event.head_commit.message }}
+        run: |
+          curl -X POST $BARKURL/$TITLE/$BODY
