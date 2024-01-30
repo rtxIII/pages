@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Devops on 繠驖瓕III 文章展示</title>
+    <link>https://rtx3.com/devops/</link>
+    <description>Recent content in Devops on 繠驖瓕III 文章展示</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language><atom:link href="https://rtx3.com/devops/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title></title>
+      <link>https://rtx3.com/devops/cd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://rtx3.com/devops/cd/</guid>
+      <description>持续交付 渐进式交付 渐进式交付是高级部署模式（如金丝雀，功能标记和 A/B 测试）的总称。通过给予应用程序开发人员和 SRE 团队对爆炸半径的细粒度控制，渐进交付技术被用来降低在生产中引入新软件版本的风险。
+使用金丝雀的好处是能够在生产环境中使用发现问题的安全回滚策略对新版本进行容量测试。通过缓慢增加负载，您可以监视和捕获有关新版本如何影响生产环境的指标</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://rtx3.com/devops/ci/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://rtx3.com/devops/ci/</guid>
+      <description>持续集成 持续集成是系统持续提供可交付版本软件并且保证软件质量的一种开发方法。
+它主张开发人员尽可能早、快地将各自开发的代码集成起来，每次集成都通过自动化的构建（包括静态代码扫描、编译、自动化测试、发布等）来进行质量验证，从而尽可能早地发现集成错误，避免项目延期以及不可预测的质量风险等。
+持续集成系统的价值在于完全自动化构建和自动化测试，在微服务持续集成中，包含的关键要素为源代码库、持续集成机系统、自动化测试系统。
+一个典型的持续集成过程为：开发团队基于源代码库（如 Git）建立持续集成系统，当团队成员对源代码就行更新并提交到源码库之后，持续集成系统先从版本控制服务器下载更新后的代码，调用自动化编译脚本进行编译，并运行开发人员预先编写的自动化测试脚本，最后将测试结果生成报告反馈给开发团队，开发团队根据反馈结果进行下一轮的代码迭代更新，并触发新一轮的持续集成过程。
+GitLab CI 是为 Gitlab 提供持续集成的一整套系统，
+流水线(Pipeline) 流水线是一个分成不同阶段（Stage）的作业（Job）的集合。一次 Pipeline 其实相当于一次构建任务，里面可以包含多个流程，如安装依赖、运行测试、编译、部署测试服务器、部署生产服务器等流程。任何提交或者 Merge Request 的合并都可以触发 Pipeline。
+Stages Stages 表示构建阶段，说白了就是上面提到的流程。 我们可以在一次 Pipeline 中定义多个 Stages，这些 Stages 会有以下特点：
+所有 Stages 会按照顺序运行，即当一个 Stage 完成后，下一个 Stage 才会开始 只有当所有 Stages 完成后，该构建任务 (Pipeline) 才会成功 如果任何一个 Stage 失败，那么后面的 Stages 不会执行，该构建任务 (Pipeline) 失败 Jobs Jobs 表示构建工作，表示某个 Stage 里面执行的工作。 我们可以在 Stages 里面定义多个 Jobs，这些 Jobs 会有以下特点：
+相同 Stage 中的 Jobs 会并行执行 相同 Stage 中的 Jobs 都执行成功时，该 Stage 才会成功 如果任何一个 Job 失败，那么该 Stage 失败，即该构建任务 (Pipeline) 失败 GitLab Runner 理解了上面的基本概念之后，还有一个问题，由谁来执行这些构建任务呢？ 答案就是 GitLab Runner ！</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://rtx3.com/devops/cicd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://rtx3.com/devops/cicd/</guid>
+      <description>GitOps 下的 CI/CD 流程 CI/CD 是架构中非常重要的一个组件，在云原生时代，依托于容器化持续集成，改变了以往应用通过 Jar、war 包形式的部署方式，转而制作成镜像，通过集成 GitLab CI、镜像仓库、Kubernetes 、Argo CD 等各类效率、流程系统，对纳管集群进行镜像发布、应用验证、升级，进而实现了自动化和监控贯穿于应用迭代的整个生命周期。
+什么是 CI/CD CI（Continuous Intergration，持续集成），强调开发人员不断进行代码提交、单元测试、性能测试、代码扫描等操作，根据测试结果，发现问题及时回滚，并进行反馈。
+持续部署 （Continuous Deployment，CD）或者说持续交付（Continuous Delivery，CD），是指在构建和测试完成通过后，通过一系列系统化手段让最新的功能能够尽快地更新到生产环境，并通过运营反馈需求，促进产品进一步迭代。持续部署需要保障整个过程的平滑和安全，通常借助蓝绿发布、金丝雀发布确保过程中的平滑、安全以及降低部署过程出错的概率。
+总结来说，持续集成、持续部署与持续交付，是一种通过在应用开发阶段引入自动化，实现频繁交付应用的方法。
+GitOps 下的 CI/CD 流程 鉴于 GitOps 的设计哲学，我们看一下 GitOps 下的 CI/CD 流程，如下图所示：
+![image](https://ocf.rtx3.com/api/raw?path=/3/assets/devops/gitops-workflow.webp
+首先，团队成员都可以 fork 仓库对配置进行更改，然后提交 Pull Request。 接下来运行 CI 流水线，进行校验配置文件、执行自动化测试、构建 OCI 镜像、推送到镜像仓库等。 CI 流水线执行完成后，拥有合并代码权限的人会将 Pull Request 合并到主分支。 最后运行 CD 流水线，结合 CD 工具（例如 Argo CD）将变更自动应用到目标集群中。 整个过程中完全自动化且操作透明，通过多人协作和自动化测试来保证了基础设施声明的健壮性。另外由于基础设置配置都存储在 Git 仓库中，当应用出现故障时，也可快速地进行版本回退。
+CI/CD 中的工具链 在 CI/CD 工程实施中，Jenkins 和 Gitlab 已成为流程中的核心工具，其中 Jenkins 。现如今的 CI/CD 中，集合容器技术、镜像仓库、容器编排系统等各类工具链，已成为企业、各类组织效率提升必不可少的基础支撑。</description>
+    </item>
+    
+  </channel>
+</rss>

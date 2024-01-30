@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <title>繠驖瓕III 文章展示</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="theme-color" content="#000084" />
+    <link rel="icon" href="https://rtx3.com/favicon.ico">
+    <link rel="canonical" href="https://rtx3.com">
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "jt8n7op18g");
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1654491404703711"
+    crossorigin="anonymous"></script>
+    
+    
+</head>
+
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"></button>
+            <a class="brand" href="https://rtx3.com">繠驖瓕III 文章展示</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    
+                    
+                        
+                            <li>
+                                <a href="/product/">
+                                    
+                                    <span>Data Product</span>
+                                </a>
+                            </li>
+                        
+                    
+                        
+                            <li>
+                                <a href="/post/">
+                                    
+                                    <span>All posts</span>
+                                </a>
+                            </li>
+                        
+                    
+                        
+                            <li>
+                                <a href="/search/">
+                                    
+                                    <span>Search Site</span>
+                                </a>
+                            </li>
+                        
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav><div id="content" class="container">
+
+<div class="row-fluid navmargin">
+    <div class="page-header">
+        <h1> - Mon, Jan 1, 0001</h1>
+    </div>
+    <p class="lead"></p>
+    <h1 id="持续集成">持续集成</h1>
+<p>持续集成是系统持续提供可交付版本软件并且保证软件质量的一种开发方法。</p>
+<p>它主张开发人员尽可能早、快地将各自开发的代码集成起来，每次集成都通过自动化的构建（包括静态代码扫描、编译、自动化测试、发布等）来进行质量验证，从而尽可能早地发现集成错误，避免项目延期以及不可预测的质量风险等。</p>
+<p>持续集成系统的价值在于完全自动化构建和自动化测试，在微服务持续集成中，包含的关键要素为源代码库、持续集成机系统、自动化测试系统。</p>
+<p>一个典型的持续集成过程为：开发团队基于源代码库（如 Git）建立持续集成系统，当团队成员对源代码就行更新并提交到源码库之后，持续集成系统先从版本控制服务器下载更新后的代码，调用自动化编译脚本进行编译，并运行开发人员预先编写的自动化测试脚本，最后将测试结果生成报告反馈给开发团队，开发团队根据反馈结果进行下一轮的代码迭代更新，并触发新一轮的持续集成过程。</p>
+<p>GitLab CI 是为 Gitlab 提供持续集成的一整套系统，</p>
+<h2 id="流水线pipeline">流水线(Pipeline)</h2>
+<p>流水线是一个分成不同阶段（Stage）的作业（Job）的集合。一次 Pipeline 其实相当于一次构建任务，里面可以包含多个流程，如安装依赖、运行测试、编译、部署测试服务器、部署生产服务器等流程。任何提交或者 Merge Request 的合并都可以触发 Pipeline。</p>
+<h2 id="stages">Stages</h2>
+<p>Stages 表示构建阶段，说白了就是上面提到的流程。 我们可以在一次 Pipeline 中定义多个 Stages，这些 Stages 会有以下特点：</p>
+<ul>
+<li>所有 Stages 会按照顺序运行，即当一个 Stage 完成后，下一个 Stage 才会开始</li>
+<li>只有当所有 Stages 完成后，该构建任务 (Pipeline) 才会成功</li>
+<li>如果任何一个 Stage 失败，那么后面的 Stages 不会执行，该构建任务 (Pipeline) 失败</li>
+</ul>
+<h2 id="jobs">Jobs</h2>
+<p>Jobs 表示构建工作，表示某个 Stage 里面执行的工作。 我们可以在 Stages 里面定义多个 Jobs，这些 Jobs 会有以下特点：</p>
+<ul>
+<li>相同 Stage 中的 Jobs 会并行执行</li>
+<li>相同 Stage 中的 Jobs 都执行成功时，该 Stage 才会成功</li>
+<li>如果任何一个 Job 失败，那么该 Stage 失败，即该构建任务 (Pipeline) 失败</li>
+</ul>
+<h2 id="gitlab-runner">GitLab Runner</h2>
+<p>理解了上面的基本概念之后，还有一个问题，由谁来执行这些构建任务呢？ 答案就是 GitLab Runner ！</p>
+<p>GitLab CI 最大的作用是管理各个项目的构建状态，因此，运行构建任务这种浪费资源的事情就交给 GitLab Runner 来做拉！ 因为 GitLab Runner 可以安装到不同的机器上，所以在构建任务运行期间并不会影响到 GitLab 的性能</p>
+<h2 id="gitlab-ciyml">.gitlab-ci.yml</h2>
+<p>配置好 Runner 之后，我们要做的事情就是在项目根目录中添加 .gitlab-ci.yml 文件。 当我们添加了 .gitlab-ci.yml 文件后，每次提交代码或者合并 MR 都会自动运行构建任务。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span># 定义 stages
+</span></span><span style="display:flex;"><span>stages:
+</span></span><span style="display:flex;"><span>  - build
+</span></span><span style="display:flex;"><span>  - test
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 定义 job
+</span></span><span style="display:flex;"><span>job1:
+</span></span><span style="display:flex;"><span>  stage: test
+</span></span><span style="display:flex;"><span>  script:
+</span></span><span style="display:flex;"><span>    - echo &#34;I am job1&#34;
+</span></span><span style="display:flex;"><span>    - echo &#34;I am in test stage&#34;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 定义 job
+</span></span><span style="display:flex;"><span>job2:
+</span></span><span style="display:flex;"><span>  stage: build
+</span></span><span style="display:flex;"><span>  script:
+</span></span><span style="display:flex;"><span>    - echo &#34;I am job2&#34;
+</span></span><span style="display:flex;"><span>    - echo &#34;I am in build stage&#34;
+</span></span></code></pre></div><p>用 stages 关键字来定义 Pipeline 中的各个构建阶段，然后用一些非关键字来定义 jobs。 每个 job 中可以可以再用 stage 关键字来指定该 job 对应哪个 stage。 job 里面的 script 关键字是最关键的地方了，也是每个 job 中必须要包含的，它表示每个 job 要执行的命令。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>I am job2
+</span></span><span style="display:flex;"><span>I am in build stage
+</span></span><span style="display:flex;"><span>I am job1
+</span></span><span style="display:flex;"><span>I am in test stage
+</span></span></code></pre></div>
+    <h4><a href="https://rtx3.com">Back to Home</a></h4>
+</div>
+
+
+        </div><footer class="container">
+    <hr class="soften">
+    <p>
+    <a href="https://beian.miit.gov.cn/">沪ICP备15006974号</a> | 
+
+&copy; 
+<a href="mailto:r@rtx3.com" target="_blank">
+    rtx3
+</a>
+<span id="thisyear">2024</span>
+
+    | Provide IOS market registration and translation services in China.
+
+
+</p>
+    <p class="text-center">
+        
+        <a href="rtx3_com">Twitter</a> 
+        
+        <a href="https://github.com/rtx3">GitHub</a> 
+        
+    </p>
+</footer>
+
+</body><link rel="stylesheet" href="/css/bootstrap.css">
+<link rel="stylesheet" href="/css/bootstrap-responsive.css">
+<link rel="stylesheet" href="/css/style.css">
+
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap-386.js"></script>
+<script src="/js/bootstrap-transition.js"></script>
+<script src="/js/bootstrap-alert.js"></script>
+<script src="/js/bootstrap-modal.js"></script>
+<script src="/js/bootstrap-dropdown.js"></script>
+<script src="/js/bootstrap-scrollspy.js"></script>
+<script src="/js/bootstrap-tab.js"></script>
+<script src="/js/bootstrap-tooltip.js"></script>
+<script src="/js/bootstrap-popover.js"></script>
+<script src="/js/bootstrap-button.js"></script>
+<script src="/js/bootstrap-collapse.js"></script>
+<script src="/js/bootstrap-carousel.js"></script>
+<script src="/js/bootstrap-typeahead.js"></script>
+<script src="/js/bootstrap-affix.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.0/fuse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
+<script src="https://rtx3.com/js/search.js"></script>
+<script>
+    _386 = { 
+        fastLoad: false ,
+        onePass: false , 
+        speedFactor: 2 
+    };
+
+    
+    function ThisYear() {
+        document.getElementById('thisyear').innerHTML = new Date().getFullYear();
+    };
+</script>
+
+</html>

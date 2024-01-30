@@ -3,18 +3,57 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://rtx3.com/</loc>
-    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
+    <lastmod>2024-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://rtx3.com/categories/</loc>
+    <lastmod>2024-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://rtx3.com/term/cd/</loc>
+    <lastmod>2024-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://rtx3.com/term/ci/</loc>
+    <lastmod>2024-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://rtx3.com/post/contentdev/</loc>
+    <lastmod>2024-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://rtx3.com/tags/devops/</loc>
+    <lastmod>2024-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://rtx3.com/categories/devops/</loc>
+    <lastmod>2024-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://rtx3.com/post/d/devops-cd/</loc>
+    <lastmod>2024-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://rtx3.com/post/d/devops-ci/</loc>
+    <lastmod>2024-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://rtx3.com/post/</loc>
+    <lastmod>2024-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://rtx3.com/post/privacy-policy-cook/</loc>
+    <lastmod>2024-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://rtx3.com/tags/</loc>
+    <lastmod>2024-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://rtx3.com/term/</loc>
+    <lastmod>2024-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://rtx3.com/post/d/devops-iac/</loc>
+    <lastmod>2024-01-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://rtx3.com/post/d/devops-gitops/</loc>
+    <lastmod>2024-01-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://rtx3.com/post/d/devops-docker-build/</loc>
+    <lastmod>2024-01-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://rtx3.com/post/acknowledgements-cook/</loc>
     <lastmod>2023-12-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://rtx3.com/post/ios%E4%B8%8A%E6%9E%B6/</loc>
-    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://rtx3.com/post/</loc>
-    <lastmod>2023-12-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://rtx3.com/term/</loc>
     <lastmod>2023-12-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://rtx3.com/term/%E4%B8%AD%E5%9B%BD/</loc>
@@ -27,12 +66,6 @@
     <lastmod>2023-11-06T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://rtx3.com/tags/ai%E6%9C%8D%E5%8A%A1/</loc>
-    <lastmod>2023-11-06T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://rtx3.com/categories/</loc>
-    <lastmod>2023-11-06T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://rtx3.com/tags/</loc>
     <lastmod>2023-11-06T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://rtx3.com/post/nginx-proxy-ai/</loc>
@@ -85,10 +118,6 @@
   </url><url>
     <loc>https://rtx3.com/product/</loc>
     <lastmod>2019-02-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://rtx3.com/post/contentdev/</loc>
-  </url><url>
-    <loc>https://rtx3.com/post/privacy-policy-cook/</loc>
   </url><url>
     <loc>https://rtx3.com/tags/index/</loc>
   </url><url>
