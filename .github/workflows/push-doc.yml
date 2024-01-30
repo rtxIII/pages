@@ -16,7 +16,7 @@ jobs:
           SECRET_ID: ${{ secrets.SecretId }}      # 传入鉴权信息
           SECRET_KEY: ${{ secrets.SecretKey }}
         run: |                                    # 安装 sdk 并运行刷新脚本
-          pip install --upgrade tencentcloud-sdk-python
+          pip install --upgrade tencentcloud-sdk-python && cd workflows
           python flush-dns.py -i $SECRET_ID -k $SECRET_KEY
   barks:
     runs-on: ubuntu-22.04
@@ -27,4 +27,4 @@ jobs:
           TITLE: '${{ github.repository }}已推送。'
           BODY: ${{ github.event.head_commit.message }}
         run: |
-          curl -X POST $BARKURL/$TITLE/$BODY
+          curl -X POST $BARKURL/$TITLE/$BODY?icon=https://pngimg.com/uploads/github/github_PNG22.png
