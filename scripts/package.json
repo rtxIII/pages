@@ -1,0 +1,15 @@
+{
+  "name": "scripts",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "index": "node ./index.mjs"
+  },
+  "dependencies": {
+    "googleapis": "131.0.0",
+    "sitemapper": "3.2.8"
+  },
+  "prettier": {
+    "printWidth": 120
+  }
+}
