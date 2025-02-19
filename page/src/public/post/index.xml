@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on 繠驖瓕III 文章展示</title>
+    <link>https://rtx3.com/post/</link>
+    <description>Recent content in Posts on 繠驖瓕III 文章展示</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 30 Jan 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://rtx3.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ContentDev</title>
+      <link>https://rtx3.com/post/contentdev/</link>
+      <pubDate>Tue, 30 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://rtx3.com/post/contentdev/</guid>
+      <description>保留链接 **【**手册】封标技巧攻略
+Comfy教程
+https://ahrefs.com/keywords-explorer 关键词检测
+https://ber4x592s7.feishu.cn/wiki/KjX9w0c3HipMPjkw6x6c7vLRnQc?fromScene=spaceOverview AI Agent
+https://yunyinghui.feishu.cn/docx/Q66RdH4lNoLW7nxSjXBcjcOtnod 互联网运营</description>
+    </item>
+    
+    <item>
+      <title>Devops-持续交付CD</title>
+      <link>https://rtx3.com/post/d/devops-cd/</link>
+      <pubDate>Tue, 30 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://rtx3.com/post/d/devops-cd/</guid>
+      <description>持续交付 渐进式交付 渐进式交付是高级部署模式（如金丝雀，功能标记和 A/B 测试）的总称。通过给予应用程序开发人员和 SRE 团队对爆炸半径的细粒度控制，渐进交付技术被用来降低在生产中引入新软件版本的风险。
+使用金丝雀的好处是能够在生产环境中使用发现问题的安全回滚策略对新版本进行容量测试。通过缓慢增加负载，您可以监视和捕获有关新版本如何影响生产环境的指标
+GitOps 下的 CI/CD 流程 CI/CD 是架构中非常重要的一个组件，在云原生时代，依托于容器化持续集成，改变了以往应用通过 Jar、war 包形式的部署方式，转而制作成镜像，通过集成 GitLab CI、镜像仓库、Kubernetes 、Argo CD 等各类效率、流程系统，对纳管集群进行镜像发布、应用验证、升级，进而实现了自动化和监控贯穿于应用迭代的整个生命周期。
+什么是 CI/CD CI（Continuous Intergration，持续集成），强调开发人员不断进行代码提交、单元测试、性能测试、代码扫描等操作，根据测试结果，发现问题及时回滚，并进行反馈。
+持续部署 （Continuous Deployment，CD）或者说持续交付（Continuous Delivery，CD），是指在构建和测试完成通过后，通过一系列系统化手段让最新的功能能够尽快地更新到生产环境，并通过运营反馈需求，促进产品进一步迭代。持续部署需要保障整个过程的平滑和安全，通常借助蓝绿发布、金丝雀发布确保过程中的平滑、安全以及降低部署过程出错的概率。
+总结来说，持续集成、持续部署与持续交付，是一种通过在应用开发阶段引入自动化，实现频繁交付应用的方法。
+GitOps 下的 CI/CD 流程 鉴于 GitOps 的设计哲学，我们看一下 GitOps 下的 CI/CD 流程，如下图所示：
+![image](https://ocf.rtx3.com/api/raw?path=/3/assets/devops/gitops-workflow.webp
+首先，团队成员都可以 fork 仓库对配置进行更改，然后提交 Pull Request。 接下来运行 CI 流水线，进行校验配置文件、执行自动化测试、构建 OCI 镜像、推送到镜像仓库等。 CI 流水线执行完成后，拥有合并代码权限的人会将 Pull Request 合并到主分支。 最后运行 CD 流水线，结合 CD 工具（例如 Argo CD）将变更自动应用到目标集群中。 整个过程中完全自动化且操作透明，通过多人协作和自动化测试来保证了基础设施声明的健壮性。另外由于基础设置配置都存储在 Git 仓库中，当应用出现故障时，也可快速地进行版本回退。
+CI/CD 中的工具链 在 CI/CD 工程实施中，Jenkins 和 Gitlab 已成为流程中的核心工具，其中 Jenkins 。现如今的 CI/CD 中，集合容器技术、镜像仓库、容器编排系统等各类工具链，已成为企业、各类组织效率提升必不可少的基础支撑。</description>
+    </item>
+    
+    <item>
+      <title>Devops-持续交付CI</title>
+      <link>https://rtx3.com/post/d/devops-ci/</link>
+      <pubDate>Tue, 30 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://rtx3.com/post/d/devops-ci/</guid>
+      <description>持续集成 持续集成是系统持续提供可交付版本软件并且保证软件质量的一种开发方法。
+它主张开发人员尽可能早、快地将各自开发的代码集成起来，每次集成都通过自动化的构建（包括静态代码扫描、编译、自动化测试、发布等）来进行质量验证，从而尽可能早地发现集成错误，避免项目延期以及不可预测的质量风险等。
+持续集成系统的价值在于完全自动化构建和自动化测试，在微服务持续集成中，包含的关键要素为源代码库、持续集成机系统、自动化测试系统。
+一个典型的持续集成过程为：开发团队基于源代码库（如 Git）建立持续集成系统，当团队成员对源代码就行更新并提交到源码库之后，持续集成系统先从版本控制服务器下载更新后的代码，调用自动化编译脚本进行编译，并运行开发人员预先编写的自动化测试脚本，最后将测试结果生成报告反馈给开发团队，开发团队根据反馈结果进行下一轮的代码迭代更新，并触发新一轮的持续集成过程。
+GitLab CI 是为 Gitlab 提供持续集成的一整套系统，
+流水线(Pipeline) 流水线是一个分成不同阶段（Stage）的作业（Job）的集合。一次 Pipeline 其实相当于一次构建任务，里面可以包含多个流程，如安装依赖、运行测试、编译、部署测试服务器、部署生产服务器等流程。任何提交或者 Merge Request 的合并都可以触发 Pipeline。
+Stages Stages 表示构建阶段，说白了就是上面提到的流程。 我们可以在一次 Pipeline 中定义多个 Stages，这些 Stages 会有以下特点：
+所有 Stages 会按照顺序运行，即当一个 Stage 完成后，下一个 Stage 才会开始 只有当所有 Stages 完成后，该构建任务 (Pipeline) 才会成功 如果任何一个 Stage 失败，那么后面的 Stages 不会执行，该构建任务 (Pipeline) 失败 Jobs Jobs 表示构建工作，表示某个 Stage 里面执行的工作。 我们可以在 Stages 里面定义多个 Jobs，这些 Jobs 会有以下特点：
+相同 Stage 中的 Jobs 会并行执行 相同 Stage 中的 Jobs 都执行成功时，该 Stage 才会成功 如果任何一个 Job 失败，那么该 Stage 失败，即该构建任务 (Pipeline) 失败 GitLab Runner 理解了上面的基本概念之后，还有一个问题，由谁来执行这些构建任务呢？ 答案就是 GitLab Runner ！</description>
+    </item>
+    
+    <item>
+      <title>Privacy-Policy-COOK</title>
+      <link>https://rtx3.com/post/privacy-policy-cook/</link>
+      <pubDate>Tue, 30 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://rtx3.com/post/privacy-policy-cook/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Devops-持续交付1IaC</title>
+      <link>https://rtx3.com/post/d/devops-iac/</link>
+      <pubDate>Mon, 29 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://rtx3.com/post/d/devops-iac/</guid>
+      <description>基础设施即代码 GitOps 一个最基础的工作是基础设施代码化。
+基础设施即代码（Infrastructure as Code, IaC），顾名思义，表示使用代码（而非手动流程）来定义基础设施，研发人员可以像对待应用软件一样对待基础设施， 包括对网络配置、虚拟机、负载平衡、连接拓扑等等都使用高级语言进行编码。
+对对应用开发所依靠的环境进行标准化后，DevOps 就能够启动、拆解和扩展基础设施，以响应不断波动的需求，这样的敏捷性能够造就更快、更简单的软件开发、测试和部署。
+IaC 的优势 置备基础架构历来是一个耗时且成本高昂的手动过程，随着云计算的发展，基础架构的管理已逐渐转移到了虚拟化、容器和云计算，在基础架构之上，有数以百计、千计的服务不断地更新迭代，另外基础架构本身也不断地使用、扩展和移除。在这种状态下，如果没有相应的 IaC 管理实践，大规模的基础架构维护也会变得越来越困难。
+使用 IaC 可以提高一致性并减少错误和手动配置，它的优势特点如下：
+可以创建包含基础架构规范的声明式配置文件，从而便于编辑和分发配置。 可以确保每次配置的环境都完全相同。 可以进行版本控制，所有的变更都会被记录下来，方便溯源。 可以将基础设施划分为若干个模块化组件，并通过自动化以不同的方式进行组合。 广义上的 IaC 不仅仅只关于基础设施，还包含了网络、安全、配置等等，所以 IaC 又叫 X as Code。
+IaC 工具选型 大部分的公有云已经提供了良好的 API 和相应的 IaC 生态，而对于使用混合云的企业，还是需要一些投入将底层基础设施 IaC 化。
+云上资源 IaC 化，比较典型的工具是 Terraform。Terraform 可以说是 IaC 概念最早期的奠基项目，生态最为完善，社区也非常活跃，背后也有非常成熟的商业上市公司 HashiCorp 进行支持。Terraform 抽象了 HCL 这门相对简单易学的 DSL 作为资源描述语言，实践中配合 Terragrunt 这个工具（底层基于 Terraform 进行封装）能更好地写出相对紧凑简洁的代码。
+另外一个 Crossplane 。基于 Kubernetes 并通过封装好的形形色色的 CRDs 来操作多云资源。
+除以上云资源 IaC 化外，还有应用配置的 IaC，现在大部分企业选择 Kubernetes 作为 PaaS 的基座，行于 Kubernetes 之上的所有资源天然就已经被代码化了，其形式就是资源声明式 YAML 配置，但这种方式，过于简单，局限性过大。 从组织的角度来看，需要有对 yaml 更抽象的部署封装，这就是 Kustomize 和 Helm 。</description>
+    </item>
+    
+    <item>
+      <title>Devops-持续交付Gitops</title>
+      <link>https://rtx3.com/post/d/devops-gitops/</link>
+      <pubDate>Sun, 28 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://rtx3.com/post/d/devops-gitops/</guid>
+      <description>什么是 GitOps GitOps = IaC + Git+ CI/CD，即基于 IaC 版本化 CI/CD，它的核心是使用 Git 仓库来管理基础设施和应用的配置，并且以 Git 仓库作为基础设置和应用的单一事实来源。GitoOps 重新定义了云原生场景下的 CI/CD 流程。 开发、运维团队以 Git 版本控制，作为中心不可变状态声明，结合 CI/CD 流程中代码审查、自动测试和交付部署，从而实现云原生场景下运维体系的最佳实践。
+GitOps 是 DevOps 文化的一种工程实践，它重新定义了云原生场景下的持续交付模型。GitOps 下的整个运维体系使用声明式描述，并使用 Git 类似的版本控制系统对基础设施、应用配置等进行跟踪管理，系统任何变更在 Git 版本的控制下更加便捷地进行跟踪。
+GitOps 以目标为导向，使用 Git 来维护系统的期望状态，结合 CI/CD 流程中的工具，如 Helm、ArgoCD 等，提高了生产力、安全性和合规性，以及升应用交付的效率和质量保证。
+GitOps 的设计理念 GitOps 本质上 DevOps 文化中的工程实践，而非某项具体的技术或项目，结合当今流行的使用形式，可将 GitOps 系统简单地理解为以下几大特点：
+代码化描述基础设施和应用的部署状态 对于应用的基础设置资源、应用配置和状态的维护，原则都是应是使用代码化的方式进行声明式描述。只有将各类手动配置的工作代码化，我们才能使用 Git 仓库的形式来管理基础设施和应用的部署。
+对大规模应用管理的运维效率和可维护性的关键基础是 IaC （Infrastructure as Code），基础设置无法进行 IaC，GitOps 也就无从谈起。
+使用 Git 的语义来管理代码化后的配置代码 基础设施代码化后面临着管理问题，而 GitOps 顾名思义，采用 Git 语义来管理这部分代码，主要有：
+IaC 代码存储于 Git 仓库中 基于分支模式来管理代码版本 开发人员使用 Pull Request 来提交 IaC 变更 更高级的管理人员，对这部分变更进行 Code Review，合规之后进行 Merge 到主版本，进而应用到线上环境， 而当线上环境出现问题时，再基于 Git 历史进行回退。</description>
+    </item>
+    
+    <item>
+      <title>Devops-持续交付容器镜像</title>
+      <link>https://rtx3.com/post/d/devops-docker-build/</link>
+      <pubDate>Sat, 27 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://rtx3.com/post/d/devops-docker-build/</guid>
+      <description>构建镜像 我们先前面讲述过，容器镜像实际上就是利用 UnionFs 实现的一个特殊文件系统。那么容器镜像的构建就是基于底层 rootfs （基础镜像）定制上层配置、文件、依赖等信息。我们把每一层修改、操作命令都写入一个脚本，用这个脚本来构建、定制镜像，这个脚本就是 Dockerfile。
+有了 Dockerfile 之后, 就可以制定自己的镜像规则，在 Dockerfile 上添加或者修改指令, 就可生成镜像产物。
+docker 镜像构建步骤如下：
+编写 Dockerfile 文件 docker build 命令构建镜像 docker run 按照镜像运行容器实例。如下图所示： 1. Dockerfile 常用指令 通过 Dockerfile 构建镜像时，Docker 安装顺序读取 Dockerfile 内的指令，并解析出所有的指令。这些指令被分成多个层，每个层都对应着一个镜像层。
+下表列举了常用的 Dockerfile 指令。
+指令 用途 FROM 指定构建镜像的基础镜像 MAINTAINER 镜像的维护信息 RUN 构建镜像时运行的指令 COPY 复制文件或目录到镜像内（只能在构建镜像的主机上读取资源） ADD 支持从远程服务器读取资源，复制到镜像内，同时支持自动解压 tar, zip 等压缩文件 ENV 环境变量设置 USER 指定运行 RUN、CMD COPY 等指令的用户 EXPOSE 容器运行的端口 WORKDIR 指定运行 RUN、CMD、COPY 指令的工作目录 VOLUME 设置挂载卷 CMD 启动后运行的指令 2. 镜像构建 熟悉常用的 Dockerfile 指令之后，我们可以开始尝试通过 Dockerfile 构建一个 Nginx 镜像。</description>
+    </item>
+    
+    <item>
+      <title>Acknowledgements-COOK</title>
+      <link>https://rtx3.com/post/acknowledgements-cook/</link>
+      <pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://rtx3.com/post/acknowledgements-cook/</guid>
+      <description>Acknowledgements The iOS version of PickCook depends on the following open source components:
+cook MIT License Copyright (c) 2022 云游君 YunYouJun &amp;lt;me@yunyoujun.cn&amp;gt; Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &amp;#34;Software&amp;#34;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</description>
+    </item>
+    
+    <item>
+      <title>IOS上架</title>
+      <link>https://rtx3.com/post/ios%E4%B8%8A%E6%9E%B6/</link>
+      <pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://rtx3.com/post/ios%E4%B8%8A%E6%9E%B6/</guid>
+      <description>Ionic ios app打包 安装capacitor， 注意起始页面必须在/ 4747 pnpm i @capacitor/core 4748 pnpm i -D @capacitor/cli 4749 pnpm i @capacitor/ios pnpm 和vite如有冲突，通过npm安装依赖 保证capacitor版本一致：
+&amp;#34;@capacitor/android&amp;#34;: &amp;#34;^5.5.1&amp;#34;, &amp;#34;@capacitor/app&amp;#34;: &amp;#34;^5.0.6&amp;#34;, &amp;#34;@capacitor/haptics&amp;#34;: &amp;#34;^5.0.6&amp;#34;, &amp;#34;@capacitor/ios&amp;#34;: &amp;#34;^5.5.1&amp;#34;, &amp;#34;@capacitor/keyboard&amp;#34;: &amp;#34;^5.0.6&amp;#34;, &amp;#34;@capacitor/status-bar&amp;#34;: &amp;#34;^5.0.6&amp;#34; 使用npx cap add ios增加ios打包
+确保配置目录正确：
+const config: CapacitorConfig = { appId: &amp;#39;com.example.app&amp;#39;, appName: &amp;#39;Example-App&amp;#39;, webDir: &amp;#39;./.output/public&amp;#39;, bundledWebRuntime: false }; App connect 中建立app
+图标工场 - 移动应用图标/启动图生成工具，一键生成所有尺寸的应用图标/启动图 (wuruihong.com) 生成appicon
+App Tools - Generate icons, images and splashscreens for android and iOS apps (appicononline.</description>
+    </item>
+    
+    <item>
+      <title>隐私协议-COOK</title>
+      <link>https://rtx3.com/post/%E9%9A%90%E7%A7%81%E5%8D%8F%E8%AE%AE-cook/</link>
+      <pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://rtx3.com/post/%E9%9A%90%E7%A7%81%E5%8D%8F%E8%AE%AE-cook/</guid>
+      <description>本应用尊重并保护所有使用服务用户的个人隐私权。为了给您提供更准确、更有个性化的服务，本应用会按照本隐私权政策的规定使用和披露您的个人信息。但本应用将以高度的勤勉、审慎义务对待这些信息。除本隐私权政策另有规定外，在未征得您事先许可的情况下，本应用不会将这些信息对外披露或向第三方提供。本应用会不时更新本隐私权政策。 您在同意本应用服务使用协议之时，即视为您已经同意本隐私权政策全部内容。本隐私权政策属于本应用服务使用协议不可分割的一部分。
+适用范围 (a) 在您在使用本应用时，您根据本应用要求提供的个人注册信息；
+(b) 在您使用本应用网络服务，或访问本应用平台网页时，本应用自动接收并记录的您的浏览器和计算机上的信息，包括但不限于您的IP地址、浏览器的类型、使用的语言、访问日期和时间、软硬件特征信息及您需求的网页记录等数据；
+(c) 本应用通过合法途径从商业伙伴处取得的用户个人数据。
+您了解并同意，以下信息不适用本隐私权政策：
+(a) 您在使用本应用平台提供的搜索服务时输入的关键字信息；
+(b) 本应用收集到的您在本应用发布的有关信息数据，包括但不限于参与活动、成交信息及评价详情；
+(c) 违反法律规定或违反本应用规则行为及本应用已对您采取的措施。
+信息使用 (a)本应用不会向任何无关第三方提供、出售、出租、分享或交易您的个人信息，除非事先得到您的许可，或该第三方和本应用（含本应用关联公司）单独或共同为您提供服务，且在该服务结束后，其将被禁止访问包括其以前能够访问的所有这些资料。
+(b) 本应用亦不允许任何第三方以任何手段收集、编辑、出售或者无偿传播您的个人信息。任何本应用平台用户如从事上述活动，一经发现，本应用有权立即终止与该用户的服务协议。
+(c) 为服务用户的目的，本应用可能通过使用您的个人信息，向您提供您感兴趣的信息，包括但不限于向您发出产品和服务信息，或者与本应用合作伙伴共享信息以便他们向您发送有关其产品和服务的信息（后者需要您的事先同意）。
+信息披露 在如下情况下，本应用将依据您的个人意愿或法律的规定全部或部分的披露您的个人信息：
+(a) 经您事先同意，向第三方披露；
+(b)为提供您所要求的产品和服务，而必须和第三方分享您的个人信息；
+(c) 根据法律的有关规定，或者行政或司法机构的要求，向第三方或者行政、司法机构披露；
+(d) 如您出现违反中国有关法律、法规或者本应用服务协议或相关规则的情况，需要向第三方披露；
+(e) 如您是适格的知识产权投诉人并已提起投诉，应被投诉人要求，向被投诉人披露，以便双方处理可能的权利纠纷；
+(f) 在本应用平台上创建的某一交易中，如交易任何一方履行或部分履行了交易义务并提出信息披露请求的，本应用有权决定向该用户提供其交易对方的联络方式等必要信息，以促成交易的完成或纠纷的解决。
+(g) 其它本应用根据法律、法规或者网站政策认为合适的披露。
+信息存储和交换 本应用收集的有关您的信息和资料将保存在本应用及（或）其关联公司的服务器上，这些信息和资料可能传送至您所在国家、地区或本应用收集信息和资料所在地的境外并在境外被访问、存储和展示。
+本隐私政策的更改 (a)如果决定更改隐私政策，我们会在本政策中、本公司网站中以及我们认为适当的位置发布这些更改，以便您了解我们如何收集、使用您的个人信息，哪些人可以访问这些信息，以及在什么情况下我们会透露这些信息。
+(b)本人保留随时修改本政策的权利，因此请经常查看。如对本政策作出重大更改，本人会通过网站通知的形式告知。</description>
+    </item>
+    
+    <item>
+      <title>使用阿里云函数计算反向代理AI服务</title>
+      <link>https://rtx3.com/post/nginx-proxy-ai/</link>
+      <pubDate>Mon, 06 Nov 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://rtx3.com/post/nginx-proxy-ai/</guid>
+      <description>使用阿里云函数计算反向代理AI服务 Simon (Yu Ma) 收录于 类别 杂技浅尝
+2023-11-17 00:16 2023-11-17 00:16 约 1076 字 预计阅读 3 分钟 392 次阅读 7 条评论
+本文的主要思路是使用阿里云的函数计算服务来代理 OpenAI 的 API 地址，配合自己的域名即可在境内实现访问。
+至于是不是永久免费，我不知道。但是每个人都有点免费额度，个人做技术探究应该是够用了。
+前期准备 需要一个阿里云账号， 没有账号的可自行注册( 点击此处注册 ) 需要一个自己注册的域名， 没有的可以注册 ( 点击注册域名 ) 创建代理服务 1. 登录并开通函数计算服务 登录地址：https://fcnext.console.aliyun.com/overview
+2. 通过模板创建Nginx应用 这是整个过程中最重要的一步！
+首先在函数计算管理的应用面板，找到创建应用。
+选择 通过模板创建应用， 在搜索框输入 Nginx ，找到对应模板 立即创建
+填写一些服务关键信息。 这里要注意一下几个点
+选择 直接部署 区域选择可以访问OpenAI的区域，例如：日本、美国、新加坡等 函数名、角色等信息不要修改 3 Nginx配置修改 在函数及服务 面板中，找到刚创建的服务，点击进入 Nginx
+选择函数代码，并进行编辑，仅修改 nginx.conf 即可， 代码全文如下:
+| 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 | # nginx -c /code/nginx.</description>
+    </item>
+    
+    <item>
+      <title>统一登录开源服务安装</title>
+      <link>https://rtx3.com/post/casdoor-installation-run/</link>
+      <pubDate>Mon, 06 Nov 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://rtx3.com/post/casdoor-installation-run/</guid>
+      <description>统一登录开源服务Casdoor部署 统一登录是自动运维的基础以及基石，它可以极大的减少用户的管理成本。
+常用的统一登录方式有
+AD LDAP CAS OAUTH 开源服务提供了大部分的接入方式，并且依赖简单，值得使用。
+当使用在生产环境时，需使用K8S等方式实现高可用。
+！当使用在生产环境时，将管理人员使用的登录服务与普通用户使用的登录服务隔离。
+Casdoor features Casdoor follows a front-end and back-end separate architecture, developed by Golang. It supports high concurrency, provides a web-based UI for management, and supports localization in 10+ languages. Casdoor supports third-party application login, such as GitHub, Google, QQ, and WeChat, and it supports extending third-party login with plugins. Casdoor supports authorization management based on Casbin. It supports ACL, RBAC, ABAC, and RESTful access control models.</description>
+    </item>
+    
+    <item>
+      <title>APP审核说明书文档</title>
+      <link>https://rtx3.com/post/china-code-register-2/</link>
+      <pubDate>Tue, 31 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://rtx3.com/post/china-code-register-2/</guid>
+      <description>说明书文档格式写好了，只需要按照框架填充内容。
+第一页「封面」需要修改软件名称和版本号，以V1.0申请；修改作者、负责人以及创建日期和更新日期 第二页「修订历史」根据自己实际情况修改日期和修改者，注意需要和封面日期对应起来，描述改不改无所谓 第三页 「一、简介」第一段根据软件自己修改，1.1 和 1.2 可以不改 「二、用途」2.1 需要根据自己软件修改，2.2 和 2.3 可以不改 「三、运行环境」根据自己软件修改 「四、使用说明」名称改一下就行 从 4.1 一直到 4.xx 就根据自己软件提供截图，描述截图的功能就行，写满 30 页。不够的就把软件功能全部截图描述完就行。 模版链接: https://www.aliyundrive.com/s/pgDX9SAd2GE</description>
+    </item>
+    
+    <item>
+      <title>软著审核代码文档</title>
+      <link>https://rtx3.com/post/china-code-register-3/</link>
+      <pubDate>Tue, 31 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://rtx3.com/post/china-code-register-3/</guid>
+      <description>代码文档注意事项：
+不要有空白行 不要有注释行和注释块，代码结尾处不影响，但是最好也删掉（主要是注释和空白行不能算源代码行数） 建议粘帖后手动整理一下 建议写满 60 页（前 30 页，后 30 页），理论上代码量不足 60 页，全部提交也没问题 字体使用宋体、字号 10、行距 1 模版链接: https://www.aliyundrive.com/s/pgDX9SAd2GE</description>
+    </item>
+    
+    <item>
+      <title>软著审核准备</title>
+      <link>https://rtx3.com/post/china-code-register-1/</link>
+      <pubDate>Tue, 31 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://rtx3.com/post/china-code-register-1/</guid>
+      <description>一、前期需要准备的： 1、程序源代码（最好60页的源代码文档，pdf 格式） 2、程序运行的截图（用来编写使用说明书）
+二、申请软著 1、打开中国版权保护中心网站：https://www.ccopyright.com.cn/ 2、点击「我要登记」图标 3、点击「立即登记」 4、没有登录的登录或者一下，注意这里有「个人用户」和「机构」。个人就是个人申请，机构一般是公司申请。 5、选择：我是申请人 6、依据自己情况填写软件申请信息 7、依据自己情况填写软件开发信息 8、填写软件功能与特点（注意：有两份文件要上传，1 程序鉴别材料，俗称源代码，2 文档鉴别材料，俗称使用说明书，这两份文档在 repo 中单独给出，并且有很多限制条件，具体看模版） 9、确认信息
+10、填报完成，这里什么都不用点击 11、直接点击右上角「用户中心」继续操作，会看到状态为「待提交材料」的登记记录。 12、点击「打印签章页」，打印出来签字或盖章。再点击「上传签章页」进行上传提交。注意：请勿擅自更改申请确认签章页的内容、格式和打印比例，否则可能会被驳回。 13、点击「查看详情」 14、拉到最下面，点击「查看申请表」，查看需要准备的申请表，当前下载功能正在升级，待升级好了可以点击下载。下载好了签字或盖章。 </description>
+    </item>
+    
+  </channel>
+</rss>

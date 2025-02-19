@@ -1,0 +1,8 @@
+TODO
+env/
+*.pyc
+*.log
+log/
+logs/
+node_modules/
+__test__/

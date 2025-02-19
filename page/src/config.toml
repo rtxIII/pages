@@ -1,0 +1,112 @@
+baseURL = "https://rtx3.com"
+title = "繠驖瓕III 文章展示"
+languageCode = "en"
+DefaultContentLanguage = "en" # Change this to change the site's language
+theme = "hugo.386"
+preserveTaxonomyNames = true
+
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+
+[params]
+    # The name to display as main title in the home page
+    mainpagetitle = "繠驖瓕III"
+
+    # The subtitle to display under the title in the home page
+    mainpagesubtitle = "导航面板" 
+
+    # The description of your website. It will be displayed in the home page
+    mainpagedesc = "This is a site for the demonstration of data."
+
+    # The name to display in the copyright section in the footer
+    copyrightname = "RTX3"
+
+    # The url to use as link in the copyright name in the footer. Leave empty to use none.
+    copyrighturl = ""
+
+    # Show the "built on Hugo" disclaimer
+    showhugo = false
+
+    # Urls for social networks
+    facebook = ""
+    twitter = "rtx3_com"
+    linkedin = ""
+    github = "https://github.com/rtx3"
+    gitlab = ""
+
+    # Enables or disables the loading animations. false activates them. Default is false.
+    loadfastload = false
+
+    # Sets the speed for the page loading effect. Default is 1.0.
+    loadspeedfactor = 2.0
+
+    # Enables or disables the second flyby cursor. Default is false.
+    loadonepass = false
+
+[params.copyright]
+    name = "rtx3"
+
+    # The url to use as link in the copyright name in the footer. Leave empty to use none.
+    url = "mailto:r@rtx3.com"
+
+    # Text to go before copyright information
+    prefix = "[沪ICP备15006974号](https://beian.miit.gov.cn/)"
+
+    # Text to go between copyright and hugo disclaimer (if enabled)
+    suffix = "Provide IOS market registration and translation services in China."
+
+[menu]
+  # This displays buttons in the navbar to access your contents
+  [[menu.main]]
+    identifier = "product" # An unique identifier for the button
+    name = "Data Product"       # A display name for the button
+    url = "/product/"      # The path to the content. It can lead to a single page (like here)
+    weight = 10          # A number to order the buttons in the navbar
+
+  [[menu.main]]
+    identifier = "posts"
+    name = "All posts"
+    url = "/post/"       # The path can lead to a content folder too.
+    weight = 20
+
+  [[menu.main]]
+    identifier = "search"
+    name = "Search Site"
+    url = "/search/"       
+    weight = 20
+
+[taxonomies]
+category = "categories"
+tag = "tags"
+term = "term"
+
+[privacy]
+
+  [privacy.linkedin]
+    disabled = true
+    simple = true
+
+  [privacy.vimeo]
+    disabled = true
+    simple = true
+
+  [privacy.twitter]
+    disabled = true
+    enableDNT = true
+    simple = true
+
+  [privacy.instagram]
+    disabled = true
+    simple = true
+
+  [privacy.youtube]
+    disabled = true
+    privacyEnhanced = true
+
+[services]
+
+  [services.instagram]
+    disableInlineCSS = true
+
+  [services.twitter]
+    disableInlineCSS = true

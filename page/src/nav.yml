@@ -1,0 +1,32 @@
+sorted: true
+titles:
+  - title:
+      name: "Monitoring"
+      items:
+        - name: "uptime-kuma"
+          logo: 📊
+          url: "https://kuma.we2.xyz/"
+        - name: "certd"
+          logo: "💾"
+          url: "https://cert.we2.xyz"
+  - title:
+      name: "tools"
+      items:
+        - name: "exray"
+          logo: "🔍"
+          url: "https://exray.fuuka.link"
+        - name: "dify"
+          logo: "🤖"
+          url: "https://dify.fuuka.link"
+  - title:
+      name: "misc"
+      items:
+        - name: "禅镜"
+          logo: "🌞"
+          url: "https://www.chanjing.cc/"
+        - name: "硅基"
+          logo: "🌐" 
+          url: "https://cloud.siliconflow.cn/"
+        - name: "扣子"
+          logo: "🔗"
+          url: "https://www.coze.cn/"

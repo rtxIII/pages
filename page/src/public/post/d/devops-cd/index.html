@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <title>繠驖瓕III 文章展示</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="theme-color" content="#000084" />
+    <link rel="icon" href="https://rtx3.com/favicon.ico">
+    <link rel="canonical" href="https://rtx3.com">
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "jt8n7op18g");
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1654491404703711"
+    crossorigin="anonymous"></script>
+    
+    
+</head>
+
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"></button>
+            <a class="brand" href="https://rtx3.com">繠驖瓕III 文章展示</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    
+                    
+                        
+                            <li>
+                                <a href="/product/">
+                                    
+                                    <span>Data Product</span>
+                                </a>
+                            </li>
+                        
+                    
+                        
+                            <li>
+                                <a href="/post/">
+                                    
+                                    <span>All posts</span>
+                                </a>
+                            </li>
+                        
+                    
+                        
+                            <li>
+                                <a href="/search/">
+                                    
+                                    <span>Search Site</span>
+                                </a>
+                            </li>
+                        
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav><div id="content" class="container">
+
+<div class="row-fluid navmargin">
+    <div class="page-header">
+        <h1>Devops-持续交付CD - Tue, Jan 30, 2024</h1>
+    </div>
+    <p class="lead"></p>
+    <h1 id="持续交付">持续交付</h1>
+<p><img src="https://ocf.rtx3.com/api/raw?path=/3/assets/devops/cd.png" alt="image"></p>
+<h2 id="渐进式交付">渐进式交付</h2>
+<p>渐进式交付是高级部署模式（如金丝雀，功能标记和 A/B 测试）的总称。通过给予应用程序开发人员和 SRE 团队对爆炸半径的细粒度控制，渐进交付技术被用来降低在生产中引入新软件版本的风险。</p>
+<blockquote>
+<p>使用金丝雀的好处是能够在生产环境中使用发现问题的安全回滚策略对新版本进行容量测试。通过缓慢增加负载，您可以监视和捕获有关新版本如何影响生产环境的指标</p>
+</blockquote>
+<h1 id="gitops-下的-cicd-流程">GitOps 下的 CI/CD 流程</h1>
+<p>CI/CD 是架构中非常重要的一个组件，在云原生时代，依托于容器化持续集成，改变了以往应用通过 Jar、war 包形式的部署方式，转而制作成镜像，通过集成 GitLab CI、镜像仓库、Kubernetes 、Argo CD 等各类效率、流程系统，对纳管集群进行镜像发布、应用验证、升级，进而实现了自动化和监控贯穿于应用迭代的整个生命周期。</p>
+<h2 id="什么是-cicd">什么是 CI/CD</h2>
+<p>CI（Continuous Intergration，持续集成），强调开发人员不断进行代码提交、单元测试、性能测试、代码扫描等操作，根据测试结果，发现问题及时回滚，并进行反馈。</p>
+<p>持续部署 （Continuous Deployment，CD）或者说持续交付（Continuous Delivery，CD），是指在构建和测试完成通过后，通过一系列系统化手段让最新的功能能够尽快地更新到生产环境，并通过运营反馈需求，促进产品进一步迭代。持续部署需要保障整个过程的平滑和安全，通常借助蓝绿发布、金丝雀发布确保过程中的平滑、安全以及降低部署过程出错的概率。</p>
+<p>总结来说，持续集成、持续部署与持续交付，是一种通过在应用开发阶段引入自动化，实现频繁交付应用的方法。</p>
+<h2 id="gitops-下的-cicd-流程-1">GitOps 下的 CI/CD 流程</h2>
+<p>鉴于 GitOps 的设计哲学，我们看一下 GitOps 下的 CI/CD 流程，如下图所示：</p>
+<p>![image](<a href="https://ocf.rtx3.com/api/raw?path=/3/assets/devops/gitops-workflow.webp">https://ocf.rtx3.com/api/raw?path=/3/assets/devops/gitops-workflow.webp</a></p>
+<ul>
+<li>首先，团队成员都可以 fork 仓库对配置进行更改，然后提交 Pull Request。</li>
+<li>接下来运行 CI 流水线，进行校验配置文件、执行自动化测试、构建 OCI 镜像、推送到镜像仓库等。</li>
+<li>CI 流水线执行完成后，拥有合并代码权限的人会将 Pull Request 合并到主分支。</li>
+<li>最后运行 CD 流水线，结合 CD 工具（例如 Argo CD）将变更自动应用到目标集群中。</li>
+</ul>
+<p>整个过程中完全自动化且操作透明，通过多人协作和自动化测试来保证了基础设施声明的健壮性。另外由于基础设置配置都存储在 Git 仓库中，当应用出现故障时，也可快速地进行版本回退。</p>
+<h2 id="cicd-中的工具链">CI/CD 中的工具链</h2>
+<p>在 CI/CD 工程实施中，Jenkins 和 Gitlab 已成为流程中的核心工具，其中 Jenkins 。现如今的 CI/CD 中，集合容器技术、镜像仓库、容器编排系统等各类工具链，已成为企业、各类组织效率提升必不可少的基础支撑。</p>
+<!-- raw HTML omitted -->
+<p>目前，CI/CD 典型的工具链包括持续集成、持续交付、持续部署与基础工具类。</p>
+<h3 id="基础工具">基础工具</h3>
+<p>Jenkins 是一个被广泛使用的可扩展的持续集引擎，提供了数以百计的插件来支持自动化构建、测试、部署相关的各类任务，Jenkins 在 2.0 版本中提供的流水线即代码(Pipeline as Code) 能力。贯穿于 CI/CD  整个过程，将原本独立运行与单个或多个节点的任务串联起来，从而实现单个任务难以完成的复杂发布流程。</p>
+<p>Prometheus 是新一代的云原生监控系统，它是一个开源的完整监控解决方案，对传统的监控系统测试、告警模型进行了彻底颠覆的重新设计，形成了基于中央化的规则计算、统一分析和告警的新一模型。</p>
+<p>为了实现统一的用户管理和权限管理，我们需要引入一套统一的用户管理系统，OpenLDAP 则是目前较为广泛应用的系统。</p>
+<h3 id="持续集成">持续集成</h3>
+<p>典型的源码管理工具是 Gitlab，同时也可以完成代码评审等工作。</p>
+<p>代码构建根据编程语言不同而不同，譬如 Java 构建工具包括 Maven、Gradle。单元测试框架 如 JUnit、TestNG 等。</p>
+<p>制品仓库代表性产品为 Nexus，Nexus 可以支持多种私有仓库，包括 maven、nuget、docker、npm、bower、pypi、rubygems、go 等。</p>
+<p>镜像仓库目前使用最广泛的 是 VMware 开源的 Harbor。Harbor 是一个用于存储和镜像分发的企业级镜像服务端软件，它添加了很多企业必须的功能特性，例如安全、标识和管理等。</p>
+<p>代码质量管理使用最广泛的开源工具是 SonarQube， 它可以用代码风格、缺陷、漏洞、以及安全热点等几个维度对源代码进行扫码和分析。</p>
+<h3 id="持续交付-1">持续交付</h3>
+<p>接口测试可以使用 Python 编写的功能自动化测试框架 RobotFramework，它具备良好的可扩展性，支持关键字驱动，可以同时测试多种类型的客户端和接口，也可以进行分布式测试。</p>
+<p>性能测试类工具可以使用 Java 开发的 JMeter，它可以对服务器、网络、或者对象模拟请求负载来测试他们的强度或者分析不同压力下整体性能。</p>
+<h3 id="持续部署">持续部署</h3>
+<p>使用 Kebernetes 的配置功能（configmap、Secret）做配置管理。</p>
+<p>可以使用 Helm 打包应用，管理应用的依赖关系，管理应用版本并发布应用到软件仓库。</p>
+<p>Operator 是基于 Kebernetes 编写的也定应用程序控制器，它用来创建、配置和管理复杂的有状态应用，如数据库、缓存和监控系统。Operator 是将运维人员对软件操作代码化，同时利用 Kebernetes 强大的抽象来实现应用的生命周期管理。</p>
+
+    <h4><a href="https://rtx3.com">Back to Home</a></h4>
+</div>
+
+
+        </div><footer class="container">
+    <hr class="soften">
+    <p>
+    <a href="https://beian.miit.gov.cn/">沪ICP备15006974号</a> | 
+
+&copy; 
+<a href="mailto:r@rtx3.com" target="_blank">
+    rtx3
+</a>
+<span id="thisyear">2025</span>
+
+    | Provide IOS market registration and translation services in China.
+
+
+</p>
+    <p class="text-center">
+        
+        <a href="rtx3_com">Twitter</a> 
+        
+        <a href="https://github.com/rtx3">GitHub</a> 
+        
+    </p>
+</footer>
+
+</body><link rel="stylesheet" href="/css/bootstrap.css">
+<link rel="stylesheet" href="/css/bootstrap-responsive.css">
+<link rel="stylesheet" href="/css/style.css">
+
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap-386.js"></script>
+<script src="/js/bootstrap-transition.js"></script>
+<script src="/js/bootstrap-alert.js"></script>
+<script src="/js/bootstrap-modal.js"></script>
+<script src="/js/bootstrap-dropdown.js"></script>
+<script src="/js/bootstrap-scrollspy.js"></script>
+<script src="/js/bootstrap-tab.js"></script>
+<script src="/js/bootstrap-tooltip.js"></script>
+<script src="/js/bootstrap-popover.js"></script>
+<script src="/js/bootstrap-button.js"></script>
+<script src="/js/bootstrap-collapse.js"></script>
+<script src="/js/bootstrap-carousel.js"></script>
+<script src="/js/bootstrap-typeahead.js"></script>
+<script src="/js/bootstrap-affix.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.0/fuse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
+<script src="https://rtx3.com/js/search.js"></script>
+<script>
+    _386 = { 
+        fastLoad: false ,
+        onePass: false , 
+        speedFactor: 2 
+    };
+
+    
+    function ThisYear() {
+        document.getElementById('thisyear').innerHTML = new Date().getFullYear();
+    };
+</script>
+
+</html>
