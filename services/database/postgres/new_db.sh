@@ -1,1 +1,0 @@
-docker exec -i postgres  psql -U postgres -c 'CREATE DATABASE <your_db_name>;'

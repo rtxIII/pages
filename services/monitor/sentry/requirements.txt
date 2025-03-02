@@ -1,2 +1,0 @@
-# ldap user store
-django-auth-ldap==1.2.7

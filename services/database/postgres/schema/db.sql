@@ -1,2 +1,0 @@
-CREATE DATABASE alist;
-CREATE DATABASE casdoor;

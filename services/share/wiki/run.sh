@@ -1,1 +1,0 @@
-docker run -d -p 8989:3000 --name wiki --restart unless-stopped -e "DB_TYPE=postgres" -e "DB_HOST=host.docker.internal" -e "DB_PORT=5432" -e "DB_USER=postgres" -e "DB_PASS=p0stgr3s" -e "DB_NAME=wiki" ghcr.io/requarks/wiki:2
