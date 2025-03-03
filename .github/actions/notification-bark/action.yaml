@@ -20,7 +20,7 @@ inputs:
   sound:
     description: 'Message sound'
     required: false
-    default: 'minuet'
+    default: 'birdsong'
   isArchive:
     description: 'Whether to archive the message'
     required: false
@@ -33,6 +33,13 @@ inputs:
   copy:
     description: 'Message to be copied'
     required: false
+  icon:
+    description: 'Message icon'
+    required: false
+  group:
+    description: 'Message group'
+    required: false
+    default: 'github'
   
 outputs:
   martix:
@@ -42,16 +49,19 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    - name: Push notification
-      id: bark_push
-      uses: shink/bark-action@v2
-      with:
-        key: ${{ inputs.key }}      
-        host: ${{ inputs.host }}
-        title: ${{ inputs.title }}
-        body: ${{ inputs.body }}
-        sound: ${{ inputs.sound }}
-        isArchive: ${{ inputs.isArchive }}
-        url: ${{ inputs.url }}
-        automaticallyCopy: ${{ inputs.automaticallyCopy }}
-        copy: ${{ inputs.copy }}
+    - name: Run notification script
+      shell: bash
+      run: $GITHUB_ACTION_PATH/script.sh
+      env:
+        INPUT_KEY: ${{ inputs.key }}
+        INPUT_HOST: ${{ inputs.host }}
+        INPUT_TITLE: ${{ inputs.title }}
+        INPUT_BODY: ${{ inputs.body }}
+        INPUT_SOUND: ${{ inputs.sound }}
+        INPUT_IS_ARCHIVE: ${{ inputs.isArchive }}
+        INPUT_URL: ${{ inputs.url }}
+        INPUT_AUTOMATICALLY_COPY: ${{ inputs.automaticallyCopy }}
+        INPUT_COPY: ${{ inputs.copy }}
+        INPUT_GROUP: ${{ inputs.group }}
+        INPUT_ICON: ${{ inputs.icon }}
+        
