@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="format-detection" content="telephone=no" />
     <meta name="theme-color" content="#000084" />
-    <link rel="icon" href="https://rtx3.com/favicon.ico">
-    <link rel="canonical" href="https://rtx3.com">
+    <link rel="icon" href="https://rtx3.com//favicon.ico">
+    <link rel="canonical" href="https://rtx3.com/">
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -27,7 +27,7 @@
     <div class="navbar-inner">
         <div class="container">
             <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"></button>
-            <a class="brand" href="https://rtx3.com">繠驖瓕III 文章展示</a>
+            <a class="brand" href="https://rtx3.com/">繠驖瓕III 文章展示</a>
             <div class="nav-collapse collapse">
                 <ul class="nav">
                     
@@ -85,58 +85,58 @@
 <p><img src="https://ocf.rtx3.com/api/raw?path=/3/assets/devops/docker-image.png" alt="image"></p>
 <p>下表列举了常用的 Dockerfile 指令。</p>
 <table>
-<thead>
-<tr>
-<th style="text-align:left">指令</th>
-<th style="text-align:left">用途</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">FROM</td>
-<td style="text-align:left">指定构建镜像的基础镜像</td>
-</tr>
-<tr>
-<td style="text-align:left">MAINTAINER</td>
-<td style="text-align:left">镜像的维护信息</td>
-</tr>
-<tr>
-<td style="text-align:left">RUN</td>
-<td style="text-align:left">构建镜像时运行的指令</td>
-</tr>
-<tr>
-<td style="text-align:left">COPY</td>
-<td style="text-align:left">复制文件或目录到镜像内（只能在构建镜像的主机上读取资源）</td>
-</tr>
-<tr>
-<td style="text-align:left">ADD</td>
-<td style="text-align:left">支持从远程服务器读取资源，复制到镜像内，同时支持自动解压 tar, zip 等压缩文件</td>
-</tr>
-<tr>
-<td style="text-align:left">ENV</td>
-<td style="text-align:left">环境变量设置</td>
-</tr>
-<tr>
-<td style="text-align:left">USER</td>
-<td style="text-align:left">指定运行 RUN、CMD COPY 等指令的用户</td>
-</tr>
-<tr>
-<td style="text-align:left">EXPOSE</td>
-<td style="text-align:left">容器运行的端口</td>
-</tr>
-<tr>
-<td style="text-align:left">WORKDIR</td>
-<td style="text-align:left">指定运行 RUN、CMD、COPY 指令的工作目录</td>
-</tr>
-<tr>
-<td style="text-align:left">VOLUME</td>
-<td style="text-align:left">设置挂载卷</td>
-</tr>
-<tr>
-<td style="text-align:left">CMD</td>
-<td style="text-align:left">启动后运行的指令</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th style="text-align: left">指令</th>
+          <th style="text-align: left">用途</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">FROM</td>
+          <td style="text-align: left">指定构建镜像的基础镜像</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">MAINTAINER</td>
+          <td style="text-align: left">镜像的维护信息</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">RUN</td>
+          <td style="text-align: left">构建镜像时运行的指令</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">COPY</td>
+          <td style="text-align: left">复制文件或目录到镜像内（只能在构建镜像的主机上读取资源）</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">ADD</td>
+          <td style="text-align: left">支持从远程服务器读取资源，复制到镜像内，同时支持自动解压 tar, zip 等压缩文件</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">ENV</td>
+          <td style="text-align: left">环境变量设置</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">USER</td>
+          <td style="text-align: left">指定运行 RUN、CMD COPY 等指令的用户</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">EXPOSE</td>
+          <td style="text-align: left">容器运行的端口</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">WORKDIR</td>
+          <td style="text-align: left">指定运行 RUN、CMD、COPY 指令的工作目录</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">VOLUME</td>
+          <td style="text-align: left">设置挂载卷</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">CMD</td>
+          <td style="text-align: left">启动后运行的指令</td>
+      </tr>
+  </tbody>
 </table>
 <h2 id="2-镜像构建">2. 镜像构建</h2>
 <p>熟悉常用的 Dockerfile 指令之后，我们可以开始尝试通过 Dockerfile 构建一个 Nginx 镜像。</p>
@@ -175,7 +175,7 @@
 <li>改动不频繁的 layer 尽量往前在 Dockerfile 的前面</li>
 </ul>
 
-    <h4><a href="https://rtx3.com">Back to Home</a></h4>
+    <h4><a href="https://rtx3.com/">Back to Home</a></h4>
 </div>
 
 

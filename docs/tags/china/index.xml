@@ -1,42 +1,33 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>china on 繠驖瓕III 文章展示</title>
+    <title>China on 繠驖瓕III 文章展示</title>
     <link>https://rtx3.com/tags/china/</link>
-    <description>Recent content in china on 繠驖瓕III 文章展示</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in China on 繠驖瓕III 文章展示</description>
+    <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 31 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://rtx3.com/tags/china/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 31 Oct 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://rtx3.com/tags/china/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>APP审核说明书文档</title>
       <link>https://rtx3.com/post/china-code-register-2/</link>
       <pubDate>Tue, 31 Oct 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://rtx3.com/post/china-code-register-2/</guid>
-      <description>说明书文档格式写好了，只需要按照框架填充内容。
-第一页「封面」需要修改软件名称和版本号，以V1.0申请；修改作者、负责人以及创建日期和更新日期 第二页「修订历史」根据自己实际情况修改日期和修改者，注意需要和封面日期对应起来，描述改不改无所谓 第三页 「一、简介」第一段根据软件自己修改，1.1 和 1.2 可以不改 「二、用途」2.1 需要根据自己软件修改，2.2 和 2.3 可以不改 「三、运行环境」根据自己软件修改 「四、使用说明」名称改一下就行 从 4.1 一直到 4.xx 就根据自己软件提供截图，描述截图的功能就行，写满 30 页。不够的就把软件功能全部截图描述完就行。 模版链接: https://www.aliyundrive.com/s/pgDX9SAd2GE</description>
+      <description>&lt;p&gt;说明书文档格式写好了，只需要按照框架填充内容。&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;第一页「封面」需要修改软件名称和版本号，以V1.0申请；修改作者、负责人以及创建日期和更新日期&lt;/li&gt;&#xA;&lt;li&gt;第二页「修订历史」根据自己实际情况修改日期和修改者，注意需要和封面日期对应起来，描述改不改无所谓&lt;/li&gt;&#xA;&lt;li&gt;第三页&#xA;&lt;ul&gt;&#xA;&lt;li&gt;「一、简介」第一段根据软件自己修改，1.1 和 1.2 可以不改&lt;/li&gt;&#xA;&lt;li&gt;「二、用途」2.1 需要根据自己软件修改，2.2 和 2.3 可以不改&lt;/li&gt;&#xA;&lt;li&gt;「三、运行环境」根据自己软件修改&lt;/li&gt;&#xA;&lt;li&gt;「四、使用说明」名称改一下就行&lt;/li&gt;&#xA;&lt;li&gt;从 4.1 一直到 4.xx 就根据自己软件提供截图，描述截图的功能就行，写满 30 页。不够的就把软件功能全部截图描述完就行。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;模版链接: &lt;a href=&#34;https://www.aliyundrive.com/s/pgDX9SAd2GE&#34;&gt;https://www.aliyundrive.com/s/pgDX9SAd2GE&lt;/a&gt;&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>软著审核代码文档</title>
       <link>https://rtx3.com/post/china-code-register-3/</link>
       <pubDate>Tue, 31 Oct 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://rtx3.com/post/china-code-register-3/</guid>
-      <description>代码文档注意事项：
-不要有空白行 不要有注释行和注释块，代码结尾处不影响，但是最好也删掉（主要是注释和空白行不能算源代码行数） 建议粘帖后手动整理一下 建议写满 60 页（前 30 页，后 30 页），理论上代码量不足 60 页，全部提交也没问题 字体使用宋体、字号 10、行距 1 模版链接: https://www.aliyundrive.com/s/pgDX9SAd2GE</description>
+      <description>&lt;p&gt;代码文档注意事项：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;不要有空白行&lt;/li&gt;&#xA;&lt;li&gt;不要有注释行和注释块，代码结尾处不影响，但是最好也删掉（主要是注释和空白行不能算源代码行数）&lt;/li&gt;&#xA;&lt;li&gt;建议粘帖后手动整理一下&lt;/li&gt;&#xA;&lt;li&gt;建议写满 60 页（前 30 页，后 30 页），理论上代码量不足 60 页，全部提交也没问题&lt;/li&gt;&#xA;&lt;li&gt;字体使用宋体、字号 10、行距 1&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;模版链接: &lt;a href=&#34;https://www.aliyundrive.com/s/pgDX9SAd2GE&#34;&gt;https://www.aliyundrive.com/s/pgDX9SAd2GE&lt;/a&gt;&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>软著审核准备</title>
       <link>https://rtx3.com/post/china-code-register-1/</link>
       <pubDate>Tue, 31 Oct 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://rtx3.com/post/china-code-register-1/</guid>
-      <description>一、前期需要准备的： 1、程序源代码（最好60页的源代码文档，pdf 格式） 2、程序运行的截图（用来编写使用说明书）
-二、申请软著 1、打开中国版权保护中心网站：https://www.ccopyright.com.cn/ 2、点击「我要登记」图标 3、点击「立即登记」 4、没有登录的登录或者一下，注意这里有「个人用户」和「机构」。个人就是个人申请，机构一般是公司申请。 5、选择：我是申请人 6、依据自己情况填写软件申请信息 7、依据自己情况填写软件开发信息 8、填写软件功能与特点（注意：有两份文件要上传，1 程序鉴别材料，俗称源代码，2 文档鉴别材料，俗称使用说明书，这两份文档在 repo 中单独给出，并且有很多限制条件，具体看模版） 9、确认信息
-10、填报完成，这里什么都不用点击 11、直接点击右上角「用户中心」继续操作，会看到状态为「待提交材料」的登记记录。 12、点击「打印签章页」，打印出来签字或盖章。再点击「上传签章页」进行上传提交。注意：请勿擅自更改申请确认签章页的内容、格式和打印比例，否则可能会被驳回。 13、点击「查看详情」 14、拉到最下面，点击「查看申请表」，查看需要准备的申请表，当前下载功能正在升级，待升级好了可以点击下载。下载好了签字或盖章。 </description>
+      <description>&lt;p&gt;一、前期需要准备的：&#xA;1、程序源代码（最好60页的源代码文档，pdf 格式）&#xA;2、程序运行的截图（用来编写使用说明书）&lt;/p&gt;&#xA;&lt;p&gt;二、申请软著&#xA;1、打开中国版权保护中心网站：https://www.ccopyright.com.cn/&#xA;&lt;img src=&#34;https://ocf.rtx3.com/api/raw?path=/3/assets/20231021/275717176-1ac149b6-bcb8-4764-8965-912b42d493f8.png&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;2、点击「我要登记」图标&#xA;&lt;img src=&#34;https://ocf.rtx3.com/api/raw?path=/3/assets/20231021/275717188-043f7817-3856-42b2-9c14-b33e04d93efc.png&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;3、点击「立即登记」&#xA;&lt;img src=&#34;https://ocf.rtx3.com/api/raw?path=/3/assets/20231021/275717202-b74d71e6-158a-4337-ac8f-56b553d33a8d.png&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;4、没有登录的登录或者一下，注意这里有「个人用户」和「机构」。个人就是个人申请，机构一般是公司申请。&#xA;&lt;img src=&#34;https://ocf.rtx3.com/api/raw?path=/3/assets/20231021/275717220-6504d693-898d-485e-8e22-3a3dc9651fb9.png&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;5、选择：我是申请人&#xA;&lt;img src=&#34;https://ocf.rtx3.com/api/raw?path=/3/assets/20231021/275717229-8eac3e90-444e-4308-a184-840b7b026cff.png&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;6、依据自己情况填写软件申请信息&#xA;&lt;img src=&#34;https://ocf.rtx3.com/api/raw?path=/3/assets/20231021/275717245-4b15e651-ede2-4e86-b0a4-e82f0f387087.png&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;7、依据自己情况填写软件开发信息&#xA;&lt;img src=&#34;https://ocf.rtx3.com/api/raw?path=/3/assets/20231021/275717832-888181f3-3952-4255-a49b-07f6cdd1cd07.png&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;8、填写软件功能与特点（注意：有两份文件要上传，1 程序鉴别材料，俗称源代码，2 文档鉴别材料，俗称使用说明书，这两份文档在 repo 中单独给出，并且有很多限制条件，具体看模版）&#xA;&lt;img src=&#34;https://ocf.rtx3.com/api/raw?path=/3/assets/20231021/275717278-6984ef7d-b4ca-4da0-b9cb-b0ad7594b352.png&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;9、确认信息&lt;/p&gt;&#xA;&lt;p&gt;10、填报完成，这里什么都不用点击&#xA;&lt;img src=&#34;https://ocf.rtx3.com/api/raw?path=/3/assets/20231021/275717309-1d08ed53-abf6-48a8-a4e5-184406fa91a5.png&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;11、直接点击右上角「用户中心」继续操作，会看到状态为「待提交材料」的登记记录。&#xA;&lt;img src=&#34;https://ocf.rtx3.com/api/raw?path=/3/assets/20231021/275717317-5e607c25-8693-42ef-844d-149dd586d42f.png&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;12、点击「打印签章页」，打印出来签字或盖章。再点击「上传签章页」进行上传提交。注意：请勿擅自更改申请确认签章页的内容、格式和打印比例，否则可能会被驳回。&#xA;&lt;img src=&#34;https://ocf.rtx3.com/api/raw?path=/3/assets/20231021/275717328-e611312e-97fc-4f2f-a0b2-0bd316aeb5eb.png&#34; alt=&#34;image&#34;&gt;&#xA;&lt;img src=&#34;https://ocf.rtx3.com/api/raw?path=/3/assets/20231021/275717344-22d82644-acd9-4bb4-95c7-1b26e7a6d150.png&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;13、点击「查看详情」&#xA;&lt;img src=&#34;https://ocf.rtx3.com/api/raw?path=/3/assets/20231021/275717361-a2e7b27b-26bf-43f6-8d1b-f4b04841dfa0.png&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;14、拉到最下面，点击「查看申请表」，查看需要准备的申请表，当前下载功能正在升级，待升级好了可以点击下载。下载好了签字或盖章。&#xA;&lt;img src=&#34;https://ocf.rtx3.com/api/raw?path=/3/assets/20231021/275717370-9cca6764-a4bc-44b2-b221-e7269a1305a1.png&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>
