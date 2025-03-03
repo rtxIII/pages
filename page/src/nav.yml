@@ -1,7 +1,7 @@
 sorted: true
 titles:
   - title:
-      name: "Monitoring"
+      name: "监控"
       items:
         - name: "uptime-kuma"
           logo: 📊
@@ -9,8 +9,11 @@ titles:
         - name: "certd"
           logo: "💾"
           url: "https://cert.we2.xyz"
+        - name: "sentry"
+          logo: "🔗"
+          url: "https://rtx3.sentry.io/"
   - title:
-      name: "tools"
+      name: "工具"
       items:
         - name: "exray"
           logo: "🔍"
@@ -19,7 +22,7 @@ titles:
           logo: "🤖"
           url: "https://dify.fuuka.link"
   - title:
-      name: "misc"
+      name: "AI"
       items:
         - name: "禅镜"
           logo: "🌞"
@@ -30,3 +33,9 @@ titles:
         - name: "扣子"
           logo: "🔗"
           url: "https://www.coze.cn/"
+        - name: "Hailuo"
+          logo: "🏠"
+          url: "https://goapi.ai/dashboard/hailuo"
+        - name: "硅基流动"
+          logo: "📚"
+          url: "https://account.siliconflow.cn/"

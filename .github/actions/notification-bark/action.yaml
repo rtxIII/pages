@@ -1,0 +1,56 @@
+name: 'Push Notifications via Bark'
+
+description: >
+  Push Notifications via Bark
+
+inputs:
+  key:
+    description: 'Your secret key, it is required'
+    required: true
+  host:
+    description: 'Your Bark host, the default is URL_ADDRESS    description: 'Your Bark host, the default is https://api.day.app'
+    required: false
+    default: 'https://api.day.app'
+  title:
+    description: 'Message title'
+    required: false
+  body:
+    description: 'Message body'
+    required: false
+  sound:
+    description: 'Message sound'
+    required: false
+    default: 'minuet'
+  isArchive:
+    description: 'Whether to archive the message'
+    required: false
+  url:
+    description: 'Message URL'
+    required: false
+  automaticallyCopy:
+    description: 'Whether to automatically copy the message'
+    required: false
+  copy:
+    description: 'Message to be copied'
+    required: false
+  
+outputs:
+  martix:
+    description: 'The matrix of the job'
+    value: ${{ steps.set-matrix.outputs.matrix }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Push notification
+      uses: shink/bark-action@v2
+      with:
+        key: ${{ inputs.key }}      
+        host: ${{ inputs.host }}
+        title: ${ inputs.title }}
+        body: ${{ inputs.body }}
+        sound: ${{ inputs.sound }}
+        isArchive: ${{ inputs.isArchive }}
+        url: ${{ inputs.url }}
+        automaticallyCopy: ${{ inputs.automaticallyCopy }}
+        copy: ${{ inputs.copy }}
