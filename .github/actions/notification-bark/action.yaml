@@ -37,12 +37,13 @@ inputs:
 outputs:
   martix:
     description: 'The matrix of the job'
-    value: ${{ steps.set-matrix.outputs.matrix }}
+    value: ${{ steps.bark_push.outputs.matrix }}
 
 runs:
   using: 'composite'
   steps:
     - name: Push notification
+      id: bark_push
       uses: shink/bark-action@v2
       with:
         key: ${{ inputs.key }}      
