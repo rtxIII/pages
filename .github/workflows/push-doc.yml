@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - .github/workflows/push-doc.yml
+      - docs/**
 
 jobs:
   python_flush_cnd:
