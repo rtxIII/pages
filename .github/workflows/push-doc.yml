@@ -12,6 +12,12 @@ jobs:
   python_flush_cnd:
     runs-on: ubuntu-22.04
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
       - name: Flush CDN
         env:
           SECRET_ID: ${{ secrets.SecretId }}      # 传入鉴权信息
@@ -25,7 +31,7 @@ jobs:
       - name: Call Bark
         env:
           BARKURL: ${{ secrets.BARKURL }}      # 传入鉴权信息  :
-          TITLE: 'Github项目${{ github.repository }}'
+          TITLE: 'Page 更新'
           BODY: '已推送。'
         run: |
           curl -X POST $BARKURL/$TITLE/$BODY?icon=https://pngimg.com/uploads/github/github_PNG22.png
