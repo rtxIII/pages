@@ -24,13 +24,14 @@ jobs:
         run: |                                    # 安装 sdk 并运行刷新脚本
           pip install --upgrade tencentcloud-sdk-python && cd .github/workflows
           python flush-cdn.py -i $SECRET_ID -k $SECRET_KEY
-  barks:
-    runs-on: ubuntu-22.04
+  push-bark:
+    runs-on: ubuntu-latest
     steps:
-      - name: Call Bark
-        env:
-          BARKURL: ${{ secrets.BARKURL }}      # 传入鉴权信息  :
-          TITLE: 'Page 更新'
-          BODY: '已推送。'
-        run: |
-          curl -X POST $BARKURL/$TITLE/$BODY?icon=https://pngimg.com/uploads/github/github_PNG22.png
+    - uses: rtxiii/pages/.github/actions/notification-bark@main
+      with:
+        key: ${{ secrets.BARK_KEY }}
+        title: Page ${{ github.ref_name }}已推送。
+        body: ${{ github.event.head_commit.message }} 
+        sound: noir
+        icon: https://rtx3.com/res/img/app/Github2.png
+        group: Exray-CI
