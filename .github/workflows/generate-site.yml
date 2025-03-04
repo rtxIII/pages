@@ -22,7 +22,6 @@ jobs:
           hugo-version: '0.144.2'
       - uses: actions/setup-python@v5
         with:
-          cache: 'pip' 
           python-version: '3.11' 
       - run: pip install  PyYAML
       - run: |
