@@ -40,4 +40,4 @@ jobs:
       - name: Push changes|Deploy
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ env.TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
