@@ -8,7 +8,7 @@ on:
       - page/src//**
 
 permissions:
-  contents: read 
+  contents: write 
 
 jobs:
   site_code:
@@ -31,9 +31,13 @@ jobs:
         run: cd page/src && hugo
       - name: rsync
         run: rsync --exclude-from=./exclude.txt  -avz  ./page/src/public/  ./docs/
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        if: github.ref == 'refs/heads/main'
+      - name: Commit files|Deploy
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add ./docs
+          git commit -m "docs update" || echo "Nothing to commit"
+      - name: Push changes|Deploy
+        uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/
+          github_token: ${{ env.TOKEN }}
