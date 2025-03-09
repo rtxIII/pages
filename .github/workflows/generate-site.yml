@@ -11,6 +11,17 @@ permissions:
   contents: write 
 
 jobs:
+  push-bark-start:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: .github/actions/notification-bark@main
+      with:
+        key: ${{ secrets.BARK_KEY }}
+        title: Page生成开始[${{ github.ref_name }}]
+        body: ${{ github.event.head_commit.message }} 
+        sound: noir
+        icon: https://rtx3.com/res/img/app/Github2.png
+        group: Exray-CI
   site_code:
     runs-on: ubuntu-22.04
     steps:
@@ -41,3 +52,15 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+  push-bark-result:
+    runs-on: ubuntu-latest
+    needs: site_code
+    steps:
+    - uses: .github/actions/notification-bark@main
+      with:
+        key: ${{ secrets.BARK_KEY }}
+        title: Page生成完成[${{ github.ref_name }}]
+        body: ${{ github.event.head_commit.message }} 
+        sound: noir
+        icon: https://rtx3.com/res/img/app/Github2.png
+        group: Exray-CI

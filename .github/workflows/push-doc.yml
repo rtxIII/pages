@@ -8,6 +8,17 @@ on:
       - docs/**
 
 jobs:
+  push-bark-start:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: .github/actions/notification-bark@main
+      with:
+        key: ${{ secrets.BARK_KEY }}
+        title: Page CDN flush started.
+        body: ${{ github.event.head_commit.message }} 
+        sound: noir
+        icon: https://rtx3.com/res/img/app/Github2.png
+        group: Exray-CI
   python_flush_cnd:
     runs-on: ubuntu-22.04
     steps:
