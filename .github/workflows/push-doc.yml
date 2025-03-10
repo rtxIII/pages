@@ -11,7 +11,7 @@ jobs:
   push-bark-start:
     runs-on: ubuntu-latest
     steps:
-    - uses: .github/actions/notification-bark@main
+    - uses: rtxiii/pages/.github/actions/notification-bark@main
       with:
         key: ${{ secrets.BARK_KEY }}
         title: Page CDN flush started.

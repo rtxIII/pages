@@ -14,7 +14,7 @@ jobs:
   push-bark-start:
     runs-on: ubuntu-latest
     steps:
-    - uses: .github/actions/notification-bark@main
+    - uses: rtxiii/pages/.github/actions/notification-bark@main
       with:
         key: ${{ secrets.BARK_KEY }}
         title: Page生成开始[${{ github.ref_name }}]
@@ -56,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: site_code
     steps:
-    - uses: .github/actions/notification-bark@main
+    - uses: rtxiii/pages/.github/actions/notification-bark@main
       with:
         key: ${{ secrets.BARK_KEY }}
         title: Page生成完成[${{ github.ref_name }}]
