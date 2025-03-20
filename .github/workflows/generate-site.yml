@@ -5,7 +5,7 @@ on:
   push:
     paths:
       - .github/workflows/generate-site.yml
-      - page/src//**
+      - page/src/content/**/*.md
 
 permissions:
   contents: write 
