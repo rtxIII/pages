@@ -1,3 +1,12 @@
++++
+date = "2025-03-20"
+title = "tx3-jizhi"
+description = ""
+tags = [""]
+term = [""]
+categories = [""]
++++
+
 Privacy Policy for Jizhi-rtx3
 Introduction
 This privacy policy applies to the Jizhi browser extension, which provides a custom new tab page for Chrome, Firefox, and Edge browsers, featuring noise waves animation in traditional Chinese colors paired with classic Chinese poems.
