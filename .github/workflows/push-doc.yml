@@ -6,6 +6,7 @@ on:
     paths:
       - .github/workflows/push-doc.yml
       - docs/**/*
+      - docs/sitemap.xml  
 
 jobs:
   push-bark-start:
