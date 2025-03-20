@@ -14,7 +14,7 @@ titles:
           url: "https://rtx3.sentry.io/"
         - name: "grafana"
           logo: "📈"
-          url: "https://grafana.we2.xyz/""
+          url: "https://grafana.we2.xyz/"
   - title:
       name: "工具"
       items:
@@ -24,22 +24,18 @@ titles:
         - name: "dify"
           logo: "🤖"
           url: "https://dify.fuuka.link"
-        - 
   - title:
       name: "AI"
       items:
         - name: "禅镜"
           logo: "🌞"
           url: "https://www.chanjing.cc/"
-        #- name: "硅基"
-        #  logo: "🌐" 
-        #  url: "https://cloud.siliconflow.cn/"
-        #- name: "扣子"
-        #  logo: "🔗"
-        #  url: "https://www.coze.cn/"
+        - name: "硅基"
+          logo: "🌐" 
+          url: "https://cloud.siliconflow.cn/"
+        - name: "扣子"
+          logo: "🔗"
+          url: "https://www.coze.cn/"
         - name: "Hailuo"
           logo: "🏠"
           url: "https://goapi.ai/dashboard/hailuo"
-        #- name: "硅基流动"
-        #  logo: "📚"
-        #  url: "https://account.siliconflow.cn/"
