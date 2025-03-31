@@ -1,0 +1,25 @@
+name: 'Shell Tree'
+description: 'A GitHub Action to generate a tree of the repository.'
+inputs:
+  path:
+    description: 'Path to the directory to generate the tree for'
+    required: false
+    default: '.'
+
+outputs:
+  martix:
+    description: 'The matrix of the job'
+    value: ${{ steps.tree.outputs.matrix }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run tree script
+      id: tree
+      shell: bash
+      run: |
+        cd ${{ inputs.path }}
+        echo "========"
+        ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
+        echo "========"
+        
