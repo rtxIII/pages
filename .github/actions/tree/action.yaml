@@ -5,6 +5,10 @@ inputs:
     description: 'Path to the directory to generate the tree for'
     required: false
     default: '.'
+  depth:
+    description: 'Depth of the tree'
+    required: false
+    default: '3'
 
 outputs:
   martix:
@@ -20,6 +24,6 @@ runs:
       run: |
         cd ${{ inputs.path }}
         echo "========"
-        ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
+        ls -l | grep '^d' | awk '{print "|-- " $9}' && ls -l | grep '^-' | awk '{print "|-- " $9}'
         echo "========"
         
