@@ -190,7 +190,16 @@ def generate_markdown_report(
         output_path.mkdir(parents=True, exist_ok=True)
         
         # 提取热词列表(用于标题和文件名)
-        top_keywords = [stat['group_key'] for stat in stats[:max_keywords]]
+        top_keywords = []
+        for stat in stats[:max_keywords]:
+            # 安全获取关键词 - 使用 'word' 字段
+            keyword = stat.get('word', '') or stat.get('group_key', '') or stat.get('keyword', '')
+            if keyword:
+                top_keywords.append(keyword)
+        
+        if not top_keywords:
+            print("[Markdown报告] 没有有效的关键词,跳过生成")
+            return None
         
         # 生成文件名
         filename = generate_filename(date, top_keywords, max_keywords=3)
@@ -222,9 +231,19 @@ def generate_markdown_report(
             content += f"*统计周期: {start_date} 至 {end_date}*\n\n"
         
         # 添加每个热词章节
-        for stat in stats[:max_keywords]:
-            keyword = stat['group_key']
-            news_items = stat.get('news', [])
+        for i, stat in enumerate(stats[:max_keywords]):
+            # 安全获取关键词 - 使用 'word' 字段
+            keyword = stat.get('word', '') or stat.get('group_key', '') or stat.get('keyword', '')
+            if not keyword:
+                continue
+                
+            # 使用 'titles' 字段而不是 'news'
+            news_items = stat.get('titles', []) or stat.get('news', [])
+            
+            # 调试信息
+            print(f"关键词 '{keyword}': {len(news_items)} 条新闻")
+            if i == 0 and news_items:
+                print(f"第一条新闻示例: {news_items[0].keys() if news_items else 'N/A'}")
             
             if news_items:
                 content += format_keyword_section(
@@ -296,7 +315,8 @@ def generate_markdown_from_analysis(
     # 提取平台列表
     platforms = set()
     for stat in stats:
-        for news in stat.get('news', []):
+        # 使用 'titles' 字段
+        for news in stat.get('titles', []) or stat.get('news', []):
             source = news.get('source_name')
             if source:
                 platforms.add(source)
