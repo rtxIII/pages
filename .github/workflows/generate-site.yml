@@ -35,9 +35,9 @@ jobs:
         with:
           python-version: '3.11' 
       - run: pip install  PyYAML
-      - run: |
-          cd page/src
-          python nav.py >  ./layouts/partials/nav.html
+      #- run: |
+      #    cd page/src
+      #    python nav.py >  ./layouts/partials/nav.html
       - name: Build
         run: cd page/src && hugo
       - name: rsync
@@ -48,6 +48,8 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add ./docs
           git commit -m "docs update" || echo "Nothing to commit"
+          git add ./config/frequency_words.txt
+          git commit -m "frequency_words.txt update" || echo "Nothing to commit"
       - name: Push changes|Deploy
         uses: ad-m/github-push-action@master
         with:
