@@ -224,6 +224,24 @@ class StorageManager:
     def is_first_crawl_today(self, date: Optional[str] = None) -> bool:
         """检查是否是当天第一次抓取"""
         return self.get_backend().is_first_crawl_today(date)
+    
+    def get_historical_data(self, days: int) -> dict:
+        """
+        获取历史数据
+        
+        Args:
+            days: 获取过去N天的数据
+            
+        Returns:
+            历史数据字典 {date: NewsData}
+        """
+        backend = self.get_backend()
+        # 检查后端是否有 get_historical_data 方法
+        if hasattr(backend, 'get_historical_data'):
+            return backend.get_historical_data(days)
+        else:
+            print(f"[存储管理器] 当前后端不支持 get_historical_data 方法")
+            return {}
 
     def cleanup(self) -> None:
         """清理资源"""

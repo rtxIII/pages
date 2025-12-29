@@ -84,8 +84,8 @@ report:
   # 频率词自动更新配置
   auto_update_frequency_words: true  # 是否自动更新频率词
   frequency_update_days: 7  # 分析历史数据天数
-  frequency_score_threshold: 0.4  # 新热词评分阈值(0-1) 降低阈值更容易识别新热词
-  frequency_max_append: 10  # 每次最多追加的热词数量
+  frequency_score_threshold: 0.3  # 新热词评分阈值(0-1) 降低阈值更容易识别新热词
+  frequency_max_append: 20  # 每次最多追加的热词数量
 
 notification:
   enable_notification: true # 是否启用通知功能，如果 false，则不发送手机通知
