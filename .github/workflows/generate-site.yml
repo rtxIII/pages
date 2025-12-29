@@ -31,10 +31,10 @@ jobs:
         uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: '0.144.2'
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11' 
-      - run: pip install  PyYAML
+      #- uses: actions/setup-python@v5
+      #- with:
+      #- python-version: '3.11' 
+      #- run: pip install  PyYAML
       #- run: |
       #    cd page/src
       #    python nav.py >  ./layouts/partials/nav.html
