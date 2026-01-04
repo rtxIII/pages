@@ -35,49 +35,6 @@ jobs:
           fetch-depth: 1
           clean: true
 
-      - name: Check Expiration
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          WORKFLOW_FILE="crawler.yml"
-          API_URL="repos/${{ github.repository }}/actions/workflows/$WORKFLOW_FILE/runs"
-
-          TOTAL=$(gh api "$API_URL" --jq '.total_count')
-          if [ -z "$TOTAL" ] || [ "$TOTAL" -eq 0 ]; then
-            echo "No previous runs found, skipping expiration check"
-            exit 0
-          fi
-
-          LAST_PAGE=$(( (TOTAL + 99) / 100 ))
-          FIRST_RUN_DATE=$(gh api "$API_URL?per_page=100&page=$LAST_PAGE" --jq '.workflow_runs[-1].created_at')
-          CURRENT_TIMESTAMP=$(date +%s)
-          FIRST_RUN_TIMESTAMP=$(date -d "$FIRST_RUN_DATE" +%s)
-          DIFF_SECONDS=$((CURRENT_TIMESTAMP - FIRST_RUN_TIMESTAMP))
-
-          echo "First run date: $FIRST_RUN_DATE"
-          echo "Total runs: $TOTAL"
-          echo "Last page: $LAST_PAGE"
-          echo "Current timestamp: $(date +%s)"
-          echo "First run timestamp: $(date -d "$FIRST_RUN_DATE" +%s)"
-          echo "Diff seconds: $DIFF_SECONDS"
-
-      # --------------------------------------------------------------------------------
-      # 🚦 TRAFFIC CONTROL / 流量控制
-      # --------------------------------------------------------------------------------
-      # EN: Generates a random delay between 1 and 300 seconds (5 minutes).
-      #     Critical for load balancing.
-      #
-      # CN: 生成 1 到 300 秒（5分钟）之间的随机延迟。
-      #     这对负载均衡至关重要。
-      - name: Random Delay (Traffic Control)
-        if: success()
-        run: |
-          echo "🎲 Traffic Control: Generating random delay..."
-          DELAY=$(( ( RANDOM % 30 )  + 1 ))
-          echo "⏸️  Sleeping for ${DELAY} seconds to spread the load..."
-          sleep ${DELAY}s
-          echo "▶️  Delay finished. Starting crawler..."
-
       - name: Set up Python
         if: success()
         uses: actions/setup-python@v5
@@ -89,7 +46,7 @@ jobs:
         if: success()
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r requirement-trand.txt
 
       - name: Verify required files
         if: success()
@@ -127,7 +84,7 @@ jobs:
           S3_ENDPOINT_URL: ${{ vars.S3_ENDPOINT_URL }}
           S3_REGION: ${{ vars.S3_REGION }}
           GITHUB_ACTIONS: true
-        run: python -m trendradar
+        run: python -m trend
 
       - name: Commit and push updates
         if: success()
@@ -138,8 +95,7 @@ jobs:
           # 添加可能更新的文件
           git add config/frequency_words.txt || true
           git add page/src/content/post/*.md || true
-          git add output/ || true
-          
+
           # 检查是否有变更
           if git diff --staged --quiet; then
             echo "No changes to commit"
