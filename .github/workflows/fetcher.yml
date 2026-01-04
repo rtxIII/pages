@@ -1,4 +1,4 @@
-name: Process Hot News
+name: Process Hot News(Auto)
 
 on:
   schedule:
@@ -16,7 +16,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: crawler-${{ github.ref_name }}
+  group: fetcher-${{ github.ref_name }}
   cancel-in-progress: true
 
 permissions:
@@ -24,7 +24,7 @@ permissions:
   actions: write
 
 jobs:
-  crawl:
+  fetcher:
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -56,7 +56,7 @@ jobs:
             exit 1
           fi
 
-      - name: Run crawler
+      - name: Run fetcher
         if: success()
         env:
           FEISHU_WEBHOOK_URL: ${{ vars.FEISHU_WEBHOOK_URL }}
