@@ -46,7 +46,7 @@ jobs:
         if: success()
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirement-trand.txt
+          pip install -r requirements.txt
 
       - name: Verify required files
         if: success()
