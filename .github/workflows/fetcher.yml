@@ -113,7 +113,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "🤖 Auto update: frequency words and markdown reports [skip ci]"
+            git commit -m "🤖 Auto update: frequency words and markdown reports"
             git push
             echo "✅ Changes committed and pushed"
           fi
