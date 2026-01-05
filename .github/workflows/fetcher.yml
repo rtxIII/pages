@@ -48,13 +48,24 @@ jobs:
           python-version: "3.10"
           cache: "pip"
 
+      - name: Set TrendRadar Version
+        id: set-version
+        run: |
+          if [ -z "${{ inputs.TrendRadar_Version }}" ]; then
+            echo "TRENDRADAR_VERSION=4.7.0" >> $GITHUB_OUTPUT
+            echo "📦 Using default version: 4.7.0 (scheduled run)"
+          else
+            echo "TRENDRADAR_VERSION=${{ inputs.TrendRadar_Version }}" >> $GITHUB_OUTPUT
+            echo "📦 Using input version: ${{ inputs.TrendRadar_Version }}"
+          fi
+
       - name: Install dependencies
         if: success()
         run: |
           python -m pip install --upgrade pip
-          curl -L https://github.com/sansan0/TrendRadar/archive/refs/tags/v${{ inputs.TrendRadar_Version }}.tar.gz -o TrendRadar-${{ inputs.TrendRadar_Version }}.tar.gz
-          tar -zxvf TrendRadar-${{ inputs.TrendRadar_Version }}.tar.gz
-          cd TrendRadar-${{ inputs.TrendRadar_Version }} 
+          curl -L https://github.com/sansan0/TrendRadar/archive/refs/tags/v${{ steps.set-version.outputs.TRENDRADAR_VERSION }}.tar.gz -o TrendRadar-${{ steps.set-version.outputs.TRENDRADAR_VERSION }}.tar.gz
+          tar -zxvf TrendRadar-${{ steps.set-version.outputs.TRENDRADAR_VERSION }}.tar.gz
+          cd TrendRadar-${{ steps.set-version.outputs.TRENDRADAR_VERSION }} 
           pip install -r requirements.txt
           mv trendradar/ ../
           cd ../
