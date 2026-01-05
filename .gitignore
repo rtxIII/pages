@@ -3,7 +3,8 @@ output/
 trendradar/
 index.html
 
-#Claude
+#Claude or other agent
+.agent
 .claude/
 
 # Byte-compiled / optimized / DLL files
