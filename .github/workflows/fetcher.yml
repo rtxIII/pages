@@ -117,3 +117,10 @@ jobs:
             git push
             echo "✅ Changes committed and pushed"
           fi
+
+      - name: Trigger generate-site workflow
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow run generate-site.yml --ref ${{ github.ref_name }}
