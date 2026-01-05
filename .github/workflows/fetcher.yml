@@ -107,7 +107,7 @@ jobs:
           
           # 添加可能更新的文件
           git add config/frequency_words.txt || true
-          git add page/src/content/post/**/*.md || true
+          git add page/src/content/post/ || true
 
           # 检查是否有变更
           if git diff --staged --quiet; then
