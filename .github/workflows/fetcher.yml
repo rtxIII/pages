@@ -52,9 +52,9 @@ jobs:
         if: success()
         run: |
           python -m pip install --upgrade pip
-          curl -L https://github.com/sansan0/TrendRadar/archive/refs/tags/${{ inputs.TrendRadar_Version }}.tar.gz -o TrendRadar-${{ inputs.TrendRadar_Version }}.tar.gz
-          tar -zxvf TrendRadar-${{ inputs.TrendRadar_Version }}.tar.gz
-          cd TrendRadar-${{ inputs.TrendRadar_Version }} 
+          curl -L https://github.com/sansan0/TrendRadar/archive/refs/tags/${{ inputs.TrendRadar_Version }}.tar.gz -o TrendRadar-${{ inputs.TrendRadar_Version|lstrip('v') }}.tar.gz
+          tar -zxvf TrendRadar-${{ inputs.TrendRadar_Version|lstrip('v') }}.tar.gz
+          cd TrendRadar-${{ inputs.TrendRadar_Version|lstrip('v') }} 
           pip install -r requirements.txt
           mv trendradar/ ../
           cd ../
