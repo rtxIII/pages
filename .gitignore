@@ -1,5 +1,7 @@
-#
+#trendradar
 output/
+trendradar/
+index.html
 
 #Claude
 .claude/
