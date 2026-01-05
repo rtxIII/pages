@@ -1,4 +1,4 @@
-name: Flush cdn when push doc
+name: flush-cdn-when-push-doc
 
 on:
   workflow_dispatch:

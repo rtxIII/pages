@@ -1,4 +1,4 @@
-name: Process Hot News(Auto)
+name: auto-process-news
 
 on:
   schedule:

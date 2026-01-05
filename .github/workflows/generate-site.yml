@@ -1,4 +1,4 @@
-name: generate site source code
+name: generate-site-source-code
 
 on:
   workflow_dispatch:
