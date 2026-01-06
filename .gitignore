@@ -1,7 +1,8 @@
-#trendradar
+#python
 output/
 trendradar/
 index.html
+test/
 
 #Claude or other agent
 .agent
