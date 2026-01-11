@@ -1,0 +1,75 @@
++++
+date = "2026-01-11"
+title = "热点新闻: 国产, 美国, AI等"
+description = "基于2026-01-11的热点新闻汇总"
+tags = ["trend", "news", "热点"]
+categories = ["news"]
++++
+
+# 热词统计
+
+*生成时间: 01-11 14:36*
+
+## 国产 中国 (15条)
+
+- [超20万颗！中国新增多个星座计划申请 全球太空资源竞争趋于白热化](https://www.cls.cn/detail/2253832) - 来源: 财联社热门
+- [中国新增20万颗卫星申请，专家：卫星频轨资源申请已上升至国家战略层面](https://wallstreetcn.com/articles/3763017) - 来源: 华尔街见闻
+- [多家外资金融机构看好中国市场](https://www.douyin.com/hot/2363824) - 来源: 抖音
+- [中国科学家发现基因封条](https://search.bilibili.com/all?keyword=%E4%B8%AD%E5%9B%BD%E7%A7%91%E5%AD%A6%E5%AE%B6%E5%8F%91%E7%8E%B0%E5%9F%BA%E5%9B%A0%E5%B0%81%E6%9D%A1) - 来源: bilibili 热搜
+- [热血忠诚铸就平安中国](https://s.weibo.com/weibo?q=%23%E7%83%AD%E8%A1%80%E5%BF%A0%E8%AF%9A%E9%93%B8%E5%B0%B1%E5%B9%B3%E5%AE%89%E4%B8%AD%E5%9B%BD%23&t=31&band_rank=3&Refer=top) - 来源: 微博
+- [中国“南天门计划”曝光](https://www.baidu.com/s?wd=%E4%B8%AD%E5%9B%BD%E2%80%9C%E5%8D%97%E5%A4%A9%E9%97%A8%E8%AE%A1%E5%88%92%E2%80%9D%E6%9B%9D%E5%85%89) - 来源: 百度热搜
+- [老外被中国细糠折服的一天](https://s.weibo.com/weibo?q=%E8%80%81%E5%A4%96%E8%A2%AB%E4%B8%AD%E5%9B%BD%E7%BB%86%E7%B3%A0%E6%8A%98%E6%9C%8D%E7%9A%84%E4%B8%80%E5%A4%A9&t=31&band_rank=17&Refer=top) - 来源: 微博
+- [刷新全球纪录！中国团队胜出](https://www.baidu.com/s?wd=%E5%88%B7%E6%96%B0%E5%85%A8%E7%90%83%E7%BA%AA%E5%BD%95%EF%BC%81%E4%B8%AD%E5%9B%BD%E5%9B%A2%E9%98%9F%E8%83%9C%E5%87%BA) - 来源: 百度热搜
+- [马上评｜外国人走进中共一大纪念馆，在“红色起点”读懂中国](https://m.thepaper.cn/newsDetail_forward_32358544) - 来源: 澎湃新闻
+- [全国公安机关庆祝第六个中国人民警察节](https://m.thepaper.cn/newsDetail_forward_32358373) - 来源: 澎湃新闻
+- [中国“手搓党”重塑创业](https://www.toutiao.com/trending/7593919500999724607/) - 来源: 今日头条
+- [米莱计划今年访华：中国是非常重要的贸易伙伴](https://news.ifeng.com/c/8ppI9Hefpvb) - 来源: 凤凰网
+- [中国阿姨带外国友人练八段锦](https://www.toutiao.com/trending/7593595492144283711/) - 来源: 今日头条
+- [中国大妈带中外友人在机场练八段锦](https://www.baidu.com/s?wd=%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%A6%88%E5%B8%A6%E4%B8%AD%E5%A4%96%E5%8F%8B%E4%BA%BA%E5%9C%A8%E6%9C%BA%E5%9C%BA%E7%BB%83%E5%85%AB%E6%AE%B5%E9%94%A6) - 来源: 百度热搜
+- [中国科学家发现基因封条](https://s.weibo.com/weibo?q=%23%E4%B8%AD%E5%9B%BD%E7%A7%91%E5%AD%A6%E5%AE%B6%E5%8F%91%E7%8E%B0%E5%9F%BA%E5%9B%A0%E5%B0%81%E6%9D%A1%23&t=31&band_rank=30&Refer=top) - 来源: 微博
+
+## 美国 日本 韩国 (11条)
+
+- [委内瑞拉与美国互派代表团](https://news.ifeng.com/c/8pnTnY84poZ) - 来源: 凤凰网
+- [美国蜜雪冰城含糖量](https://s.weibo.com/weibo?q=%E7%BE%8E%E5%9B%BD%E8%9C%9C%E9%9B%AA%E5%86%B0%E5%9F%8E%E5%90%AB%E7%B3%96%E9%87%8F&t=31&band_rank=4&Refer=top) - 来源: 微博
+- [特朗普被曝已听取军事打击伊朗方案汇报，美伊真的会打起来吗？为何近期美国军事动作频频？](https://www.zhihu.com/question/1993621515099399503) - 来源: 知乎
+- [金与正：韩国当局无法摆脱重大侵权挑衅的责任](https://news.ifeng.com/c/8pok3k5CfMh) - 来源: 凤凰网
+- [俄精准断供材料,日本产业被反杀](https://tieba.baidu.com/hottopic/browse/hottopic?amp%3Btopic_name=%E4%BF%84%E7%B2%BE%E5%87%86%E6%96%AD%E4%BE%9B%E6%9D%90%E6%96%99%2C%E6%97%A5%E6%9C%AC%E4%BA%A7%E4%B8%9A%E8%A2%AB%E5%8F%8D%E6%9D%80&topic_id=28348910) - 来源: 贴吧
+- [日本交涉被拒,中方驳回不惯着](https://tieba.baidu.com/hottopic/browse/hottopic?amp%3Btopic_name=%E6%97%A5%E6%9C%AC%E4%BA%A4%E6%B6%89%E8%A2%AB%E6%8B%92%2C%E4%B8%AD%E6%96%B9%E9%A9%B3%E5%9B%9E%E4%B8%8D%E6%83%AF%E7%9D%80&topic_id=28348923) - 来源: 贴吧
+- [日本出昏招,停供动漫当武器](https://tieba.baidu.com/hottopic/browse/hottopic?amp%3Btopic_name=%E6%97%A5%E6%9C%AC%E5%87%BA%E6%98%8F%E6%8B%9B%2C%E5%81%9C%E4%BE%9B%E5%8A%A8%E6%BC%AB%E5%BD%93%E6%AD%A6%E5%99%A8&topic_id=28348887) - 来源: 贴吧
+- [朝中社发文批日本新军国主义](https://www.douyin.com/hot/2364039) - 来源: 抖音
+- [美国移民执法射杀女子案持续发酵](https://www.toutiao.com/trending/7593600241552179219/) - 来源: 今日头条
+- [被美国奶茶的含糖量惊到了](https://s.weibo.com/weibo?q=%E8%A2%AB%E7%BE%8E%E5%9B%BD%E5%A5%B6%E8%8C%B6%E7%9A%84%E5%90%AB%E7%B3%96%E9%87%8F%E6%83%8A%E5%88%B0%E4%BA%86&t=31&band_rank=14&Refer=top) - 来源: 微博
+- [韩国青瓦台称无意挑衅或刺激朝鲜](https://www.baidu.com/s?wd=%E9%9F%A9%E5%9B%BD%E9%9D%92%E7%93%A6%E5%8F%B0%E7%A7%B0%E6%97%A0%E6%84%8F%E6%8C%91%E8%A1%85%E6%88%96%E5%88%BA%E6%BF%80%E6%9C%9D%E9%B2%9C) - 来源: 百度热搜
+
+## AI 相关 (6条)
+
+- [南大人工智能学科排名全球第一](https://www.baidu.com/s?wd=%E5%8D%97%E5%A4%A7%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E7%A7%91%E6%8E%92%E5%90%8D%E5%85%A8%E7%90%83%E7%AC%AC%E4%B8%80) - 来源: 百度热搜
+- [AI照片竟然拿了摄影比赛第一名](https://s.weibo.com/weibo?q=%23AI%E7%85%A7%E7%89%87%E7%AB%9F%E7%84%B6%E6%8B%BF%E4%BA%86%E6%91%84%E5%BD%B1%E6%AF%94%E8%B5%9B%E7%AC%AC%E4%B8%80%E5%90%8D%23&t=31&band_rank=1&Refer=top) - 来源: 微博
+- [AI每回答一个问题要消耗多少水](https://www.baidu.com/s?wd=AI%E6%AF%8F%E5%9B%9E%E7%AD%94%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98%E8%A6%81%E6%B6%88%E8%80%97%E5%A4%9A%E5%B0%91%E6%B0%B4) - 来源: 百度热搜
+- [国产龙头大模型捷报“三箭齐发” 技术与资本共振 AI应用加速落地](https://www.cls.cn/detail/2253876) - 来源: 财联社热门
+- [中国“AI四巨头”罕见同台，阿里、腾讯、Kimi与智谱“论剑”：大模型的下一步与中国反超的可能性](https://wallstreetcn.com/articles/3763033) - 来源: 华尔街见闻
+- [AI时代还有学画画的必要吗](https://www.baidu.com/s?wd=AI%E6%97%B6%E4%BB%A3%E8%BF%98%E6%9C%89%E5%AD%A6%E7%94%BB%E7%94%BB%E7%9A%84%E5%BF%85%E8%A6%81%E5%90%97) - 来源: 百度热搜
+
+## DeepSeek (2条)
+
+- [Deepseek或将发布新AI模型](https://search.bilibili.com/all?keyword=Deepseek%E6%88%96%E5%B0%86%E5%8F%91%E5%B8%83%E6%96%B0AI%E6%A8%A1%E5%9E%8B) - 来源: bilibili 热搜
+- [有新论文暗示 DeepSeekV4 已完成训练，这对未来 AI 大模型发展意味着什么？](https://www.zhihu.com/question/1990551534715556923) - 来源: 知乎
+
+## 特斯拉 (2条)
+
+- [AI“电荒”未解：马斯克“加单”燃气轮机 部分数据中心电网连线需等7年](https://www.cls.cn/detail/2253847) - 来源: 财联社热门
+- [马斯克宣布“X将在7天内公开所有算法”，包括推荐算法，以后每四周1次](https://wallstreetcn.com/articles/3763028) - 来源: 华尔街见闻
+
+## 英伟达 (1条)
+
+- [英伟达要求中国客户预付全款](https://s.weibo.com/weibo?q=%23%E8%8B%B1%E4%BC%9F%E8%BE%BE%E8%A6%81%E6%B1%82%E4%B8%AD%E5%9B%BD%E5%AE%A2%E6%88%B7%E9%A2%84%E4%BB%98%E5%85%A8%E6%AC%BE%23&t=31&band_rank=12&Refer=top) - 来源: 微博
+
+## 科技 (1条)
+
+- [国内首个海上回收复用火箭基地开工在即！《科创板日报》记者实探杭州箭元科技“超级工厂”](https://www.cls.cn/detail/2253794) - 来源: 财联社热门
+
+
+---
+
+*数据来源: 今日头条、贴吧、华尔街见闻、凤凰网、抖音等 | 日期: 2026-01-11*
