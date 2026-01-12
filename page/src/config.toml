@@ -1,5 +1,6 @@
 baseURL = "https://rtx3.com"
-title = "繠驖瓕III 文章展示"
+# title = "繠驖瓕III 文章展示"
+
 languageCode = "en"
 DefaultContentLanguage = "en" # Change this to change the site's language
 theme = "hugo.386"
@@ -7,6 +8,8 @@ preserveTaxonomyNames = true
 
 [outputs]
 home = ["HTML", "RSS", "JSON"]
+section = ["HTML", "RSS"]
+page = ["HTML"]
 
 [params]
     # The name to display as main title in the home page
