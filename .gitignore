@@ -1,7 +1,7 @@
 #python
 output/
 trendradar/
-index.html
+#/index.html
 test/
 
 #Claude or other agent
