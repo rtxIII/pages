@@ -41,7 +41,7 @@ jobs:
       - name: Build
         run: cd page/src && hugo
       - name: rsync
-        run: rsync --exclude-from=./exclude.txt --delete -avz  ./page/src/public/  ./docs/
+        run: rsync --exclude-from=./exclude.txt -av  ./page/src/public/  ./docs/
       - name: Commit files|Deploy
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
