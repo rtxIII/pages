@@ -169,6 +169,10 @@ class NewsAnalysisEngine:
                 # 存储结果
                 self.function_results[function_name] = result
                 
+                # 特殊处理：存储板块评估结果
+                if function_name == "evaluate_sector_impact":
+                    self.sector_impact_results.append(arguments)
+                
                 results.append({
                     "type": "tool_result",
                     "tool_use_id": tool_use.id,
@@ -195,8 +199,9 @@ class NewsAnalysisEngine:
             {"role": "user", "content": prompt}
         ]
         
-        max_iterations = 5  # 最多执行5轮 Function Calling
+        max_iterations = 10  # 最多执行10轮 Function Calling
         iteration = 0
+        response = None
         
         while iteration < max_iterations:
             iteration += 1
@@ -244,8 +249,24 @@ class NewsAnalysisEngine:
                 print(f"[Claude API 调用失败] {e}")
                 return self._generate_fallback_analysis()
         
-        # 如果达到最大迭代次数，返回最后一次的内容
-        print(f"[Function Calling] 达到最大迭代次数 {max_iterations}")
+        # 如果达到最大迭代次数，再调用一次让 Claude 生成最终文本响应
+        print(f"[Function Calling] 达到最大迭代次数 {max_iterations}，获取最终响应...")
+        try:
+            # 最后一次调用，禁用工具以强制生成文本响应
+            final_response = self.client.messages.create(
+                model=self.model,
+                max_tokens=self.max_tokens,
+                temperature=self.temperature,
+                system=system_prompt,
+                messages=messages,
+                tools=None  # 禁用工具，强制生成文本
+            )
+            text_blocks = [block.text for block in final_response.content if hasattr(block, 'text')]
+            if text_blocks:
+                return "\n".join(text_blocks)
+        except Exception as e:
+            print(f"[Claude API 最终调用失败] {e}")
+        
         return self._generate_fallback_analysis()
     
     def _generate_fallback_analysis(self) -> str:
@@ -288,6 +309,7 @@ class NewsAnalysisEngine:
         
         # 重置函数调用结果
         self.function_results = {}
+        self.sector_impact_results = []  # 存储板块评估结果
         
         # 解析新闻文件
         news_data = self.parse_news_markdown(news_md_path)
@@ -306,8 +328,13 @@ class NewsAnalysisEngine:
         print(f"[分析引擎] 调用 Claude API (Function Calling {'启用' if self.enable_function_calling else '禁用'})...")
         ai_response = self.call_llm_api(prompt)
         
-        # 解析 AI 响应
-        analysis_result = MarketImpactScorer.parse_analysis_result(ai_response)
+        # 优先使用 Function Calling 返回的结构化数据
+        if self.sector_impact_results:
+            # 从 Function Calling 结果构建分析结果
+            analysis_result = self._build_result_from_function_calls(ai_response)
+        else:
+            # 降级：解析 AI 响应文本
+            analysis_result = MarketImpactScorer.parse_analysis_result(ai_response)
         
         # 计算情绪
         sentiment = MarketImpactScorer.calculate_overall_sentiment(
@@ -323,6 +350,68 @@ class NewsAnalysisEngine:
             "sentiment": sentiment,
             "function_results": self.function_results  # 包含函数调用结果
         }
+    
+    def _build_result_from_function_calls(self, ai_response: str) -> "MarketAnalysisResult":
+        """从 Function Calling 结果构建分析结果"""
+        from .market_scorer import MarketAnalysisResult, SectorImpact
+        
+        # 构建板块影响列表
+        sector_impacts = []
+        for impact_data in self.sector_impact_results:
+            sector_impacts.append(SectorImpact(
+                sector=impact_data.get("sector", "未知"),
+                direction=impact_data.get("direction", "中性"),
+                score=impact_data.get("impact_score", 5),
+                confidence=impact_data.get("confidence", "中"),
+                reason=impact_data.get("reasoning", "")
+            ))
+        
+        # 尝试从文本响应中提取建议
+        short_term = ""
+        medium_term = ""
+        risk_warning = ""
+        key_points = []
+        
+        if ai_response:
+            # 尝试解析文本中的建议
+            import re
+            
+            # 提取核心要点
+            points_pattern = r'(?:^|\n)\d+\.\s*\*\*(.+?)\*\*\s*[-:：]\s*(.+?)(?=\n\d+\.|\n##|\Z)'
+            for m in re.finditer(points_pattern, ai_response, re.DOTALL):
+                event = m.group(1).strip()
+                impact = m.group(2).strip()
+                key_points.append(f"{event}: {impact}")
+            
+            # 提取投资建议
+            short_pattern = r'\*\*短期[（(]1-3天[)）]\*\*[：:]\s*(.+?)(?=\n\*\*|$)'
+            short_match = re.search(short_pattern, ai_response, re.DOTALL)
+            if short_match:
+                short_term = short_match.group(1).strip()
+            
+            medium_pattern = r'\*\*中期[（(]1-2周[)）]\*\*[：:]\s*(.+?)(?=\n\*\*|$)'
+            medium_match = re.search(medium_pattern, ai_response, re.DOTALL)
+            if medium_match:
+                medium_term = medium_match.group(1).strip()
+            
+            risk_pattern = r'\*\*风险提示\*\*[：:]\s*(.+?)(?=\n##|$)'
+            risk_match = re.search(risk_pattern, ai_response, re.DOTALL)
+            if risk_match:
+                risk_warning = risk_match.group(1).strip()
+        
+        # 如果没有提取到核心要点，从板块分析中生成
+        if not key_points and sector_impacts:
+            for impact in sector_impacts[:5]:
+                key_points.append(f"{impact.sector}板块 - {impact.direction}: {impact.reason[:50]}...")
+        
+        return MarketAnalysisResult(
+            key_points=key_points if key_points else ["基于热点新闻的市场分析"],
+            sector_impacts=sector_impacts,
+            short_term_advice=short_term or "关注市场情绪变化，谨慎操作",
+            medium_term_advice=medium_term or "持续跟踪热点板块发展",
+            risk_warning=risk_warning or "市场有风险，投资需谨慎",
+            raw_content=ai_response
+        )
     
     def analyze_and_generate_report(
         self,
