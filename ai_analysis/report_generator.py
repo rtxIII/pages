@@ -240,6 +240,47 @@ sentiment = "{sentiment}"
         return content
     
     @staticmethod
+    def extract_filename_keyword(key_points: List[str], sector_impacts: List = None) -> str:
+        """
+        从核心要点中提取最重要的关键词用于文件名
+        
+        Args:
+            key_points: 核心要点列表
+            sector_impacts: 板块影响列表（可选）
+            
+        Returns:
+            提取的关键词，如 "AI产业全面爆发"
+        """
+        if not key_points:
+            return "market-analysis"
+        
+        first_point = key_points[0] if key_points else ""
+        
+        import re
+        
+        # 优先匹配 **xxx** 格式的加粗文本（实际核心要点格式）
+        # 格式: "**AI产业全面爆发** - 利好：..."
+        bold_match = re.search(r'\*\*([^*]+)\*\*', first_point)
+        if bold_match:
+            keyword = bold_match.group(1).strip()
+            # 清理可能的特殊字符
+            keyword = re.sub(r'[\[\]()（）【】]', '', keyword)
+            if 3 <= len(keyword) <= 20:
+                return keyword
+        
+        # 尝试匹配 "板块 - 利好：1. xxx" 格式
+        numbered_match = re.search(r'[：:]\s*(?:\d+\.\s*)?([^：:;；\d][^：:;；]{2,15})', first_point)
+        if numbered_match:
+            keyword = numbered_match.group(1).strip()
+            keyword = re.sub(r'[*\[\]()（）【】]', '', keyword)
+            keyword = keyword.split('；')[0].split(';')[0]
+            if 3 <= len(keyword) <= 20:
+                return keyword
+        
+        # 回退到默认
+        return "market-analysis"
+    
+    @staticmethod
     def generate_report(
         analysis_result: MarketAnalysisResult,
         date: str,

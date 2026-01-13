@@ -507,11 +507,18 @@ class NewsAnalysisEngine:
         )
         
         if save:
+            # 从核心要点提取关键词用于文件名
+            keyword = AnalysisReportGenerator.extract_filename_keyword(
+                result["analysis_result"].key_points
+            )
+            filename = f"{result['date']}-{keyword}.md"
+            
             # 保存 Markdown 报告
             file_path = AnalysisReportGenerator.save_report(
                 report_content=report_content,
                 output_dir=output_dir,
-                date=result["date"]
+                date=result["date"],
+                filename=filename
             )
             print(f"[分析引擎] Markdown 报告已保存: {file_path}")
             
