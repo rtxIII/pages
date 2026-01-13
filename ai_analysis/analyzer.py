@@ -376,33 +376,100 @@ class NewsAnalysisEngine:
             # 尝试解析文本中的建议
             import re
             
-            # 提取核心要点
-            points_pattern = r'(?:^|\n)\d+\.\s*\*\*(.+?)\*\*\s*[-:：]\s*(.+?)(?=\n\d+\.|\n##|\Z)'
-            for m in re.finditer(points_pattern, ai_response, re.DOTALL):
-                event = m.group(1).strip()
-                impact = m.group(2).strip()
-                key_points.append(f"{event}: {impact}")
+            # 提取核心要点 - 支持多种格式
+            points_patterns = [
+                r'(?:^|\n)\d+\.\s*\*\*(.+?)\*\*\s*[-:：]\s*(.+?)(?=\n\d+\.|\n##|\Z)',
+                r'(?:^|\n)\d+\.\s*(.+?)[：:]\s*(.+?)(?=\n\d+\.|\n##|\Z)',
+            ]
+            for pattern in points_patterns:
+                for m in re.finditer(pattern, ai_response, re.DOTALL):
+                    event = m.group(1).strip()
+                    impact = m.group(2).strip()
+                    key_points.append(f"{event}: {impact}")
+                if key_points:
+                    break
             
-            # 提取投资建议
-            short_pattern = r'\*\*短期[（(]1-3天[)）]\*\*[：:]\s*(.+?)(?=\n\*\*|$)'
-            short_match = re.search(short_pattern, ai_response, re.DOTALL)
-            if short_match:
-                short_term = short_match.group(1).strip()
+            # 提取投资建议 - 支持多种格式
+            short_patterns = [
+                r'\*\*短期[（(]1-3天[)）]\*\*[：:]\s*(.+?)(?=\n\*\*|\n##|$)',
+                r'###?\s*短期[（(]1-3天[)）]\s*\n+(.+?)(?=\n###?|\n##|$)',
+                r'短期[（(]1-3天[)）][：:]\s*(.+?)(?=\n|$)',
+            ]
+            for pattern in short_patterns:
+                short_match = re.search(pattern, ai_response, re.DOTALL)
+                if short_match:
+                    short_term = short_match.group(1).strip()
+                    break
             
-            medium_pattern = r'\*\*中期[（(]1-2周[)）]\*\*[：:]\s*(.+?)(?=\n\*\*|$)'
-            medium_match = re.search(medium_pattern, ai_response, re.DOTALL)
-            if medium_match:
-                medium_term = medium_match.group(1).strip()
+            medium_patterns = [
+                r'\*\*中期[（(]1-2周[)）]\*\*[：:]\s*(.+?)(?=\n\*\*|\n##|$)',
+                r'###?\s*中期[（(]1-2周[)）]\s*\n+(.+?)(?=\n###?|\n##|$)',
+                r'中期[（(]1-2周[)）][：:]\s*(.+?)(?=\n|$)',
+            ]
+            for pattern in medium_patterns:
+                medium_match = re.search(pattern, ai_response, re.DOTALL)
+                if medium_match:
+                    medium_term = medium_match.group(1).strip()
+                    break
             
-            risk_pattern = r'\*\*风险提示\*\*[：:]\s*(.+?)(?=\n##|$)'
-            risk_match = re.search(risk_pattern, ai_response, re.DOTALL)
-            if risk_match:
-                risk_warning = risk_match.group(1).strip()
+            risk_patterns = [
+                r'\*\*风险提示\*\*[：:]\s*(.+?)(?=\n##|$)',
+                r'###?\s*风险提示\s*\n+(.+?)(?=\n###?|\n##|$)',
+                r'风险提示[：:]\s*(.+?)(?=\n##|$)',
+            ]
+            for pattern in risk_patterns:
+                risk_match = re.search(pattern, ai_response, re.DOTALL)
+                if risk_match:
+                    risk_warning = risk_match.group(1).strip()
+                    break
         
         # 如果没有提取到核心要点，从板块分析中生成
         if not key_points and sector_impacts:
             for impact in sector_impacts[:5]:
-                key_points.append(f"{impact.sector}板块 - {impact.direction}: {impact.reason[:50]}...")
+                reason_short = impact.reason[:80] + "..." if len(impact.reason) > 80 else impact.reason
+                key_points.append(f"{impact.sector}板块 - {impact.direction}: {reason_short}")
+        
+        # 如果没有提取到投资建议，基于板块分析自动生成
+        if not short_term and sector_impacts:
+            bullish_sectors = [s for s in sector_impacts if s.direction == "利好" and s.score >= 7]
+            bearish_sectors = [s for s in sector_impacts if s.direction == "利空" and s.score >= 7]
+            
+            advices = []
+            if bullish_sectors:
+                sectors_str = "、".join([s.sector for s in bullish_sectors[:2]])
+                advices.append(f"1. **关注{sectors_str}板块**：短期有利好支撑，可适当关注相关龙头标的")
+            if bearish_sectors:
+                sectors_str = "、".join([s.sector for s in bearish_sectors[:2]])
+                advices.append(f"{len(advices)+1}. **规避{sectors_str}板块风险**：短期存在利空因素，建议谨慎操作")
+            if not advices:
+                advices.append("1. **关注市场情绪变化**：当前市场信号混杂，建议谨慎操作，控制仓位")
+            
+            short_term = "\n".join(advices)
+        
+        if not medium_term and sector_impacts:
+            high_conf_sectors = [s for s in sector_impacts if s.confidence == "高"]
+            
+            advices = []
+            if high_conf_sectors:
+                for i, s in enumerate(high_conf_sectors[:2], 1):
+                    advices.append(f"{i}. **{s.sector}板块**：{s.reason[:60]}...")
+            if not advices:
+                advices.append("1. **持续跟踪热点**：关注政策面和资金面变化，灵活调整持仓")
+            
+            medium_term = "\n".join(advices)
+        
+        if not risk_warning and sector_impacts:
+            risks = []
+            for s in sector_impacts:
+                if s.score >= 6:
+                    if "估值" in s.reason or "泡沫" in s.reason:
+                        risks.append(f"1. **{s.sector}板块估值风险**：需警惕短期回调压力")
+                    if "政策" in s.reason or "监管" in s.reason:
+                        risks.append(f"{len(risks)+1}. **政策不确定性**：关注相关政策动向")
+            if not risks:
+                risks.append("1. **市场波动风险**：市场有风险，投资需谨慎")
+            
+            risk_warning = "\n".join(risks[:3])
         
         return MarketAnalysisResult(
             key_points=key_points if key_points else ["基于热点新闻的市场分析"],

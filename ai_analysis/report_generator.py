@@ -5,6 +5,7 @@
 将 AI 分析结果格式化为 Hugo Markdown 文档
 """
 
+import re
 from typing import Dict, List
 from datetime import datetime
 from pathlib import Path
@@ -14,6 +15,43 @@ from .market_scorer import MarketAnalysisResult, SectorImpact
 
 class AnalysisReportGenerator:
     """分析报告生成器"""
+    
+    # 影响程度映射到星级
+    SCORE_TO_STARS = {
+        (1, 2): "⭐",
+        (3, 4): "⭐⭐",
+        (5, 6): "⭐⭐⭐",
+        (7, 8): "⭐⭐⭐⭐",
+        (9, 10): "⭐⭐⭐⭐⭐",
+    }
+    
+    @staticmethod
+    def _score_to_stars(score: int) -> str:
+        """将分数转换为星级显示"""
+        for (low, high), stars in AnalysisReportGenerator.SCORE_TO_STARS.items():
+            if low <= score <= high:
+                return stars
+        return "⭐"
+    
+    @staticmethod
+    def _parse_numbered_list(text: str) -> List[str]:
+        """
+        解析文本中的编号列表项
+        
+        支持格式: "1. xxx 2. xxx" 或 "1. xxx\n2. xxx"
+        """
+        if not text:
+            return []
+        
+        # 尝试按编号分割 (1. xxx 2. xxx)
+        pattern = r'(\d+)\.\s*\*?\*?([^0-9]+?)(?=\d+\.|$)'
+        matches = re.findall(pattern, text)
+        
+        if matches:
+            return [match[1].strip().rstrip('*').strip() for match in matches if match[1].strip()]
+        
+        # 如果没有匹配到编号格式，返回原文本作为单项
+        return [text.strip()]
     
     @staticmethod
     def generate_frontmatter(
@@ -56,15 +94,51 @@ sentiment = "{sentiment}"
         return frontmatter
     
     @staticmethod
-    def format_key_points(key_points: List[str]) -> str:
-        """格式化核心要点"""
+    def format_key_points(key_points: List[str], max_points: int = 5) -> str:
+        """
+        格式化核心要点（精简版）
+        
+        Args:
+            key_points: 核心要点列表
+            max_points: 最多显示的要点数
+        """
         if not key_points:
             return "## 📊 核心要点\n\n暂无核心要点\n\n"
         
         content = "## 📊 核心要点\n\n"
-        for i, point in enumerate(key_points, 1):
-            content += f"{i}. {point}\n"
-        content += "\n"
+        
+        # 只显示前 N 个要点作为摘要
+        for i, point in enumerate(key_points[:max_points], 1):
+            # 检查是否包含利好/利空标记，格式化为加粗
+            if '利好' in point or '利空' in point or '中性' in point:
+                # 尝试提取标题和说明
+                parts = point.split(':', 1) if ':' in point else point.split('：', 1)
+                if len(parts) == 2:
+                    title = parts[0].strip()
+                    desc = parts[1].strip()
+                    # 提取方向标记
+                    direction = ""
+                    if '利好' in title or '利好' in desc[:10]:
+                        direction = "利好"
+                    elif '利空' in title or '利空' in desc[:10]:
+                        direction = "利空"
+                    elif '中性' in title or '中性' in desc[:10]:
+                        direction = "中性"
+                    
+                    # 清理标题中的方向标记
+                    clean_title = re.sub(r'\*?\*?(利好|利空|中性)\*?\*?[：:]*\s*', '', title).strip()
+                    clean_desc = re.sub(r'^\*?\*?(利好|利空|中性)\*?\*?[：:]*\s*', '', desc).strip()
+                    
+                    if direction:
+                        content += f"{i}. **{clean_title}** - {direction}：{clean_desc}\n"
+                    else:
+                        content += f"{i}. **{clean_title}** - {clean_desc}\n"
+                else:
+                    content += f"{i}. {point}\n"
+            else:
+                content += f"{i}. {point}\n"
+        
+        content += "\n---\n\n"
         return content
     
     @staticmethod
@@ -75,12 +149,17 @@ sentiment = "{sentiment}"
         
         content = "## 🎯 板块影响评估\n\n"
         content += "| 板块 | 方向 | 影响程度 | 置信度 | 理由 |\n"
-        content += "|------|------|----------|--------|------|\n"
+        content += "|:----:|:----:|:--------:|:------:|------|\n"
         
         for impact in impacts:
-            content += f"| {impact.sector} | {impact.direction} | {impact.score}/10 | {impact.confidence} | {impact.reason} |\n"
+            stars = AnalysisReportGenerator._score_to_stars(impact.score)
+            # 截断过长的理由
+            reason = impact.reason
+            if len(reason) > 60:
+                reason = reason[:57] + "..."
+            content += f"| {impact.sector} | {impact.direction} | {stars} | {impact.confidence} | {reason} |\n"
         
-        content += "\n"
+        content += "\n---\n\n"
         return content
     
     @staticmethod
@@ -89,17 +168,74 @@ sentiment = "{sentiment}"
         medium_term: str,
         risk_warning: str
     ) -> str:
-        """格式化投资建议"""
+        """格式化投资建议（改进版：自动识别并拆分编号列表）"""
         content = "## 💡 投资建议\n\n"
         
+        # 短期建议
         if short_term:
-            content += f"**短期（1-3天）**：{short_term}\n\n"
+            content += "### 短期（1-3天）\n\n"
+            items = AnalysisReportGenerator._parse_numbered_list(short_term)
+            for i, item in enumerate(items, 1):
+                # 提取加粗的标题部分
+                bold_match = re.match(r'\*\*(.+?)\*\*[：:]?\s*(.+)?', item)
+                if bold_match:
+                    title = bold_match.group(1)
+                    desc = bold_match.group(2) or ""
+                    content += f"{i}. **{title}**：{desc}\n"
+                else:
+                    content += f"{i}. {item}\n"
+            content += "\n"
         
+        # 中期建议
         if medium_term:
-            content += f"**中期（1-2周）**：{medium_term}\n\n"
+            content += "### 中期（1-2周）\n\n"
+            items = AnalysisReportGenerator._parse_numbered_list(medium_term)
+            for i, item in enumerate(items, 1):
+                bold_match = re.match(r'\*\*(.+?)\*\*[：:]?\s*(.+)?', item)
+                if bold_match:
+                    title = bold_match.group(1)
+                    desc = bold_match.group(2) or ""
+                    content += f"{i}. **{title}**：{desc}\n"
+                else:
+                    content += f"{i}. {item}\n"
+            content += "\n"
         
+        content += "---\n\n"
+        
+        # 风险提示（改为表格形式）
         if risk_warning:
-            content += f"**风险提示**：{risk_warning}\n\n"
+            content += "## ⚠️ 风险提示\n\n"
+            items = AnalysisReportGenerator._parse_numbered_list(risk_warning)
+            
+            if len(items) > 1:
+                # 多项时使用表格
+                content += "| 风险类型 | 说明 |\n"
+                content += "|:--------:|------|\n"
+                for item in items:
+                    # 尝试提取风险类型名称
+                    bold_match = re.match(r'\*\*(.+?)\*\*[：:]?\s*(.+)?', item)
+                    if bold_match:
+                        risk_type = bold_match.group(1)
+                        desc = bold_match.group(2) or ""
+                        content += f"| {risk_type} | {desc} |\n"
+                    else:
+                        # 尝试从内容推断风险类型
+                        if '估值' in item:
+                            content += f"| 估值风险 | {item} |\n"
+                        elif '政策' in item or '美联储' in item:
+                            content += f"| 政策风险 | {item} |\n"
+                        elif '地缘' in item:
+                            content += f"| 地缘风险 | {item} |\n"
+                        elif '数据' in item:
+                            content += f"| 数据风险 | {item} |\n"
+                        elif '技术' in item:
+                            content += f"| 技术风险 | {item} |\n"
+                        else:
+                            content += f"| 其他风险 | {item} |\n"
+                content += "\n"
+            else:
+                # 单项时使用普通文本
+                content += f"> ⚠️ {items[0]}\n\n"
         
         return content
     
@@ -157,8 +293,8 @@ sentiment = "{sentiment}"
         )
         
         # 添加页脚
-        report += "\n---\n\n"
-        report += f"*分析生成时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}*\n"
+        report += "---\n\n"
+        report += f"*分析生成时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}*\n\n"
         report += f"*免责声明: 本分析由 AI 自动生成，仅供参考，不构成投资建议*\n"
         
         return report
