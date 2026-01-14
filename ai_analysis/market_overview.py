@@ -201,11 +201,12 @@ class MarketOverviewProvider:
     def get_north_flow(cls) -> float:
         """获取北向资金净流入（亿元）"""
         try:
-            df = ak.stock_hsgt_north_net_flow_in_em()
+            df = ak.stock_hsgt_fund_flow_summary_em()
             if not df.empty:
-                # 取最新一条数据
-                latest = df.iloc[-1]
-                return float(latest['当日净流入'])
+                # 筛选北向资金（沪股通 + 深股通）
+                north_df = df[df['资金方向'] == '北向']
+                if not north_df.empty and '资金净流入' in north_df.columns:
+                    return float(north_df['资金净流入'].sum()) / 1e8
         except Exception as e:
             logger.error(f"获取北向资金失败: {e}")
         return 0.0
@@ -402,10 +403,12 @@ class MarketOverviewProvider:
     def get_south_flow(cls) -> float:
         """获取南向资金净流入（亿港元）"""
         try:
-            df = ak.stock_hsgt_south_net_flow_in_em()
+            df = ak.stock_hsgt_fund_flow_summary_em()
             if not df.empty:
-                latest = df.iloc[-1]
-                return float(latest['当日净流入'])
+                # 筛选南向资金（港股通）
+                south_df = df[df['资金方向'] == '南向']
+                if not south_df.empty and '资金净流入' in south_df.columns:
+                    return float(south_df['资金净流入'].sum()) / 1e8
         except Exception as e:
             logger.error(f"获取南向资金失败: {e}")
         return 0.0
