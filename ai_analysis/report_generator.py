@@ -378,3 +378,149 @@ sentiment = "{sentiment}"
             f.write(report_content)
         
         return str(file_path)
+    
+    # ==================== 新增方法（参考 daily_stock_analysis）====================
+    
+    @staticmethod
+    def format_market_overview(overview) -> str:
+        """
+        格式化大盘复盘模块
+        
+        Args:
+            overview: MarketOverview 对象
+            
+        Returns:
+            格式化的大盘复盘 Markdown 内容
+        """
+        content = f"## 📊 {overview.market} 大盘复盘 ({overview.date})\n\n"
+        
+        # 主要指数
+        if overview.indices:
+            content += "### 主要指数\n\n"
+            content += "| 指数 | 收盘 | 涨跌幅 |\n"
+            content += "|:----:|:----:|:------:|\n"
+            
+            for idx in overview.indices:
+                direction = "🟢" if idx.change_pct > 0 else "🔴" if idx.change_pct < 0 else "⚪"
+                content += f"| {idx.name} | {idx.current:.2f} | {direction}{idx.change_pct:+.2f}% |\n"
+            content += "\n"
+        
+        # 市场概况
+        content += "### 市场概况\n\n"
+        content += "| 指标 | 数值 |\n"
+        content += "|:----:|:----:|\n"
+        content += f"| 上涨家数 | {overview.up_count} |\n"
+        content += f"| 下跌家数 | {overview.down_count} |\n"
+        
+        if overview.market == "CN-A":
+            content += f"| 涨停 | {overview.limit_up_count} |\n"
+            content += f"| 跌停 | {overview.limit_down_count} |\n"
+            content += f"| 两市成交额 | {overview.total_amount:.0f}亿 |\n"
+            content += f"| 北向资金 | {overview.north_flow:+.2f}亿 |\n"
+        elif overview.market == "HK":
+            content += f"| 成交额 | {overview.total_amount:.0f}亿港元 |\n"
+            content += f"| 南向资金 | {overview.south_flow:+.2f}亿港元 |\n"
+        else:
+            content += f"| 成交额 | {overview.total_amount:.0f}亿 |\n"
+        content += "\n"
+        
+        # 板块表现
+        if overview.top_sectors or overview.bottom_sectors:
+            content += "### 板块表现\n\n"
+            if overview.top_sectors:
+                top_names = "、".join([s.name for s in overview.top_sectors[:3]])
+                content += f"- **领涨**: {top_names}\n"
+            if overview.bottom_sectors:
+                bottom_names = "、".join([s.name for s in overview.bottom_sectors[:3]])
+                content += f"- **领跌**: {bottom_names}\n"
+            content += "\n"
+        
+        content += "---\n\n"
+        return content
+    
+    @staticmethod
+    def format_trading_checklist(checklist: List[Dict]) -> str:
+        """
+        格式化交易检查清单
+        
+        Args:
+            checklist: 检查清单列表，每项包含 name, status, value, note
+            
+        Returns:
+            格式化的检查清单 Markdown 内容
+        """
+        if not checklist:
+            return ""
+        
+        content = "## ✅ 决策检查清单\n\n"
+        content += "| 检查项 | 状态 | 数值 | 备注 |\n"
+        content += "|:------:|:----:|:----:|------|\n"
+        
+        for item in checklist:
+            name = item.get("name", "")
+            status = item.get("status", "⚠️")
+            value = item.get("value", "")
+            note = item.get("note", "")
+            
+            # 截断过长的内容
+            if len(value) > 30:
+                value = value[:27] + "..."
+            if len(note) > 40:
+                note = note[:37] + "..."
+            
+            content += f"| {name} | {status} | {value} | {note} |\n"
+        
+        content += "\n---\n\n"
+        return content
+    
+    @staticmethod
+    def format_trend_score(score_data: Dict) -> str:
+        """
+        格式化趋势评分结果
+        
+        Args:
+            score_data: calculate_trend_score 返回的数据
+            
+        Returns:
+            格式化的趋势评分 Markdown 内容
+        """
+        if not score_data or "error" in score_data:
+            return ""
+        
+        content = "## 📈 趋势评分\n\n"
+        
+        symbol = score_data.get("symbol", "")
+        total_score = score_data.get("total_score", 0)
+        signal = score_data.get("signal", "")
+        
+        content += f"**{symbol}** 综合评分: **{total_score}/100** {signal}\n\n"
+        
+        # 评分细分
+        breakdown = score_data.get("breakdown", {})
+        if breakdown:
+            content += "### 评分明细\n\n"
+            content += "| 维度 | 得分 | 状态 |\n"
+            content += "|:----:|:----:|:----:|\n"
+            
+            dimension_names = {
+                "ma_alignment": "均线排列",
+                "bias": "乖离率",
+                "volume": "量能配合",
+                "rsi": "RSI",
+                "macd": "MACD"
+            }
+            
+            for key, data in breakdown.items():
+                name = dimension_names.get(key, key)
+                score = data.get("score", 0)
+                status = data.get("status", data.get("value", ""))
+                content += f"| {name} | {score} | {status} |\n"
+            content += "\n"
+        
+        # 检查清单
+        checklist = score_data.get("checklist", [])
+        if checklist:
+            content += AnalysisReportGenerator.format_trading_checklist(checklist)
+        
+        return content
+
