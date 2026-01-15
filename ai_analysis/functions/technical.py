@@ -2,7 +2,6 @@
 """
 技术分析器
 
-使用 funcat3 进行技术指标计算和选股分析
 """
 
 import pandas as pd
@@ -11,25 +10,15 @@ from typing import Dict, List, Optional
 from datetime import datetime
 import logging
 
-try:
-    from funcat import *
-    from funcat.context import ExecutionContext
-    FUNCAT_AVAILABLE = True
-except ImportError:
-    FUNCAT_AVAILABLE = False
-    logging.warning("funcat3 未安装，技术分析功能不可用")
-
 from .market_data import MarketDataProvider
 
 logger = logging.getLogger(__name__)
 
 
 class TechnicalAnalyzer:
-    """技术分析器（基于 funcat3）"""
+    """技术分析器"""
     
     def __init__(self):
-        if not FUNCAT_AVAILABLE:
-            raise ImportError("请安装 funcat3: pip install funcat3")
         
         # 初始化 funcat backend
         try:

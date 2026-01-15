@@ -294,7 +294,12 @@ class MarketDataProvider:
             
             elif market == "US":
                 df = ak.stock_us_spot_em()
-                stock_data = df[df['代码'] == symbol]
+                # 美股代码格式为 105.AAPL，需要尝试多种匹配方式
+                stock_data = df[df['代码'].str.endswith(f".{symbol}")]
+                
+                if stock_data.empty:
+                    # 尝试直接匹配
+                    stock_data = df[df['代码'] == symbol]
                 
                 if stock_data.empty:
                     return {"error": f"未找到美股 {symbol}"}
@@ -372,7 +377,10 @@ class MarketDataProvider:
         # 注意: akshare 没有直接的筹码分布 API
         # 这里通过历史数据模拟计算
         try:
-            df = MarketDataProvider.get_stock_hist(symbol, days=60)
+            from datetime import datetime, timedelta
+            end_date = datetime.now().strftime("%Y%m%d")
+            start_date = (datetime.now() - timedelta(days=60)).strftime("%Y%m%d")
+            df = MarketDataProvider.get_stock_hist(symbol, start_date=start_date, end_date=end_date)
             
             if df.empty:
                 return {"error": "无法获取历史数据"}
@@ -455,12 +463,24 @@ class MarketDataProvider:
                     adjust="qfq"
                 )
             elif market == "US":
-                df = ak.stock_us_hist(
-                    symbol=symbol,
-                    start_date=start_date,
-                    end_date=end_date,
-                    adjust="qfq"
-                )
+                # 美股需要交易所前缀，格式如 105.MSFT (纳斯达克) 或 106.XXX (纽交所)
+                us_symbol = symbol if "." in symbol else f"105.{symbol}"
+                try:
+                    df = ak.stock_us_hist(
+                        symbol=us_symbol,
+                        start_date=start_date,
+                        end_date=end_date,
+                        adjust="qfq"
+                    )
+                except Exception:
+                    # 尝试纽交所前缀
+                    us_symbol = f"106.{symbol}"
+                    df = ak.stock_us_hist(
+                        symbol=us_symbol,
+                        start_date=start_date,
+                        end_date=end_date,
+                        adjust="qfq"
+                    )
             elif market == "HK":
                 df = ak.stock_hk_hist(
                     symbol=symbol,

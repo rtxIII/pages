@@ -293,6 +293,7 @@ advanced:
 # 8. AI 分析配置
 # ===============================================================
 ai_analysis:
+
   enabled: true                       # 是否启用 AI 分析功能
   model: "claude-3-5-sonnet-20241022" # Claude 模型名称
   temperature: 0.7                    # 温度参数（0-1，越高越有创造性）
@@ -328,3 +329,14 @@ ai_analysis:
   output:
     save_json: true                   # 是否同时保存 JSON 格式的结构化数据
     json_dir: "output/analysis_data"  # JSON 数据存储目录
+
+  stock_map:
+    HK:
+      - "00100"
+      - "03887"
+      - "03696"
+    CN-A:
+      - "000001"
+    US:
+      - "AAPL"
+      - "MSFT"

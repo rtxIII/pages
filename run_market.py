@@ -360,7 +360,7 @@ def main():
         "--market",
         type=str,
         choices=["CN-A", "US", "HK", "all"],
-        default="CN-A",
+        default="HK",
         help="市场类型：CN-A(A股), US(美股), HK(港股), all(全部)，默认 CN-A"
     )
     
