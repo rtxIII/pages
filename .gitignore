@@ -3,6 +3,7 @@ output/
 trendradar/
 #/index.html
 test/
+data/
 
 #Claude or other agent
 .agent
