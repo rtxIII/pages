@@ -594,6 +594,51 @@ tags = ["技术分析", "自选股"]
         
         return content
     
+    def _ensure_index_files(self, output_dir: str, year: str, month: str) -> None:
+        """
+        确保 Hugo 所需的 _index.md 文件存在
+        
+        创建三个层级的索引文件：
+        - stock/_index.md（分类根目录）
+        - stock/{year}/_index.md（年份目录）
+        - stock/{year}/{month}/_index.md（月份目录）
+        """
+        from pathlib import Path
+        
+        base_path = Path(output_dir)
+        
+        # 1. 分类根目录索引
+        category_index = base_path / "_index.md"
+        if not category_index.exists():
+            base_path.mkdir(parents=True, exist_ok=True)
+            category_index.write_text(
+                '+++\ntitle = "Stock"\ndescription = "自选股分析汇总"\n+++\n',
+                encoding='utf-8'
+            )
+            logger.info(f"[创建索引] {category_index}")
+        
+        # 2. 年份目录索引
+        year_path = base_path / year
+        year_index = year_path / "_index.md"
+        if not year_index.exists():
+            year_path.mkdir(parents=True, exist_ok=True)
+            year_index.write_text(
+                f'+++\ntitle = "{year}年自选股分析"\ndescription = "{year}年自选股分析汇总"\n+++\n',
+                encoding='utf-8'
+            )
+            logger.info(f"[创建索引] {year_index}")
+        
+        # 3. 月份目录索引
+        month_path = year_path / month
+        month_index = month_path / "_index.md"
+        if not month_index.exists():
+            month_path.mkdir(parents=True, exist_ok=True)
+            month_index.write_text(
+                f'+++\ntitle = "{year}年{int(month)}月自选股分析汇总"\ndescription = "{year}年{int(month)}月自选股分析汇总"\n+++\n',
+                encoding='utf-8'
+            )
+            logger.info(f"[创建索引] {month_index}")
+    
     def save_report(self, content: str, output_dir: str = "page/src/content/post/stock") -> str:
         """
         保存报告到文件
@@ -611,6 +656,9 @@ tags = ["技术分析", "自选股"]
         today = datetime.now().strftime("%Y-%m-%d")
         year = today[:4]
         month = today[5:7]
+        
+        # 确保所有 _index.md 文件存在
+        self._ensure_index_files(output_dir, year, month)
         
         output_path = Path(output_dir) / year / month
         output_path.mkdir(parents=True, exist_ok=True)

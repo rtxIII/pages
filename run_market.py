@@ -139,8 +139,8 @@ def get_ai_market_analysis(overview_data: dict, model: str = "claude-sonnet-4-20
         
         response = client.messages.create(
             model=model,
-            max_tokens=2000,
-            temperature=0.7,
+            max_tokens=8000,
+            temperature=1.0,
             system=system_prompt,
             messages=[{"role": "user", "content": user_prompt}]
         )
@@ -293,10 +293,57 @@ def generate_stock_analysis_md(symbol: str, market: str = "CN-A") -> str:
     return content
 
 
+def ensure_index_files(output_dir: str, year: str, month: str) -> None:
+    """
+    确保 Hugo 所需的 _index.md 文件存在
+    
+    创建三个层级的索引文件：
+    - market/_index.md（分类根目录）
+    - market/{year}/_index.md（年份目录）
+    - market/{year}/{month}/_index.md（月份目录）
+    """
+    base_path = Path(output_dir)
+    
+    # 1. 分类根目录索引
+    category_index = base_path / "_index.md"
+    if not category_index.exists():
+        base_path.mkdir(parents=True, exist_ok=True)
+        category_index.write_text(
+            '+++\ntitle = "Market"\ndescription = "大盘复盘汇总"\n+++\n',
+            encoding='utf-8'
+        )
+        print(f"[创建索引] {category_index}")
+    
+    # 2. 年份目录索引
+    year_path = base_path / year
+    year_index = year_path / "_index.md"
+    if not year_index.exists():
+        year_path.mkdir(parents=True, exist_ok=True)
+        year_index.write_text(
+            f'+++\ntitle = "{year}年大盘复盘"\ndescription = "{year}年大盘复盘汇总"\n+++\n',
+            encoding='utf-8'
+        )
+        print(f"[创建索引] {year_index}")
+    
+    # 3. 月份目录索引
+    month_path = year_path / month
+    month_index = month_path / "_index.md"
+    if not month_index.exists():
+        month_path.mkdir(parents=True, exist_ok=True)
+        month_index.write_text(
+            f'+++\ntitle = "{year}年{int(month)}月大盘复盘汇总"\ndescription = "{year}年{int(month)}月大盘复盘汇总"\n+++\n',
+            encoding='utf-8'
+        )
+        print(f"[创建索引] {month_index}")
+
+
 def save_report(content: str, output_dir: str, date: str) -> str:
     """保存报告到文件"""
     year = date[:4]
     month = date[5:7]
+    
+    # 确保所有 _index.md 文件存在
+    ensure_index_files(output_dir, year, month)
     
     output_path = Path(output_dir) / year / month
     output_path.mkdir(parents=True, exist_ok=True)
