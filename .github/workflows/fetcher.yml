@@ -106,6 +106,12 @@ jobs:
           S3_ENDPOINT_URL: ${{ vars.S3_ENDPOINT_URL }}
           S3_REGION: ${{ vars.S3_REGION }}
           GITHUB_ACTIONS: true
+          # AI 分析配置
+          AI_ANALYSIS_ENABLED: true
+          AI_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          AI_PROVIDER: deepseek
+          AI_MODEL: ${{ vars.ANTHROPIC_MODEL }}
+          AI_BASE_URL: ${{ vars.ANTHROPIC_BASE_URL }}
         run:  |
           python -m trendradar
           python markdown.py
