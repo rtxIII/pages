@@ -105,7 +105,7 @@ def extract_stocks_from_analysis(analysis_result: Dict) -> Dict[str, Set[str]]:
 
 def update_stock_map(
     new_stocks: Dict[str, Set[str]], 
-    config_path: str = "config/config.yaml"
+    config_path: str = "config/analysis.yaml"
 ) -> Dict[str, List[str]]:
     """
     更新 config.yaml 中的 stock_map（只增加不减少）

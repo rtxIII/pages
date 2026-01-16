@@ -25,7 +25,7 @@ permissions:
 jobs:
   analyze:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 300
 
     steps:
       - name: Set date

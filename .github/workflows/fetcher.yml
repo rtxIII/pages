@@ -19,7 +19,7 @@ on:
         required: true
         type: string
         description: "TrendRadar Version"
-        default: "4.7.0"
+        default: "5.0.0"
 
 concurrency:
   group: fetcher-${{ github.ref_name }}
@@ -52,8 +52,8 @@ jobs:
         id: set-version
         run: |
           if [ -z "${{ inputs.TrendRadar_Version }}" ]; then
-            echo "TRENDRADAR_VERSION=4.7.0" >> $GITHUB_OUTPUT
-            echo "📦 Using default version: 4.7.0 (scheduled run)"
+            echo "TRENDRADAR_VERSION=5.0.0" >> $GITHUB_OUTPUT
+            echo "📦 Using default version: 5.0.0 (scheduled run)"
           else
             echo "TRENDRADAR_VERSION=${{ inputs.TrendRadar_Version }}" >> $GITHUB_OUTPUT
             echo "📦 Using input version: ${{ inputs.TrendRadar_Version }}"
