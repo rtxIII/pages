@@ -11,6 +11,17 @@ home = ["HTML", "RSS", "JSON"]
 section = ["HTML", "RSS"]
 page = ["HTML"]
 
+[pagination]
+  # The number of pages per pager. Default is 10.
+  pagerSize = 30 
+
+  # The segment of each pager URL (e.g., /page/1/, /page/2/). Default is "page".
+  # This can be changed to something like "pg" for URLs such as /pg/1/
+  path = "page" 
+
+  # Whether to disable alias generation for the first pager (e.g., /page/1/ redirects to /). Default is false.
+  disableAliasesForFirstPager = false
+
 [params]
     # The name to display as main title in the home page
     mainpagetitle = "繠驖瓕III"

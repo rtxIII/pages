@@ -685,7 +685,7 @@ def main():
     parser = argparse.ArgumentParser(description="股票分析调度器")
     parser.add_argument("--dry-run", action="store_true", help="仅获取数据，不进行分析")
     parser.add_argument("--no-ai", action="store_true", help="禁用 AI 智能分析")
-    parser.add_argument("--config", default="config/config.yaml", help="配置文件路径")
+    parser.add_argument("--config", default="config/analysis.yaml", help="配置文件路径")
     parser.add_argument("--workers", type=int, default=1, help="并发线程数")
     
     args = parser.parse_args()
