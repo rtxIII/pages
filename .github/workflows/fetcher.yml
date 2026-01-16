@@ -1,4 +1,4 @@
-name: auto-process-news
+name: auto-news-fetcher
 
 on:
   schedule:
