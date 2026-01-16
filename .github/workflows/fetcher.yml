@@ -33,7 +33,7 @@ jobs:
   fetcher:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-
+    environment: deepseek
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
