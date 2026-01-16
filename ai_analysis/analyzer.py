@@ -29,7 +29,7 @@ class NewsAnalysisEngine:
         model: str = "claude-3-5-sonnet-20241022",
         focus_sectors: List[str] = None,
         enable_function_calling: bool = True,
-        temperature: float = 0.7,
+        temperature: float = 1.0,
         max_tokens: int = 20000
     ):
         """
@@ -199,7 +199,7 @@ class NewsAnalysisEngine:
             {"role": "user", "content": prompt}
         ]
         
-        max_iterations = 10  # 最多执行10轮 Function Calling
+        max_iterations = 20  # 最多执行20轮 Function Calling
         iteration = 0
         response = None
         
@@ -524,6 +524,24 @@ class NewsAnalysisEngine:
             
             # 保存 JSON 数据（包含函数调用结果）
             self._save_json_data(result, output_dir)
+            
+            # 自动更新 stock_map（只增加不减少）
+            try:
+                from .stock_map_updater import extract_stocks_from_analysis, update_stock_map
+                
+                # 构建分析结果字典
+                analysis_data = {
+                    "sector_impacts": self.sector_impact_results,
+                    "function_results": result.get("function_results", {})
+                }
+                
+                # 提取并更新股票
+                new_stocks = extract_stocks_from_analysis(analysis_data)
+                if any(new_stocks.values()):
+                    update_stock_map(new_stocks)
+                    print(f"[分析引擎] Stock Map 已更新")
+            except Exception as e:
+                print(f"[分析引擎] Stock Map 更新失败: {e}")
             
             return file_path
         else:
