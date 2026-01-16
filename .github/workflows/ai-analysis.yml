@@ -14,7 +14,6 @@ on:
         type: string
         default: ""
 
-
 concurrency:
   group: ai-analysis-${{ github.ref_name }}
   cancel-in-progress: true
@@ -26,7 +25,7 @@ jobs:
   analyze:
     runs-on: ubuntu-latest
     timeout-minutes: 300
-
+    environment: deepseek
     steps:
       - name: Set date
         id: date
