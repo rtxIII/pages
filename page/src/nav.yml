@@ -1,7 +1,7 @@
 sorted: true
 titles:
   - title:
-      name: "监控"
+      name: "MONITOR"
       items:
         - name: "uptime-kuma"
           logo: 📊
@@ -13,7 +13,7 @@ titles:
           logo: "📈"
           url: "https://grafana.we2.xyz/"
   - title:
-      name: "工具"
+      name: "TOOL"
       items:
         - name: "exray"
           logo: "🔍"
