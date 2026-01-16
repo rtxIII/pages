@@ -1,4 +1,4 @@
-name: ai-news-analysis-daily
+name: auto-news-analysis-daily
 
 on:
   schedule:
