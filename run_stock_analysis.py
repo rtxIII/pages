@@ -353,6 +353,45 @@ class StockAnalysisPipeline:
         
         return results
     
+    def _get_raw_kline_data(self, code: str, days: int = 30) -> List[Dict[str, Any]]:
+        """
+        从数据库获取原始 K 线数据
+        
+        Args:
+            code: 股票代码
+            days: 获取天数
+            
+        Returns:
+            原始 K 线数据列表
+        """
+        from datetime import timedelta
+        
+        today = date.today()
+        start_date = (today - timedelta(days=days)).strftime("%Y-%m-%d")
+        end_date = today.strftime("%Y-%m-%d")
+        
+        try:
+            df = self.storage.get_daily_as_dataframe(code, start_date, end_date)
+            if df.empty:
+                return []
+            
+            # 转换为紧凑的列表格式
+            records = []
+            for idx, row in df.iterrows():
+                records.append({
+                    "date": idx.strftime("%Y-%m-%d") if hasattr(idx, 'strftime') else str(idx),
+                    "open": round(row.get("open", 0), 2),
+                    "high": round(row.get("high", 0), 2),
+                    "low": round(row.get("low", 0), 2),
+                    "close": round(row.get("close", 0), 2),
+                    "volume": int(row.get("volume", 0)),
+                    "pct_chg": round(row.get("pct_chg", 0), 2) if row.get("pct_chg") else None,
+                })
+            return records
+        except Exception as e:
+            logger.warning(f"[{code}] 获取原始 K 线数据失败: {e}")
+            return []
+
     def get_ai_stock_analysis(
         self, 
         results: List[Dict[str, Any]], 
@@ -360,6 +399,8 @@ class StockAnalysisPipeline:
     ) -> Dict[str, str]:
         """
         使用 Claude AI 分析股票数据，生成投资建议
+        
+        改进版本：传递原始 K 线数据给 AI，让 AI 自己进行分析判断
         
         Args:
             results: 股票分析结果列表
@@ -376,18 +417,54 @@ class StockAnalysisPipeline:
             from anthropic import Anthropic
             client = Anthropic(api_key=api_key)
             
-            # 构建股票数据摘要
-            stock_summary = json.dumps(results, ensure_ascii=False, indent=2, default=str)
+            # 构建增强版数据包：原始数据 + 技术指标参考
+            enhanced_data = []
+            for r in results:
+                code = r.get("code", "")
+                
+                # 获取原始 K 线数据（近 30 天）
+                raw_kline = self._get_raw_kline_data(code, days=30)
+                
+                enhanced_stock = {
+                    "code": code,
+                    "name": r.get("name", ""),
+                    "market": r.get("market", ""),
+                    # 原始 K 线数据（AI 可独立分析）
+                    "raw_kline_30d": raw_kline,
+                    # 实时行情
+                    "realtime": r.get("realtime", {}),
+                    # 筹码数据（仅 A 股有）
+                    "chip": r.get("chip", {}),
+                    # 技术指标参考（可选，供 AI 校验）
+                    "technical_hints": {
+                        "ma_alignment": r.get("ma_alignment", {}),
+                        "trend_score": r.get("trend_score", {}),
+                    }
+                }
+                enhanced_data.append(enhanced_stock)
+                logger.info(f"[{code}] 准备了 {len(raw_kline)} 条原始 K 线数据")
             
             # 使用系统角色中的交易理念
             system_prompt = PromptTemplates.SYSTEM_ROLE
             
-            user_prompt = f"""请根据以下自选股技术分析数据生成投资建议：
+            # 构建增强版数据 JSON
+            stock_data_json = json.dumps(enhanced_data, ensure_ascii=False, indent=2, default=str)
+            
+            user_prompt = f"""请根据以下自选股的**原始 K 线数据**和实时行情进行独立分析，生成投资建议。
 
-## 股票分析数据
-{stock_summary}
+## 股票数据
+
+以下数据包含每只股票的：
+- `raw_kline_30d`: 近 30 天原始 K 线数据（日期、开盘、最高、最低、收盘、成交量、涨跌幅）
+- `realtime`: 实时行情（当前价格、涨跌幅、量比、换手率等）
+- `chip`: 筹码分布数据（仅 A 股）
+- `technical_hints`: 系统预计算的技术指标参考（可校验，但请以你的独立分析为准）
+
+{stock_data_json}
 
 ## 分析要求
+
+**请基于原始 K 线数据进行独立分析**，而非仅依赖 technical_hints 中的预计算结果。
 
 **首先，请生成一个简短的报告标题**（10-20字），格式为：
 TITLE: [你的标题]
@@ -401,32 +478,35 @@ TITLE: [你的标题]
 1. **总体评估**（1-2句话）
    - 综合评估当前自选股的整体状态
 
-2. **个股点评**（每只股票1-2句话）
-   - 根据趋势评分、均线排列、筹码分布等指标点评
+2. **个股点评**（每只股票 2-3 句话）
+   - 基于 K 线走势分析趋势（多头/空头/震荡）
+   - 计算近期乖离率，判断是否追高风险
+   - 结合量能变化分析资金动向
    - 明确给出操作建议：买入/持有/减仓/卖出
 
-3. **风险提示**
+3. **K 线形态识别**
+   - 识别关键 K 线形态（如：锤子线、十字星、吞没形态等）
+   - 指出支撑位和压力位
+
+4. **风险提示**
    - 指出高风险股票
    - 提醒追高风险（乖离率>5%）
+   - 量价背离警告
 
-4. **短期策略**
+5. **短期策略**
    - 给出具体的仓位建议
    - 优先级排序：哪些股票值得重点关注
+   - 明确的买入/卖出价位建议
 
 请用简洁的中文回答，使用 Markdown 格式。严格遵循"不追高"的交易理念。
-评分说明：
-- 80分以上：强烈买入
-- 60-79分：买入/加仓
-- 40-59分：观望/持有
-- 40分以下：减仓/卖出
 """
             
-            logger.info("[AI 分析] 正在调用 Claude API...")
+            logger.info("[AI 分析] 正在调用 Claude API（增强版数据）...")
             
             response = client.messages.create(
                 model=model,
-                max_tokens=3000,
-                temperature=0.7,
+                max_tokens=12000,
+                temperature=1.0,
                 system=system_prompt,
                 messages=[{"role": "user", "content": user_prompt}]
             )
