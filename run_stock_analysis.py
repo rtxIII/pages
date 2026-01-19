@@ -26,6 +26,9 @@ from ai_analysis.functions.market_data import MarketDataProvider
 from ai_analysis.functions.technical import TechnicalAnalyzer
 from ai_analysis.prompts import PromptTemplates
 
+# Claude 模型配置（从环境变量获取，默认使用 claude-sonnet-4-20250514）
+ANTHROPIC_MODEL = os.getenv("ANTHROPIC_MODEL", "claude-sonnet-4-20250514")
+
 logger = logging.getLogger(__name__)
 
 
@@ -353,7 +356,7 @@ class StockAnalysisPipeline:
     def get_ai_stock_analysis(
         self, 
         results: List[Dict[str, Any]], 
-        model: str = "claude-sonnet-4-20250514"
+        model: str = ANTHROPIC_MODEL
     ) -> Dict[str, str]:
         """
         使用 Claude AI 分析股票数据，生成投资建议
@@ -461,7 +464,8 @@ TITLE: [你的标题]
         self, 
         results: List[Dict[str, Any]], 
         ai_title: str = "",
-        ai_analysis: str = ""
+        ai_analysis: str = "",
+        model: str = ANTHROPIC_MODEL
     ) -> str:
         """
         将分析结果转换为 Markdown 格式
@@ -470,6 +474,7 @@ TITLE: [你的标题]
             results: 分析结果列表
             ai_title: AI 生成的标题（可选）
             ai_analysis: AI 分析内容（可选）
+            model: AI 模型名称
             
         Returns:
             Markdown 格式的报告内容
@@ -478,8 +483,8 @@ TITLE: [你的标题]
         
         today = datetime.now().strftime("%Y-%m-%d")
         
-        # 使用 AI 标题或默认标题
-        title = ai_title if ai_title else f"自选股分析 {today}"
+        # 使用 AI 标题或默认标题（包含模型信息）
+        title = ai_title + " (AI: " + model + ")" if ai_title else f"自选股分析 {today} (AI: {model})"
         
         # Frontmatter
         content = f'''+++
@@ -639,13 +644,19 @@ tags = ["技术分析", "自选股"]
             )
             logger.info(f"[创建索引] {month_index}")
     
-    def save_report(self, content: str, output_dir: str = "page/src/content/post/stock") -> str:
+    def save_report(
+        self, 
+        content: str, 
+        output_dir: str = "page/src/content/post/stock",
+        model: str = ANTHROPIC_MODEL
+    ) -> str:
         """
         保存报告到文件
         
         Args:
             content: Markdown 报告内容
             output_dir: 输出目录
+            model: AI 模型名称（用于文件名）
             
         Returns:
             保存的文件路径
@@ -663,7 +674,9 @@ tags = ["技术分析", "自选股"]
         output_path = Path(output_dir) / year / month
         output_path.mkdir(parents=True, exist_ok=True)
         
-        filename = f"{today}-stock-analysis.md"
+        # 提取模型简称用于文件名（例如 claude-sonnet-4-20250514 -> sonnet-4）
+        model_short = model.replace("claude-", "").split("-202")[0] if model else "unknown"
+        filename = f"{today}-stock-analysis-{model_short}.md"
         file_path = output_path / filename
         
         with open(file_path, 'w', encoding='utf-8') as f:
@@ -685,6 +698,7 @@ def main():
     parser = argparse.ArgumentParser(description="股票分析调度器")
     parser.add_argument("--dry-run", action="store_true", help="仅获取数据，不进行分析")
     parser.add_argument("--no-ai", action="store_true", help="禁用 AI 智能分析")
+    parser.add_argument("--model", default=ANTHROPIC_MODEL, help=f"Claude 模型名称（默认: {ANTHROPIC_MODEL}）")
     parser.add_argument("--config", default="config/analysis.yaml", help="配置文件路径")
     parser.add_argument("--workers", type=int, default=1, help="并发线程数")
     
@@ -717,7 +731,7 @@ def main():
             ai_title = ""
             ai_content = ""
             if not args.no_ai:
-                ai_result = pipeline.get_ai_stock_analysis(results)
+                ai_result = pipeline.get_ai_stock_analysis(results, model=args.model)
                 ai_title = ai_result.get("title", "")
                 ai_content = ai_result.get("content", "")
                 if ai_title:
@@ -726,8 +740,8 @@ def main():
                     print("\n🤖 AI 分析已生成")
             
             # 生成并保存 Markdown 报告
-            report_content = pipeline.generate_report_md(results, ai_title, ai_content)
-            report_path = pipeline.save_report(report_content)
+            report_content = pipeline.generate_report_md(results, ai_title, ai_content, model=args.model)
+            report_path = pipeline.save_report(report_content, model=args.model)
             print(f"\n📄 报告已保存: {report_path}")
     finally:
         pipeline.close()

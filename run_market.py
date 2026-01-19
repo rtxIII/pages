@@ -33,6 +33,9 @@ from ai_analysis.functions.market_data import MarketDataProvider
 from ai_analysis.functions.tools import FunctionToolRegistry
 from ai_analysis.prompts import PromptTemplates
 
+# Claude 模型配置（从环境变量获取，默认使用 claude-sonnet-4-20250514）
+ANTHROPIC_MODEL = os.getenv("ANTHROPIC_MODEL", "claude-sonnet-4-20250514")
+
 
 def generate_market_overview_md(overview: MarketOverview) -> str:
     """生成大盘复盘 Markdown 内容"""
@@ -86,7 +89,7 @@ def generate_market_overview_md(overview: MarketOverview) -> str:
     return content
 
 
-def get_ai_market_analysis(overview_data: dict, model: str = "claude-sonnet-4-20250514") -> str:
+def get_ai_market_analysis(overview_data: dict, model: str = ANTHROPIC_MODEL) -> str:
     """
     使用 Claude AI 分析市场数据，生成投资建议
     
@@ -157,13 +160,21 @@ def get_ai_market_analysis(overview_data: dict, model: str = "claude-sonnet-4-20
         return f"\n> ⚠️ AI 分析调用失败: {str(e)}\n"
 
 
-def generate_report(markets: list, stock: str = None, stock_market: str = "CN-A", enable_ai: bool = True) -> str:
-    """生成完整报告"""
+def generate_report(markets: list, stock: str = None, stock_market: str = "CN-A", enable_ai: bool = True, model: str = ANTHROPIC_MODEL) -> str:
+    """生成完整报告
+    
+    Args:
+        markets: 市场列表
+        stock: 股票代码
+        stock_market: 股票所属市场
+        enable_ai: 是否启用 AI 分析
+        model: AI 模型名称
+    """
     today = datetime.now().strftime("%Y-%m-%d")
     
     # Hugo frontmatter
     content = f"""---
-title: "{today} 大盘复盘"
+title: "{today} 大盘复盘 (AI: {model})"
 date: {today}
 categories: ["market"]
 tags: ["大盘", "复盘", "技术分析", "AI分析"]
@@ -207,7 +218,7 @@ draft: false
     
     # AI 智能分析
     if enable_ai and all_overview_data:
-        ai_analysis = get_ai_market_analysis(all_overview_data)
+        ai_analysis = get_ai_market_analysis(all_overview_data, model=model)
         content += ai_analysis
         content += "---\n\n"
     
@@ -337,8 +348,16 @@ def ensure_index_files(output_dir: str, year: str, month: str) -> None:
         print(f"[创建索引] {month_index}")
 
 
-def save_report(content: str, output_dir: str, date: str) -> str:
-    """保存报告到文件"""
+def save_report(content: str, output_dir: str, date: str, model: str = ANTHROPIC_MODEL) -> str:
+    """
+    保存报告到文件
+    
+    Args:
+        content: 报告内容
+        output_dir: 输出目录
+        date: 日期
+        model: AI 模型名称（用于文件名）
+    """
     year = date[:4]
     month = date[5:7]
     
@@ -348,7 +367,9 @@ def save_report(content: str, output_dir: str, date: str) -> str:
     output_path = Path(output_dir) / year / month
     output_path.mkdir(parents=True, exist_ok=True)
     
-    filename = f"{date}-market-overview.md"
+    # 提取模型简称用于文件名（例如 claude-sonnet-4-20250514 -> sonnet-4）
+    model_short = model.replace("claude-", "").split("-202")[0] if model else "unknown"
+    filename = f"{date}-market-overview-{model_short}.md"
     file_path = output_path / filename
     
     with open(file_path, 'w', encoding='utf-8') as f:
@@ -439,7 +460,7 @@ def main():
     parser.add_argument(
         "--model",
         type=str,
-        default="claude-sonnet-4-20250514",
+        default=ANTHROPIC_MODEL,
         help="Claude 模型名称（默认: claude-sonnet-4-20250514）"
     )
     
@@ -483,9 +504,10 @@ def main():
                 markets, 
                 args.stock, 
                 stock_market, 
-                enable_ai=not args.no_ai
+                enable_ai=not args.no_ai,
+                model=args.model
             )
-            report_path = save_report(report_content, output_dir, today)
+            report_path = save_report(report_content, output_dir, today, model=args.model)
             
             print(f"\n✅ 报告已保存: {report_path}")
         

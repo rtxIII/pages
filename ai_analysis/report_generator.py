@@ -6,9 +6,13 @@
 """
 
 import re
+import os
 from typing import Dict, List
 from datetime import datetime
 from pathlib import Path
+
+# Claude 模型配置（从环境变量获取）
+ANTHROPIC_MODEL = os.getenv("ANTHROPIC_MODEL", "claude-sonnet-4-20250514")
 
 from .market_scorer import MarketAnalysisResult, SectorImpact
 
@@ -285,7 +289,8 @@ sentiment = "{sentiment}"
         analysis_result: MarketAnalysisResult,
         date: str,
         title: str = None,
-        description: str = None
+        description: str = None,
+        model: str = None
     ) -> str:
         """
         生成完整的分析报告
@@ -295,6 +300,7 @@ sentiment = "{sentiment}"
             date: 日期
             title: 标题（可选）
             description: 描述（可选）
+            model: AI 模型名称（可选）
             
         Returns:
             完整的 Markdown 报告内容
@@ -310,8 +316,9 @@ sentiment = "{sentiment}"
         sentiment = sentiment_data["sentiment"]
         
         # 生成默认标题和描述
+        model_name = model or ANTHROPIC_MODEL
         if not title:
-            title = f"AI市场分析: {date}"
+            title = f"AI市场分析: {date} (AI: {model_name})"
         if not description:
             description = f"基于 {date} 热点新闻的金融市场影响分析"
         
@@ -389,7 +396,8 @@ sentiment = "{sentiment}"
         report_content: str,
         output_dir: str,
         date: str,
-        filename: str = None
+        filename: str = None,
+        model: str = None
     ) -> str:
         """
         保存报告到文件
@@ -399,6 +407,7 @@ sentiment = "{sentiment}"
             output_dir: 输出目录（如 page/src/content/post/analysis）
             date: 日期 YYYY-MM-DD
             filename: 文件名（可选，默认使用日期）
+            model: AI 模型名称（可选，用于文件名）
             
         Returns:
             保存的文件路径
@@ -416,7 +425,10 @@ sentiment = "{sentiment}"
         
         # 生成文件名
         if not filename:
-            filename = f"{date}-market-analysis.md"
+            # 提取模型简称用于文件名（例如 claude-sonnet-4-20250514 -> sonnet-4）
+            model_name = model or ANTHROPIC_MODEL
+            model_short = model_name.replace("claude-", "").split("-202")[0] if model_name else "unknown"
+            filename = f"{date}-market-analysis-{model_short}.md"
         
         file_path = output_path / filename
         

@@ -90,6 +90,7 @@ class PromptTemplates:
 2. **get_stock_price** - 获取相关股票的实时价格和涨跌幅
 3. **get_index_price** - 获取大盘指数数据（如上证指数 000001、深证成指 399001）
 4. **search_stock** - 根据关键词搜索相关股票代码
+   - **重要**：对于每个关键词，请分别调用两次：`market="CN-A"` 和 `market="HK"`，确保同时搜索 A 股和港股
 
 ### 大盘复盘工具（新增）
 5. **get_market_overview** - 获取大盘复盘数据（指数、涨跌统计、资金流向、板块表现）

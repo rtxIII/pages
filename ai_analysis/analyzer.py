@@ -503,7 +503,8 @@ class NewsAnalysisEngine:
         # 生成报告
         report_content = AnalysisReportGenerator.generate_report(
             analysis_result=result["analysis_result"],
-            date=result["date"]
+            date=result["date"],
+            model=self.model
         )
         
         if save:
@@ -511,14 +512,17 @@ class NewsAnalysisEngine:
             keyword = AnalysisReportGenerator.extract_filename_keyword(
                 result["analysis_result"].key_points
             )
-            filename = f"{result['date']}-{keyword}.md"
+            # 提取模型简称用于文件名（例如 claude-sonnet-4-20250514 -> sonnet-4）
+            model_short = self.model.replace("claude-", "").split("-202")[0] if self.model else "unknown"
+            filename = f"{result['date']}-{keyword}-{model_short}.md"
             
             # 保存 Markdown 报告
             file_path = AnalysisReportGenerator.save_report(
                 report_content=report_content,
                 output_dir=output_dir,
                 date=result["date"],
-                filename=filename
+                filename=filename,
+                model=self.model
             )
             print(f"[分析引擎] Markdown 报告已保存: {file_path}")
             

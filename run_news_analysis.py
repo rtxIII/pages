@@ -11,6 +11,7 @@ AI 新闻分析执行脚本
 """
 
 import argparse
+import os
 import sys
 from pathlib import Path
 from datetime import datetime
@@ -20,6 +21,9 @@ PROJECT_ROOT = Path(__file__).parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from ai_analysis import NewsAnalysisEngine
+
+# Claude 模型配置（从环境变量获取，默认使用 claude-sonnet-4-20250514）
+ANTHROPIC_MODEL = os.getenv("ANTHROPIC_MODEL", "claude-sonnet-4-20250514")
 
 
 def find_news_file_by_date(news_dir: str, date: str) -> str:
@@ -86,15 +90,15 @@ def main():
     parser.add_argument(
         "--model",
         type=str,
-        default="claude-3-5-sonnet-20241022",
-        help="Claude 模型名称（默认: claude-3-5-sonnet-20241022）"
+        default=ANTHROPIC_MODEL,
+        help=f"Claude 模型名称（默认: {ANTHROPIC_MODEL}）"
     )
     
     args = parser.parse_args()
     
     # 初始化分析引擎
     print("=" * 60)
-    print("AI 新闻市场分析工具 (Powered by Claude 3.5)")
+    print(f"AI 新闻市场分析工具 (AI: {args.model})")
     print("=" * 60)
     
     try:
