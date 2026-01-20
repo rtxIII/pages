@@ -30,7 +30,8 @@ class NewsAnalysisEngine:
         focus_sectors: List[str] = None,
         enable_function_calling: bool = True,
         temperature: float = 1.0,
-        max_tokens: int = 20000
+        max_tokens: int = 20000,
+        max_iterations: int = 20
     ):
         """
         初始化分析引擎
@@ -199,7 +200,7 @@ class NewsAnalysisEngine:
             {"role": "user", "content": prompt}
         ]
         
-        max_iterations = 20  # 最多执行20轮 Function Calling
+        max_iterations = self.max_iterations  # 最多执行20轮 Function Calling
         iteration = 0
         response = None
         

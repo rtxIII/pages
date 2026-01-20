@@ -56,10 +56,10 @@ class FunctionToolRegistry:
                     "related_stocks": {
                         "type": "array",
                         "items": {"type": "string"},
-                        "description": "相关股票代码列表（可选）"
+                        "description": "相关股票代码列表，格式如：A股6位数字(000001)、港股5位数字(00700)、美股字母代码(NVDA)"
                     }
                 },
-                "required": ["sector", "direction", "impact_score", "confidence", "reasoning"]
+                "required": ["sector", "direction", "impact_score", "confidence", "reasoning", "related_stocks"]
             }
         },
         
@@ -77,7 +77,7 @@ class FunctionToolRegistry:
                     "market": {
                         "type": "string",
                         "enum": ["CN-A", "US", "HK"],
-                        "description": "市场类型：CN-A(A股), US(美股), HK(港股)，默认CN-A"
+                        "description": "市场类型：CN-A(A股), US(美股), HK(港股)，默认HK"
                     }
                 },
                 "required": ["symbol"]
@@ -118,7 +118,7 @@ class FunctionToolRegistry:
                     "market": {
                         "type": "string",
                         "enum": ["CN-A", "US", "HK"],
-                        "description": "市场类型，默认CN-A"
+                        "description": "市场类型，默认HK"
                     }
                 },
                 "required": ["symbol"]
@@ -139,7 +139,7 @@ class FunctionToolRegistry:
                     "market": {
                         "type": "string",
                         "enum": ["CN-A", "US", "HK"],
-                        "description": "市场类型，默认CN-A"
+                        "description": "市场类型，默认HK"
                     }
                 },
                 "required": ["symbol"]
@@ -164,7 +164,7 @@ class FunctionToolRegistry:
                     "market": {
                         "type": "string",
                         "enum": ["CN-A", "US", "HK"],
-                        "description": "市场类型，默认CN-A"
+                        "description": "市场类型，默认HK"
                     }
                 },
                 "required": ["symbol"]
@@ -185,7 +185,7 @@ class FunctionToolRegistry:
                     "market": {
                         "type": "string",
                         "enum": ["CN-A", "US", "HK"],
-                        "description": "市场类型，默认CN-A"
+                        "description": "市场类型，默认HK"
                     }
                 },
                 "required": ["symbol"]
@@ -206,7 +206,7 @@ class FunctionToolRegistry:
                     "market": {
                         "type": "string",
                         "enum": ["CN-A", "US", "HK"],
-                        "description": "市场类型，默认CN-A"
+                        "description": "市场类型，默认HK"
                     }
                 },
                 "required": ["keyword"]
@@ -225,7 +225,7 @@ class FunctionToolRegistry:
                     "market": {
                         "type": "string",
                         "enum": ["CN-A", "US", "HK"],
-                        "description": "市场类型：CN-A(A股)、US(美股)、HK(港股)，默认CN-A"
+                        "description": "市场类型：CN-A(A股)、US(美股)、HK(港股)，默认HK"
                     }
                 },
                 "required": []
@@ -246,7 +246,7 @@ class FunctionToolRegistry:
                     "market": {
                         "type": "string",
                         "enum": ["CN-A", "US", "HK"],
-                        "description": "市场类型，默认CN-A"
+                        "description": "市场类型，默认HK"
                     },
                     "period": {
                         "type": "integer",
@@ -271,7 +271,7 @@ class FunctionToolRegistry:
                     "market": {
                         "type": "string",
                         "enum": ["CN-A", "US", "HK"],
-                        "description": "市场类型，默认CN-A"
+                        "description": "市场类型，默认HK"
                     }
                 },
                 "required": ["symbol"]
@@ -292,7 +292,7 @@ class FunctionToolRegistry:
                     "market": {
                         "type": "string",
                         "enum": ["CN-A", "US", "HK"],
-                        "description": "市场类型，默认CN-A"
+                        "description": "市场类型，默认HK"
                     }
                 },
                 "required": ["symbol"]
@@ -313,7 +313,7 @@ class FunctionToolRegistry:
                     "market": {
                         "type": "string",
                         "enum": ["CN-A", "US", "HK"],
-                        "description": "市场类型，默认CN-A"
+                        "description": "市场类型，默认HK"
                     }
                 },
                 "required": ["symbol"]

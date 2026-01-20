@@ -95,6 +95,7 @@ class PromptTemplates:
 ### 大盘复盘工具（新增）
 5. **get_market_overview** - 获取大盘复盘数据（指数、涨跌统计、资金流向、板块表现）
    - 支持市场：CN-A(A股)、US(美股)、HK(港股)
+   - **重要**：必须分别调用两次，`market="CN-A"` 和 `market="HK"`，同时获取 A 股和港股的大盘数据
 
 ### 趋势分析工具（新增）
 6. **calculate_bias** - 计算乖离率，判断是否追高风险

@@ -104,7 +104,8 @@ def main():
     try:
         engine = NewsAnalysisEngine(
             model=args.model,
-            focus_sectors=["科技", "金融", "消费", "医疗"]
+            focus_sectors=["科技", "金融", "消费", "医疗"],
+            max_iterations=30
         )
     except ValueError as e:
         print(f"\n❌ 初始化失败: {e}")
