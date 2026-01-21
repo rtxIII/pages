@@ -60,6 +60,7 @@ class NewsAnalysisEngine:
         # Function Calling 工具集
         self.tools = FunctionToolRegistry.get_tools() if enable_function_calling else None
         self.function_results = {}  # 存储函数调用结果
+        self.max_iterations = max_iterations
     
     def parse_news_markdown(self, md_file_path: str) -> Dict:
         """
