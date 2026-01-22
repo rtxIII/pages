@@ -257,7 +257,9 @@ class StockAnalysisPipeline:
         self, 
         code: str,
         market: str = "CN-A",
-        skip_analysis: bool = False
+        skip_analysis: bool = False,
+        enable_ai: bool = False,
+        model: str = ANTHROPIC_MODEL
     ) -> Optional[Dict[str, Any]]:
         """
         处理单只股票的完整流程
@@ -266,11 +268,14 @@ class StockAnalysisPipeline:
         1. 获取数据
         2. 保存数据
         3. 技术分析
+        4. AI 智能分析（可选）
         
         Args:
             code: 股票代码
             market: 市场类型
             skip_analysis: 是否跳过分析
+            enable_ai: 是否启用 AI 分析
+            model: AI 模型名称
             
         Returns:
             分析结果 或 None
@@ -284,7 +289,7 @@ class StockAnalysisPipeline:
             if not success:
                 logger.warning(f"[{code}] 数据获取失败: {error}")
             
-            # Step 2: 分析
+            # Step 2: 技术分析
             if skip_analysis:
                 logger.info(f"[{code}] 跳过分析（dry-run 模式）")
                 return None
@@ -292,7 +297,13 @@ class StockAnalysisPipeline:
             result = self.analyze_stock(code, market)
             
             if result:
-                logger.info(f"[{code}] 分析完成")
+                logger.info(f"[{code}] 技术分析完成")
+                
+                # Step 3: AI 智能分析
+                if enable_ai:
+                    ai_analysis = self.get_ai_single_stock_analysis(result, model=model)
+                    result["ai_analysis"] = ai_analysis
+                    logger.info(f"[{code}] AI 分析已集成")
             
             return result
             
@@ -303,7 +314,9 @@ class StockAnalysisPipeline:
     def run(
         self, 
         stock_codes: Optional[List[Tuple[str, str]]] = None,
-        dry_run: bool = False
+        dry_run: bool = False,
+        enable_ai: bool = False,
+        model: str = ANTHROPIC_MODEL
     ) -> List[Dict[str, Any]]:
         """
         运行完整的分析流程
@@ -311,6 +324,8 @@ class StockAnalysisPipeline:
         Args:
             stock_codes: [(code, market), ...] 列表（可选，默认使用配置中的股票）
             dry_run: 是否仅获取数据不分析
+            enable_ai: 是否启用逐股 AI 分析
+            model: AI 模型名称
             
         Returns:
             分析结果列表
@@ -330,14 +345,19 @@ class StockAnalysisPipeline:
         
         logger.info(f"===== 开始分析 {len(stock_codes)} 只股票 =====")
         logger.info(f"股票列表: {stock_codes}")
-        logger.info(f"模式: {'仅获取数据' if dry_run else '完整分析'}")
+        logger.info(f"模式: {'仅获取数据' if dry_run else '完整分析'}, AI分析: {'启用' if enable_ai else '禁用'}")
         
         results: List[Dict[str, Any]] = []
         
         # 顺序处理（避免 SQLite 多线程问题）
         for code, market in stock_codes:
             try:
-                result = self.process_single_stock(code, market, skip_analysis=dry_run)
+                result = self.process_single_stock(
+                    code, market, 
+                    skip_analysis=dry_run,
+                    enable_ai=enable_ai,
+                    model=model
+                )
                 if result:
                     results.append(result)
             except Exception as e:
@@ -391,6 +411,112 @@ class StockAnalysisPipeline:
         except Exception as e:
             logger.warning(f"[{code}] 获取原始 K 线数据失败: {e}")
             return []
+
+    def get_ai_single_stock_analysis(
+        self,
+        stock_result: Dict[str, Any],
+        model: str = ANTHROPIC_MODEL
+    ) -> str:
+        """
+        使用 AI 分析单只股票，返回分析文本
+        
+        Args:
+            stock_result: 单只股票的技术分析结果
+            model: Claude 模型名称
+            
+        Returns:
+            AI 分析文本（Markdown 格式）
+        """
+        api_key = os.getenv("ANTHROPIC_API_KEY")
+        if not api_key:
+            return "> ⚠️ 未设置 ANTHROPIC_API_KEY，跳过 AI 分析"
+        
+        try:
+            from anthropic import Anthropic
+            client = Anthropic(api_key=api_key)
+            
+            code = stock_result.get("code", "")
+            name = stock_result.get("name", "")
+            market = stock_result.get("market", "")
+            
+            # 获取原始 K 线数据（近 15 天，精简版）
+            raw_kline = self._get_raw_kline_data(code, days=15)
+            
+            # 构建精简数据
+            realtime = stock_result.get("realtime", {})
+            trend_score = stock_result.get("trend_score", {})
+            ma_alignment = stock_result.get("ma_alignment", {})
+            chip = stock_result.get("chip", {})
+            
+            # K 线摘要（最近 5 天）
+            kline_summary = ""
+            if raw_kline:
+                recent_5 = raw_kline[-5:] if len(raw_kline) >= 5 else raw_kline
+                kline_lines = []
+                for k in recent_5:
+                    kline_lines.append(f"{k['date']}: O={k['open']} H={k['high']} L={k['low']} C={k['close']} V={k['volume']} 涨跌={k.get('pct_chg', 'N/A')}%")
+                kline_summary = "\n".join(kline_lines)
+            
+            # 使用系统角色
+            system_prompt = PromptTemplates.SYSTEM_ROLE
+            
+            user_prompt = f"""请分析以下股票，给出简洁的投资建议（2-4 句话）：
+
+## 股票信息
+- 代码: {code}
+- 名称: {name}
+- 市场: {market}
+
+## 近 5 日 K 线数据
+{kline_summary}
+
+## 实时行情
+- 当前价格: {realtime.get('price', 'N/A')}
+- 涨跌幅: {realtime.get('change_pct', 'N/A')}%
+- 量比: {realtime.get('volume_ratio', 'N/A')}
+- 换手率: {realtime.get('turnover_rate', 'N/A')}%
+
+## 技术指标参考
+- 趋势评分: {trend_score.get('total_score', 'N/A')}/100
+- 信号: {trend_score.get('signal', 'N/A')}
+- 均线排列: {ma_alignment.get('alignment', 'N/A')}
+- 趋势强度: {ma_alignment.get('trend_strength', 'N/A')}
+"""
+            
+            if chip and market == "CN-A":
+                user_prompt += f"""\n## 筹码分布
+- 获利比例: {chip.get('profit_ratio', 'N/A')}
+- 筹码状态: {chip.get('chip_status', 'N/A')}
+"""
+            
+            user_prompt += """\n## 请给出
+1. 当前趋势判断（多头/空头/震荡）
+2. 操作建议（买入/持有/减仓/观望）
+3. 风险提示（如有）
+
+直接给出分析结论，不要重复股票信息，使用简洁的中文。"""
+            
+            logger.info(f"[{code}] 调用 AI 进行单股分析...")
+            
+            response = client.messages.create(
+                model=model,
+                max_tokens=500,
+                temperature=0.7,
+                system=system_prompt,
+                messages=[{"role": "user", "content": user_prompt}]
+            )
+            
+            text_blocks = [block.text for block in response.content if hasattr(block, 'text')]
+            if text_blocks:
+                result_text = "\n".join(text_blocks).strip()
+                logger.info(f"[{code}] AI 分析完成")
+                return result_text
+            
+            return "> AI 分析结果为空"
+            
+        except Exception as e:
+            logger.error(f"[{code}] AI 分析调用失败: {e}")
+            return f"> ⚠️ AI 分析调用失败: {str(e)}"
 
     def get_ai_stock_analysis(
         self, 
@@ -543,17 +669,13 @@ TITLE: [你的标题]
     def generate_report_md(
         self, 
         results: List[Dict[str, Any]], 
-        ai_title: str = "",
-        ai_analysis: str = "",
         model: str = ANTHROPIC_MODEL
     ) -> str:
         """
         将分析结果转换为 Markdown 格式
         
         Args:
-            results: 分析结果列表
-            ai_title: AI 生成的标题（可选）
-            ai_analysis: AI 分析内容（可选）
+            results: 分析结果列表（每只股票可包含 ai_analysis 字段）
             model: AI 模型名称
             
         Returns:
@@ -563,8 +685,8 @@ TITLE: [你的标题]
         
         today = datetime.now().strftime("%Y-%m-%d")
         
-        # 使用 AI 标题或默认标题（包含模型信息）
-        title = ai_title + " (AI: " + model + ")" if ai_title else f"自选股分析 {today} (AI: {model})"
+        # 默认标题（包含模型信息）
+        title = f"自选股分析 {today} (AI: {model})"
         
         # Frontmatter
         content = f'''+++
@@ -671,11 +793,13 @@ tags = ["技术分析", "自选股"]
                 content += f"- 平均成本: {chip.get('avg_cost', 0):.2f}\n"
                 content += f"- 筹码状态: **{chip.get('chip_status', 'N/A')}**\n\n"
             
+            # AI 分析（如果有）
+            ai_analysis = r.get("ai_analysis", "")
+            if ai_analysis:
+                content += "### 🤖 AI 分析\n\n"
+                content += ai_analysis + "\n\n"
+            
             content += "---\n\n"
-        
-        # 添加 AI 分析内容
-        if ai_analysis:
-            content += ai_analysis
         
         return content
     
@@ -797,7 +921,12 @@ def main():
     )
     
     try:
-        results = pipeline.run(dry_run=args.dry_run)
+        # 运行分析（启用逐股 AI 分析）
+        results = pipeline.run(
+            dry_run=args.dry_run,
+            enable_ai=not args.no_ai,
+            model=args.model
+        )
         
         # 打印结果摘要
         if results:
@@ -805,22 +934,11 @@ def main():
             for r in results:
                 signal = r.get("trend_score", {}).get("signal", "N/A")
                 score = r.get("trend_score", {}).get("total_score", 0)
-                print(f"  {r.get('code')} ({r.get('name')}): {signal} (评分: {score})")
-            
-            # AI 智能分析
-            ai_title = ""
-            ai_content = ""
-            if not args.no_ai:
-                ai_result = pipeline.get_ai_stock_analysis(results, model=args.model)
-                ai_title = ai_result.get("title", "")
-                ai_content = ai_result.get("content", "")
-                if ai_title:
-                    print(f"\n🤖 AI 分析已生成，标题: {ai_title}")
-                else:
-                    print("\n🤖 AI 分析已生成")
+                has_ai = "🤖" if r.get("ai_analysis") else ""
+                print(f"  {r.get('code')} ({r.get('name')}): {signal} (评分: {score}) {has_ai}")
             
             # 生成并保存 Markdown 报告
-            report_content = pipeline.generate_report_md(results, ai_title, ai_content, model=args.model)
+            report_content = pipeline.generate_report_md(results, model=args.model)
             report_path = pipeline.save_report(report_content, model=args.model)
             print(f"\n📄 报告已保存: {report_path}")
     finally:

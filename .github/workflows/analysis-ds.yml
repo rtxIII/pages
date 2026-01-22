@@ -4,7 +4,7 @@ on:
   schedule:
     # 每天 9:00 (UTC+8) 执行 AI 分析
     # UTC 时间为 1:00 (21:00 - 8)
-    - cron: "0 1 * * *"
+    - cron: "5 1 * * *"
   
   workflow_dispatch:
     inputs:
