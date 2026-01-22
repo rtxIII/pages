@@ -6,6 +6,7 @@ websockets>=13.0,<14.0
 boto3>=1.35.0,<2.0.0
 
 # AI Analysis dependencies
+yfinance==1.0
 anthropic>=0.40.0
 akshare>=1.14.0
 pandas==2.3.3
