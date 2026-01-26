@@ -3,7 +3,7 @@
 股票分析主流程调度器
 
 改写版本：
-- stock_map 从 config/config.yaml 中获取
+- stock_map 从 config/analysis.yaml 中获取
 - 数据存储使用 storage/ 模块
 - 分析功能使用 ai_analysis/functions/ 模块
 - AI 智能分析（调用 Claude API）
@@ -32,12 +32,16 @@ ANTHROPIC_MODEL = os.getenv("ANTHROPIC_MODEL", "claude-sonnet-4-20250514")
 logger = logging.getLogger(__name__)
 
 
-def load_stock_map_from_config(config_path: str = "config/config.yaml") -> Dict[str, List[str]]:
+def load_stock_map_from_config(
+    config_path: str = "config/analysis.yaml",
+    map_type: str = "stock"
+) -> Dict[str, List[str]]:
     """
-    从 config.yaml 加载 stock_map
+    从 config.yaml 加载 stock_map 或 ai_watch_stock_map
     
     Args:
         config_path: 配置文件路径
+        map_type: 映射类型 - "stock"(默认) 或 "ai_watch"
         
     Returns:
         {market: [codes...]} 格式的股票映射
@@ -46,7 +50,11 @@ def load_stock_map_from_config(config_path: str = "config/config.yaml") -> Dict[
         with open(config_path, 'r', encoding='utf-8') as f:
             config = yaml.safe_load(f)
         
-        stock_map = config.get('ai_analysis', {}).get('stock_map', {})
+        # 根据 map_type 选择配置节点
+        if map_type == "ai_watch":
+            stock_map = config.get('ai_analysis', {}).get('ai_watch_stock_map', {})
+        else:
+            stock_map = config.get('ai_analysis', {}).get('stock_map', {})
         
         # 处理 YAML 格式：将嵌套结构转为列表
         result = {}
@@ -78,8 +86,9 @@ class StockAnalysisPipeline:
     
     def __init__(
         self,
-        config_path: str = "config/config.yaml",
-        max_workers: int = 3
+        config_path: str = "config/analysis.yaml",
+        max_workers: int = 3,
+        map_type: str = "stock"
     ):
         """
         初始化调度器
@@ -87,17 +96,19 @@ class StockAnalysisPipeline:
         Args:
             config_path: 配置文件路径
             max_workers: 最大并发线程数
+            map_type: 映射类型 - "stock"(默认) 或 "ai_watch"
         """
         self.config_path = config_path
         self.max_workers = max_workers
+        self.map_type = map_type
         
         # 从配置加载 stock_map
-        self.stock_map = load_stock_map_from_config(config_path)
+        self.stock_map = load_stock_map_from_config(config_path, map_type=map_type)
         
         # 初始化存储管理器
         self.storage = get_stock_storage_manager(backend_type="auto")
         
-        logger.info(f"调度器初始化完成，最大并发数: {self.max_workers}")
+        logger.info(f"调度器初始化完成，最大并发数: {self.max_workers}，映射类型: {map_type}")
         logger.info(f"股票列表: {self.stock_map}")
     
     def fetch_and_save_stock_data(
@@ -685,8 +696,17 @@ TITLE: [你的标题]
         
         today = datetime.now().strftime("%Y-%m-%d")
         
-        # 默认标题（包含模型信息）
-        title = f"自选股分析 {today} (AI: {model})"
+        # 根据 map_type 生成不同标题
+        if self.map_type == "ai_watch":
+            title_prefix = "AI观察股分析"
+            category = "ai-watch"
+            tags = '["技术分析", "AI观察股"]'
+        else:
+            title_prefix = "自选股分析"
+            category = "stock"
+            tags = '["技术分析", "自选股"]'
+        
+        title = f"{title_prefix} {today} (AI: {model})"
         
         # Frontmatter
         content = f'''+++
@@ -694,8 +714,8 @@ title = "{title}"
 date = "{today}"
 description = "股票技术分析报告"
 [taxonomies]
-categories = ["stock"]
-tags = ["技术分析", "自选股"]
+categories = ["{category}"]
+tags = {tags}
 +++
 
 '''
@@ -880,7 +900,13 @@ tags = ["技术分析", "自选股"]
         
         # 提取模型简称用于文件名（例如 claude-sonnet-4-20250514 -> sonnet-4）
         model_short = model.replace("claude-", "").split("-202")[0] if model else "unknown"
-        filename = f"{today}-stock-analysis-{model_short}.md"
+        
+        # 根据 map_type 生成不同文件名
+        if self.map_type == "ai_watch":
+            filename = f"{today}-ai-watch-analysis-{model_short}.md"
+        else:
+            filename = f"{today}-stock-analysis-{model_short}.md"
+        
         file_path = output_path / filename
         
         with open(file_path, 'w', encoding='utf-8') as f:
@@ -905,6 +931,12 @@ def main():
     parser.add_argument("--model", default=ANTHROPIC_MODEL, help=f"Claude 模型名称（默认: {ANTHROPIC_MODEL}）")
     parser.add_argument("--config", default="config/analysis.yaml", help="配置文件路径")
     parser.add_argument("--workers", type=int, default=1, help="并发线程数")
+    parser.add_argument(
+        "--map-type", 
+        choices=["stock", "ai_watch"], 
+        default="stock", 
+        help="股票映射类型: stock（自选股，默认）或 ai_watch（AI观察股）"
+    )
     
     args = parser.parse_args()
     
@@ -917,7 +949,8 @@ def main():
     # 运行
     pipeline = StockAnalysisPipeline(
         config_path=args.config,
-        max_workers=args.workers
+        max_workers=args.workers,
+        map_type=args.map_type
     )
     
     try:

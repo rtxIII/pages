@@ -516,7 +516,7 @@ class NewsAnalysisEngine:
             )
             # 提取模型简称用于文件名（例如 claude-sonnet-4-20250514 -> sonnet-4）
             model_short = self.model.replace("claude-", "").split("-202")[0] if self.model else "unknown"
-            filename = f"{result['date']}-{keyword}-{model_short}.md"
+            filename = f"{result['date']}-{keyword}-{model_short}.md".replace("/", "-")
             
             # 保存 Markdown 报告
             file_path = AnalysisReportGenerator.save_report(
@@ -533,7 +533,8 @@ class NewsAnalysisEngine:
             
             # 自动更新 stock_map（只增加不减少）
             try:
-                from .stock_map_updater import extract_stocks_from_analysis, update_stock_map
+                from .stock_map_updater import extract_stocks_from_analysis, update_stock_map, cleanup_expired_stocks
+                import yaml
                 
                 # 构建分析结果字典
                 analysis_data = {
@@ -546,6 +547,30 @@ class NewsAnalysisEngine:
                 if any(new_stocks.values()):
                     update_stock_map(new_stocks)
                     print(f"[分析引擎] Stock Map 已更新")
+                
+                # 自动清理过期股票
+                config_path = "config/analysis.yaml"
+                try:
+                    with open(config_path, 'r', encoding='utf-8') as f:
+                        config = yaml.safe_load(f)
+                    
+                    cleanup_config = config.get('ai_analysis', {}).get('ai_watch_cleanup', {})
+                    if cleanup_config.get('enabled', False):
+                        expire_days = cleanup_config.get('expire_days', 7)
+                        json_dir = config.get('ai_analysis', {}).get('output', {}).get('json_dir', 'output/analysis_data')
+                        # 转换为完整路径
+                        json_dir_full = f"page/src/{json_dir}"
+                        
+                        removed = cleanup_expired_stocks(
+                            config_path=config_path,
+                            json_dir=json_dir_full,
+                            expire_days=expire_days
+                        )
+                        if removed:
+                            print(f"[分析引擎] 已清理 {len(removed)} 只过期股票")
+                except Exception as e:
+                    print(f"[分析引擎] Stock Map 清理失败: {e}")
+                    
             except Exception as e:
                 print(f"[分析引擎] Stock Map 更新失败: {e}")
             
